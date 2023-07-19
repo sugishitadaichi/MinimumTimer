@@ -16,6 +16,9 @@
 		718C36312A67ED0600BD7E2B /* MinimumTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C36302A67ED0600BD7E2B /* MinimumTimerTests.swift */; };
 		718C363B2A67ED0600BD7E2B /* MinimumTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C363A2A67ED0600BD7E2B /* MinimumTimerUITests.swift */; };
 		718C363D2A67ED0600BD7E2B /* MinimumTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C363C2A67ED0600BD7E2B /* MinimumTimerUITestsLaunchTests.swift */; };
+		718C364C2A67EFB100BD7E2B /* AlarmSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C364B2A67EFB100BD7E2B /* AlarmSetting.swift */; };
+		718C364E2A67F10500BD7E2B /* AlarmItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C364D2A67F10500BD7E2B /* AlarmItem.swift */; };
+		718C36502A67F41200BD7E2B /* MasterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C364F2A67F41200BD7E2B /* MasterItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		718C36362A67ED0600BD7E2B /* MinimumTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinimumTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		718C363A2A67ED0600BD7E2B /* MinimumTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumTimerUITests.swift; sourceTree = "<group>"; };
 		718C363C2A67ED0600BD7E2B /* MinimumTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		718C364B2A67EFB100BD7E2B /* AlarmSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSetting.swift; sourceTree = "<group>"; };
+		718C364D2A67F10500BD7E2B /* AlarmItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmItem.swift; sourceTree = "<group>"; };
+		718C364F2A67F41200BD7E2B /* MasterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,7 @@
 		718C36182A67ED0400BD7E2B /* MinimumTimer */ = {
 			isa = PBXGroup;
 			children = (
+				718C36512A67F41C00BD7E2B /* Model */,
 				718C36192A67ED0400BD7E2B /* AppDelegate.swift */,
 				718C361B2A67ED0400BD7E2B /* SceneDelegate.swift */,
 				718C361D2A67ED0400BD7E2B /* ViewController.swift */,
@@ -125,6 +132,16 @@
 				718C363C2A67ED0600BD7E2B /* MinimumTimerUITestsLaunchTests.swift */,
 			);
 			path = MinimumTimerUITests;
+			sourceTree = "<group>";
+		};
+		718C36512A67F41C00BD7E2B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				718C364B2A67EFB100BD7E2B /* AlarmSetting.swift */,
+				718C364D2A67F10500BD7E2B /* AlarmItem.swift */,
+				718C364F2A67F41200BD7E2B /* MasterItem.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +275,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				718C364E2A67F10500BD7E2B /* AlarmItem.swift in Sources */,
+				718C364C2A67EFB100BD7E2B /* AlarmSetting.swift in Sources */,
+				718C36502A67F41200BD7E2B /* MasterItem.swift in Sources */,
 				718C361E2A67ED0400BD7E2B /* ViewController.swift in Sources */,
 				718C361A2A67ED0400BD7E2B /* AppDelegate.swift in Sources */,
 				718C361C2A67ED0400BD7E2B /* SceneDelegate.swift in Sources */,
