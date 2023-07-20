@@ -8,11 +8,11 @@
 import Foundation
 
 //アラーム表示に必要なモデルを定義
-struct AlarmSetting {
+class AlarmSetting {
     //追加したアラームのユニークID
-    var id: Int
+    var id: Int = 0
     //アラームに追加した作業項目のユニークID・computed propertyで個数を取得
-    var ItemId: Int
+    var ItemId: Int = 0
     //ユーザーが設定した開始時間（24時間表記）
     var alarmStartSettingTime: Date
     //ユーザーが設定した開始時間+各項目の所要時間の合計
