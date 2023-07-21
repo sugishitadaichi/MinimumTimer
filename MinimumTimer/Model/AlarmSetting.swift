@@ -6,16 +6,17 @@
 //
 
 import Foundation
+import RealmSwift
 
 //アラーム表示に必要なモデルを定義
-class AlarmSetting {
+class AlarmSetting: Object {
     //追加したアラームのユニークID
-    var id: Int = 0
+    @objc dynamic var id: Int = 0
     //アラームに追加した作業項目のユニークID・computed propertyで個数を取得
-    var ItemId: Int = 0
+    @objc dynamic var itemId: Int = 0
     //ユーザーが設定した開始時間（24時間表記）
-    var alarmStartSettingTime: Date = Date()
+    @objc dynamic var alarmStartSettingTime: Date = Date()
     //ユーザーが設定した開始時間+各項目の所要時間の合計
-    var alarmEndSettingTime: Date = Date()
+    @objc dynamic var alarmEndSettingTime: Date = Date()
     
 }
