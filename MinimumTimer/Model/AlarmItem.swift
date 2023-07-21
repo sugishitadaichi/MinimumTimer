@@ -16,9 +16,9 @@ class AlarmItem {
     //マスタに追加した作業項目のユニークID
     var MasterId: Int = 0
     //項目別の作業開始時間
-    var byItemStartTime: Date
+    var byItemStartTime: Date = Date()
     //AlarmSetting.作業開始時間+AlarmSetup.設定した時間(作業終了時間)
-    var byItemEndTime: Date
+    var byItemEndTime: Date = Date()
     //ユーザーが設定した項目名
     var userSetupName: String = ""
     //ユーザーが項目に設定した時間

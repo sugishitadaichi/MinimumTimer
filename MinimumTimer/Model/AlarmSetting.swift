@@ -14,8 +14,8 @@ class AlarmSetting {
     //アラームに追加した作業項目のユニークID・computed propertyで個数を取得
     var ItemId: Int = 0
     //ユーザーが設定した開始時間（24時間表記）
-    var alarmStartSettingTime: Date
+    var alarmStartSettingTime: Date = Date()
     //ユーザーが設定した開始時間+各項目の所要時間の合計
-    var alarmEndSettingTime: Date
+    var alarmEndSettingTime: Date = Date()
     
 }
