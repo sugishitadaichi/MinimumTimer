@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import RealmSwift
 
 //アラームの項目設定に必要なモデルを定義
-struct MasterItem {
+class MasterItem: Object {
     //マスタに追加した作業項目のユニークID(AlarmItemモデルのMasterIdと同義)
-    var id: Int
+    @objc dynamic var id: Int = 0
     //ユーザーが設定した項目名
-    var userSetupName: String
+    @objc dynamic var userSetupName: String = ""
     //ユーザーが項目に設定した時間
-    var userSetupTime: Int
+    @objc dynamic var userSetupTime: Int = 0
 }

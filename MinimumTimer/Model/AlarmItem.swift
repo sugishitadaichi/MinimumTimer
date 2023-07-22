@@ -6,21 +6,22 @@
 //
 
 import Foundation
+import RealmSwift
 
 //アラーム内容の設定に必要なモデルを定義
-struct AlarmItem {
+class AlarmItem: Object {
     //アラームに追加した作業項目のユニークID（AlarmSettingモデルのItemIdと同義）
-    var id: Int
+    @objc dynamic var id: Int = 0
     //紐づくアラームAlarmSettingのユニークID（AlarmSettingモデルのidと同義）
-    var alermSettingId: Int
+    @objc dynamic var alermSettingId: Int = 0
     //マスタに追加した作業項目のユニークID
-    var MasterId: Int
+    @objc dynamic var masterId: Int = 0
     //項目別の作業開始時間
-    var byItemStartTime: Date
+    @objc dynamic var byItemStartTime: Date = Date()
     //AlarmSetting.作業開始時間+AlarmSetup.設定した時間(作業終了時間)
-    var byItemEndTime: Date
+    @objc dynamic var byItemEndTime: Date = Date()
     //ユーザーが設定した項目名
-    var userSetupName: String
+    @objc dynamic var userSetupName: String = ""
     //ユーザーが項目に設定した時間
-    var userSetupTime: Int
+    @objc dynamic var userSetupTime: Int = 0
 }
