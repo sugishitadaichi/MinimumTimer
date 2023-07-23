@@ -40,6 +40,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="アラーム" image="Alarm_tab" id="diN-DE-QXP"/>
+                    <connections>
+                        <outlet property="tableView" destination="i2a-fq-HO4" id="fVz-Up-rEV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -103,8 +106,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AlarmSetup_tab" width="25" height="25"/>
-        <image name="Alarm_tab" width="25" height="25"/>
+        <image name="AlarmSetup_tab" width="15.333333015441895" height="15.333333015441895"/>
+        <image name="Alarm_tab" width="15.333333015441895" height="15.333333015441895"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
