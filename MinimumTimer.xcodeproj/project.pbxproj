@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B5D0AAAD2991A190F8A5466 /* Pods_MinimumTimer_MinimumTimerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BD1CD753F3BF72FD43CCEE /* Pods_MinimumTimer_MinimumTimerUITests.framework */; };
 		6573DBC2A6D391E49B4309BA /* Pods_MinimumTimerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4151DBAEEEC1F057152B38 /* Pods_MinimumTimerTests.framework */; };
+		7109B0C72A6D3D6600D287CB /* MasterItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7109B0C62A6D3D6600D287CB /* MasterItemViewController.swift */; };
 		718C361A2A67ED0400BD7E2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C36192A67ED0400BD7E2B /* AppDelegate.swift */; };
 		718C361C2A67ED0400BD7E2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C361B2A67ED0400BD7E2B /* SceneDelegate.swift */; };
 		718C361E2A67ED0400BD7E2B /* MainAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C361D2A67ED0400BD7E2B /* MainAlarmViewController.swift */; };
@@ -45,6 +46,7 @@
 		1E7EF586731040417DFC9FA7 /* Pods-MinimumTimer-MinimumTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinimumTimer-MinimumTimerUITests.debug.xcconfig"; path = "Target Support Files/Pods-MinimumTimer-MinimumTimerUITests/Pods-MinimumTimer-MinimumTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4C3239B162602B70366BE990 /* Pods-MinimumTimer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinimumTimer.release.xcconfig"; path = "Target Support Files/Pods-MinimumTimer/Pods-MinimumTimer.release.xcconfig"; sourceTree = "<group>"; };
 		664CC15A2F048DB58E14DD94 /* Pods_MinimumTimer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinimumTimer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7109B0C62A6D3D6600D287CB /* MasterItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterItemViewController.swift; sourceTree = "<group>"; };
 		718C36162A67ED0400BD7E2B /* MinimumTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinimumTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		718C36192A67ED0400BD7E2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		718C361B2A67ED0400BD7E2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 		718C36182A67ED0400BD7E2B /* MinimumTimer */ = {
 			isa = PBXGroup;
 			children = (
+				718C36272A67ED0600BD7E2B /* Info.plist */,
 				71E2DC5F2A6D216800348B4E /* Others */,
 				71E2DC5E2A6D211000348B4E /* Delegate */,
 				71E2DC5D2A6D20EC00348B4E /* View */,
@@ -172,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				718C361D2A67ED0400BD7E2B /* MainAlarmViewController.swift */,
+				7109B0C62A6D3D6600D287CB /* MasterItemViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -198,7 +202,6 @@
 			children = (
 				718C36222A67ED0600BD7E2B /* Assets.xcassets */,
 				718C36242A67ED0600BD7E2B /* LaunchScreen.storyboard */,
-				718C36272A67ED0600BD7E2B /* Info.plist */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -460,6 +463,7 @@
 				718C36502A67F41200BD7E2B /* MasterItem.swift in Sources */,
 				718C361E2A67ED0400BD7E2B /* MainAlarmViewController.swift in Sources */,
 				718C361A2A67ED0400BD7E2B /* AppDelegate.swift in Sources */,
+				7109B0C72A6D3D6600D287CB /* MasterItemViewController.swift in Sources */,
 				718C361C2A67ED0400BD7E2B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

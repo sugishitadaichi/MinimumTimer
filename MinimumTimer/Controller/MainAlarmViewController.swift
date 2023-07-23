@@ -6,13 +6,24 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainAlarmViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    //＋ボタンを紐付け
+    @IBOutlet weak var alarmSettingButton: UIButton!
+    //TableViewを紐付け
+    @IBOutlet weak var mainAlarmTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        //ホーム画面表示時にボタンの仕様を適用
+        configureAlarmSettingButton()
+    }
+    
+    //＋ボタンの仕様
+    func configureAlarmSettingButton() {
+        alarmSettingButton.layer.cornerRadius = alarmSettingButton.bounds.width / 2
     }
 
 
