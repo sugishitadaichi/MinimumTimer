@@ -22,6 +22,8 @@
 		718C364C2A67EFB100BD7E2B /* AlarmSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C364B2A67EFB100BD7E2B /* AlarmSetting.swift */; };
 		718C364E2A67F10500BD7E2B /* AlarmItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C364D2A67F10500BD7E2B /* AlarmItem.swift */; };
 		718C36502A67F41200BD7E2B /* MasterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C364F2A67F41200BD7E2B /* MasterItem.swift */; };
+		71BEC6FE2A6F461300DD2090 /* AlarmSettingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71BEC6FD2A6F461300DD2090 /* AlarmSettingViewController.storyboard */; };
+		71BEC7002A6F464000DD2090 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BEC6FF2A6F464000DD2090 /* AlarmSettingViewController.swift */; };
 		F4F29F03AD3A1D8698112BDE /* Pods_MinimumTimer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 664CC15A2F048DB58E14DD94 /* Pods_MinimumTimer.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,8 @@
 		718C364B2A67EFB100BD7E2B /* AlarmSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSetting.swift; sourceTree = "<group>"; };
 		718C364D2A67F10500BD7E2B /* AlarmItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmItem.swift; sourceTree = "<group>"; };
 		718C364F2A67F41200BD7E2B /* MasterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterItem.swift; sourceTree = "<group>"; };
+		71BEC6FD2A6F461300DD2090 /* AlarmSettingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlarmSettingViewController.storyboard; sourceTree = "<group>"; };
+		71BEC6FF2A6F464000DD2090 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
 		82BD1CD753F3BF72FD43CCEE /* Pods_MinimumTimer_MinimumTimerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinimumTimer_MinimumTimerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9769191BB79B19C291250CFA /* Pods-MinimumTimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinimumTimer.debug.xcconfig"; path = "Target Support Files/Pods-MinimumTimer/Pods-MinimumTimer.debug.xcconfig"; sourceTree = "<group>"; };
 		9E8C923CCACBA35293F945B1 /* Pods-MinimumTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinimumTimerTests.release.xcconfig"; path = "Target Support Files/Pods-MinimumTimerTests/Pods-MinimumTimerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -176,6 +180,7 @@
 			children = (
 				718C361D2A67ED0400BD7E2B /* MainAlarmViewController.swift */,
 				7109B0C62A6D3D6600D287CB /* MasterItemViewController.swift */,
+				71BEC6FF2A6F464000DD2090 /* AlarmSettingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				718C361F2A67ED0400BD7E2B /* MainAlarm.storyboard */,
+				71BEC6FD2A6F461300DD2090 /* AlarmSettingViewController.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -330,6 +336,7 @@
 			files = (
 				718C36262A67ED0600BD7E2B /* LaunchScreen.storyboard in Resources */,
 				718C36232A67ED0600BD7E2B /* Assets.xcassets in Resources */,
+				71BEC6FE2A6F461300DD2090 /* AlarmSettingViewController.storyboard in Resources */,
 				718C36212A67ED0400BD7E2B /* MainAlarm.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +467,7 @@
 			files = (
 				718C364E2A67F10500BD7E2B /* AlarmItem.swift in Sources */,
 				718C364C2A67EFB100BD7E2B /* AlarmSetting.swift in Sources */,
+				71BEC7002A6F464000DD2090 /* AlarmSettingViewController.swift in Sources */,
 				718C36502A67F41200BD7E2B /* MasterItem.swift in Sources */,
 				718C361E2A67ED0400BD7E2B /* MainAlarmViewController.swift in Sources */,
 				718C361A2A67ED0400BD7E2B /* AppDelegate.swift in Sources */,

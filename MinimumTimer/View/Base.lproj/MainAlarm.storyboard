@@ -28,6 +28,9 @@
                                 <color key="tintColor" systemColor="systemBackgroundColor"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="＋"/>
+                                <connections>
+                                    <action selector="alarmSettingButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="v8W-9U-Sw0"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -83,6 +86,10 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="項目一覧" image="AlarmSetup_tab" id="i6c-s1-rTh"/>
+                    <connections>
+                        <outlet property="masterItemTableView" destination="kbK-U7-DDc" id="gT7-aW-HsY"/>
+                        <outlet property="popUpButton" destination="4pD-GU-rJr" id="zHl-lw-siQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z2g-6l-IZJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
