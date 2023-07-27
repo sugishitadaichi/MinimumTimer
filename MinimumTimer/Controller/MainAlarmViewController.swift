@@ -8,8 +8,10 @@
 import UIKit
 import RealmSwift
 
-class MainAlarmViewController: UIViewController, UITableViewDelegate {
+class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate {
     @IBAction func alarmSettingButtonAction(_ sender: UIButton) {
+        //+ボタンタップ時に下記関数を実行させる
+        transitionToAlarmSettingView()
     }
     //＋ボタンを紐付け
     @IBOutlet weak var alarmSettingButton: UIButton!
@@ -29,9 +31,13 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate {
     }
     
     //　＋ボタンがタップされた際に画面遷移する処理
-    func transitionToTweetEditorView() {
+    func transitionToAlarmSettingView() {
+        //遷移するstoryboardを定義
         let storyboard = UIStoryboard(name: "AlarmSettingViewController", bundle: nil)
-        guard let asvc = storyboard.instantiateInitialViewController() as? AlarmSettingViewController else { return }
+        guard let asvc = storyboard.instantiateViewController(withIdentifier: "AlarmSettingViewController") as? AlarmSettingViewController else { return }
+        //モダール表示の設定
+        asvc.modalPresentationStyle = .fullScreen
+        //画面遷移(モーダル遷移)
         present(asvc, animated: true)
 
         asvc.delegate = self
