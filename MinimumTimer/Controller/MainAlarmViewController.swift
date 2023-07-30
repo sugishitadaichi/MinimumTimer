@@ -23,12 +23,16 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         // Do any additional setup after loading the view.
         //ホーム画面表示時にボタンの仕様を適用
         configureAlarmSettingButton()
+        //cellの登録
     }
     
     //＋ボタンの仕様
     func configureAlarmSettingButton() {
         alarmSettingButton.layer.cornerRadius = alarmSettingButton.bounds.width / 2
     }
+    
+    //アラーム設定のプロパティ
+    var alarmSettingList: [AlarmSetting] = []
     
     //　＋ボタンがタップされた際に画面遷移する処理
     func transitionToAlarmSettingView() {
@@ -39,10 +43,19 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         asvc.modalPresentationStyle = .fullScreen
         //画面遷移(モーダル遷移)
         present(asvc, animated: true)
-        //画面遷移（プッシュ遷移）
-        //self.navigationController?.pushViewController(asvc, animated: true)
-
+        //delegateの設定
         asvc.delegate = self
+    }
+    
+    //テーブルビューにセルを作成する
+    private func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //セルの作成or再利用
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MainAlarmViewCell", for: indexPath) as! MainAlarmViewCell
+        
+        //セルの内容を設定
+        let alarmSetting = alarmSettingList[indexPath.row]
+        
+        return cell
     }
 
 

@@ -8,7 +8,25 @@
 import UIKit
 import RealmSwift
 
-class MasterItemViewController: UIViewController {
+class MasterItemViewController: UIViewController, MasterItemViewCellDelegate {
+    //＋ボタンが押された際の処理
+    @IBAction func popUpButtonAction(_ sender: UIButton) {
+        //テキストの定義
+        var popUpTextField: UITextField?
+        
+        let masterItemViewCell = MasterItemViewCell()
+        
+        let popUptext = UIAlertController(
+            title: "項目名（10文字以内）", message: "", preferredStyle: UIAlertController.Style.alert)
+        
+        popUptext.addTextField(
+            configurationHandler: {(textField: UITextField!) in
+                popUpTextField = textField
+                textField.text = masterItemViewCell.UserSetupNameLabel.text
+            })
+        
+        
+    }
     //＋ボタンを紐付け
     @IBOutlet weak var popUpButton: UIButton!
     //TableViewを紐付け
