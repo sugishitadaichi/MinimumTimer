@@ -29,8 +29,21 @@ class AlarmSettingViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        footerView.frame = CGRect(x: 0, y: 0, width: alarmSettingTableView.frame.width, height: 100)
         footerView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.heightAnchor.constraint(equalToConstant: 50.0)
+        footerView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        footerView.backgroundColor = .black
+        
+        let footerHeight:CGFloat = 100.0
+        footerView.frame.size.height = footerHeight
+        footerView.frame.size.width = UIScreen.main.bounds.width
+                
+        let footerInnerView = UIView(frame: CGRect(x: 0, y: 0, width: 100.0, height: 40.0))
+        footerInnerView.backgroundColor = .yellow
+        footerView.addSubview(footerInnerView)
+        footerInnerView.center = footerView.center
+        //alarmSettingTableViewのtableFooterViewに設定
+        alarmSettingTableView.tableFooterView = footerView
         
     }
     //delegateの設定
