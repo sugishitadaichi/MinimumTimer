@@ -36,9 +36,11 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         let storyboard = UIStoryboard(name: "AlarmSettingViewController", bundle: nil)
         guard let asvc = storyboard.instantiateViewController(withIdentifier: "AlarmSettingViewController") as? AlarmSettingViewController else { return }
         //モダール表示の設定
-        asvc.modalPresentationStyle = .fullScreen
+//        asvc.modalPresentationStyle = .fullScreen
         //画面遷移(モーダル遷移)
-        present(asvc, animated: true)
+//        present(asvc, animated: true)
+        //画面遷移（プッシュ遷移）
+        self.navigationController?.pushViewController(asvc, animated: true)
 
         asvc.delegate = self
     }

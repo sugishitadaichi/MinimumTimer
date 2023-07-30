@@ -24,6 +24,18 @@ class AlarmSettingViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIButton!
     //TableViewを紐付け
     @IBOutlet weak var alarmSettingTableView: UITableView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.heightAnchor.constraint(equalToConstant: 50.0)
+        
+    }
     //delegateの設定
     var delegate: AlarmSettingViewControllerDelegate?
+    //フッタービューを定義
+    let footerView = UIView()
+    
 }
