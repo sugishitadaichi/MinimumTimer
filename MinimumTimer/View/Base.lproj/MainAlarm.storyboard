@@ -56,8 +56,8 @@
         <!--項目一覧-->
         <scene sceneID="TeY-d5-ENW">
             <objects>
-                <viewController storyboardIdentifier="MasterItemViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UUq-uV-Rcj" customClass="MasterItemViewController" customModule="MinimumTimer" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vN3-wY-EZL">
+                <viewController storyboardIdentifier="MasterItemViewController" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UUq-uV-Rcj" customClass="MasterItemViewController" customModule="MinimumTimer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" tag="1" contentMode="scaleToFill" id="vN3-wY-EZL">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -75,6 +75,7 @@
                                 <state key="normal" title="＋"/>
                                 <connections>
                                     <action selector="popUpButtonAction:" destination="UUq-uV-Rcj" eventType="touchUpInside" id="wPS-5G-t0K"/>
+                                    <segue destination="OAG-Ke-n0U" kind="modal" identifier="PopUpSegue" id="Y1Y-wp-lgg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -95,7 +96,88 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z2g-6l-IZJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="971.7557251908396" y="738.73239436619724"/>
+            <point key="canvasLocation" x="972" y="739"/>
+        </scene>
+        <!--Pop Up View Controller-->
+        <scene sceneID="1Fd-vE-VDs">
+            <objects>
+                <viewController modalPresentationStyle="overCurrentContext" id="OAG-Ke-n0U" customClass="PopUpViewController" customModule="MinimumTimer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qbg-7h-Psn">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dh8-1n-icM">
+                                <rect key="frame" x="10" y="259" width="373" height="359"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="所要時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rXg-pb-xVN">
+                                <rect key="frame" x="20" y="395" width="168" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="項目名(10文字以内)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Iyv-2P-tfy">
+                                <rect key="frame" x="23" y="270" width="200" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Q2-8u-Jba">
+                                <rect key="frame" x="16" y="329" width="361" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="　　　　　時間　　　          分" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p81-Kj-hu6">
+                                <rect key="frame" x="16" y="443" width="361" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lkq-yX-SkB">
+                                <rect key="frame" x="23" y="563" width="111" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="追加"/>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qx2-fa-PTK">
+                                <rect key="frame" x="266" y="563" width="111" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="キャンセル"/>
+                                <connections>
+                                    <action selector="cancelButtonAction:" destination="OAG-Ke-n0U" eventType="touchUpInside" id="cHg-nK-El3"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="PZq-rV-LmR"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dh8-1n-icM" firstAttribute="leading" secondItem="PZq-rV-LmR" secondAttribute="leading" constant="10" id="4Bz-tG-aNE"/>
+                            <constraint firstItem="dh8-1n-icM" firstAttribute="top" secondItem="PZq-rV-LmR" secondAttribute="top" constant="200" id="HWa-hG-1yj"/>
+                            <constraint firstItem="PZq-rV-LmR" firstAttribute="bottom" secondItem="dh8-1n-icM" secondAttribute="bottom" constant="200" id="Kir-cB-1hU"/>
+                            <constraint firstItem="PZq-rV-LmR" firstAttribute="trailing" secondItem="dh8-1n-icM" secondAttribute="trailing" constant="10" id="qfd-g6-4un"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addButton" destination="lkq-yX-SkB" id="rjW-WX-tNx"/>
+                        <outlet property="cancelButton" destination="Qx2-fa-PTK" id="4RS-y1-VBf"/>
+                        <outlet property="userSetupNameText" destination="0Q2-8u-Jba" id="V1I-7A-pxu"/>
+                        <outlet property="userSetupTimeText" destination="p81-Kj-hu6" id="x8U-1y-hPO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hDA-yK-psS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1826.7175572519084" y="738.73239436619724"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="agQ-Ik-LjB">

@@ -11,20 +11,8 @@ import RealmSwift
 class MasterItemViewController: UIViewController, MasterItemViewCellDelegate {
     //＋ボタンが押された際の処理
     @IBAction func popUpButtonAction(_ sender: UIButton) {
-        //テキストの定義
-        var popUpTextField: UITextField?
-        
-        let masterItemViewCell = MasterItemViewCell()
-        
-        let popUptext = UIAlertController(
-            title: "項目名（10文字以内）", message: "", preferredStyle: UIAlertController.Style.alert)
-        
-        popUptext.addTextField(
-            configurationHandler: {(textField: UITextField!) in
-                popUpTextField = textField
-                textField.text = masterItemViewCell.UserSetupNameLabel.text
-            })
-        
+        //Segue接続先へ遷移する処理
+        performSegue(withIdentifier: "PopUpSegue", sender: nil)
         
     }
     //＋ボタンを紐付け

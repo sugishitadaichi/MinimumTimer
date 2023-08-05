@@ -34,4 +34,10 @@ class MainAlarmViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setUp(alarmSetting: AlarmSetting) {
+        
+        //alarmEndSettingTimeLabel.text = alarmSetting.alarmEndSettingTime
+        
+    }
+    
 }

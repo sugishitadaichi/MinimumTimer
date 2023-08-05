@@ -10,6 +10,10 @@
 		3B5D0AAAD2991A190F8A5466 /* Pods_MinimumTimer_MinimumTimerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BD1CD753F3BF72FD43CCEE /* Pods_MinimumTimer_MinimumTimerUITests.framework */; };
 		6573DBC2A6D391E49B4309BA /* Pods_MinimumTimerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4151DBAEEEC1F057152B38 /* Pods_MinimumTimerTests.framework */; };
 		7109B0C72A6D3D6600D287CB /* MasterItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7109B0C62A6D3D6600D287CB /* MasterItemViewController.swift */; };
+		7124DAAD2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7124DAAB2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.swift */; };
+		7124DAAE2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7124DAAC2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.xib */; };
+		7124DAB12A7E3BC3001D6F67 /* ItemSelectedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7124DAAF2A7E3BC3001D6F67 /* ItemSelectedViewCell.swift */; };
+		7124DAB22A7E3BC3001D6F67 /* ItemSelectedViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7124DAB02A7E3BC3001D6F67 /* ItemSelectedViewCell.xib */; };
 		7178EAC02A7663850015DBBE /* MasterItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7178EABE2A7663850015DBBE /* MasterItemViewCell.swift */; };
 		718C361A2A67ED0400BD7E2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C36192A67ED0400BD7E2B /* AppDelegate.swift */; };
 		718C361C2A67ED0400BD7E2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C361B2A67ED0400BD7E2B /* SceneDelegate.swift */; };
@@ -27,6 +31,7 @@
 		71BEC7002A6F464000DD2090 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BEC6FF2A6F464000DD2090 /* AlarmSettingViewController.swift */; };
 		71C6D3642A76297800320723 /* MainAlarmViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C6D3622A76297800320723 /* MainAlarmViewCell.swift */; };
 		71C6D3652A76297800320723 /* MainAlarmViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71C6D3632A76297800320723 /* MainAlarmViewCell.xib */; };
+		71D241DF2A7762230069C9AB /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D241DE2A7762230069C9AB /* PopUpViewController.swift */; };
 		F4F29F03AD3A1D8698112BDE /* Pods_MinimumTimer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 664CC15A2F048DB58E14DD94 /* Pods_MinimumTimer.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +57,10 @@
 		4C3239B162602B70366BE990 /* Pods-MinimumTimer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinimumTimer.release.xcconfig"; path = "Target Support Files/Pods-MinimumTimer/Pods-MinimumTimer.release.xcconfig"; sourceTree = "<group>"; };
 		664CC15A2F048DB58E14DD94 /* Pods_MinimumTimer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinimumTimer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7109B0C62A6D3D6600D287CB /* MasterItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterItemViewController.swift; sourceTree = "<group>"; };
+		7124DAAB2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmStartSettingTimeViewCell.swift; sourceTree = "<group>"; };
+		7124DAAC2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlarmStartSettingTimeViewCell.xib; sourceTree = "<group>"; };
+		7124DAAF2A7E3BC3001D6F67 /* ItemSelectedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSelectedViewCell.swift; sourceTree = "<group>"; };
+		7124DAB02A7E3BC3001D6F67 /* ItemSelectedViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemSelectedViewCell.xib; sourceTree = "<group>"; };
 		7178EABB2A7663370015DBBE /* MasterItemViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MasterItemViewCell.xib; path = ../../MasterItemViewCell.xib; sourceTree = "<group>"; };
 		7178EABE2A7663850015DBBE /* MasterItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MasterItemViewCell.swift; path = ../MasterItemViewCell.swift; sourceTree = "<group>"; };
 		718C36162A67ED0400BD7E2B /* MinimumTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinimumTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +83,7 @@
 		71BEC6FF2A6F464000DD2090 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
 		71C6D3622A76297800320723 /* MainAlarmViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainAlarmViewCell.swift; path = ../MainAlarmViewCell.swift; sourceTree = "<group>"; };
 		71C6D3632A76297800320723 /* MainAlarmViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainAlarmViewCell.xib; path = ../MainAlarmViewCell.xib; sourceTree = "<group>"; };
+		71D241DE2A7762230069C9AB /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		82BD1CD753F3BF72FD43CCEE /* Pods_MinimumTimer_MinimumTimerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MinimumTimer_MinimumTimerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9769191BB79B19C291250CFA /* Pods-MinimumTimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinimumTimer.debug.xcconfig"; path = "Target Support Files/Pods-MinimumTimer/Pods-MinimumTimer.debug.xcconfig"; sourceTree = "<group>"; };
 		9E8C923CCACBA35293F945B1 /* Pods-MinimumTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinimumTimerTests.release.xcconfig"; path = "Target Support Files/Pods-MinimumTimerTests/Pods-MinimumTimerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -187,9 +197,12 @@
 			children = (
 				718C361D2A67ED0400BD7E2B /* MainAlarmViewController.swift */,
 				7109B0C62A6D3D6600D287CB /* MasterItemViewController.swift */,
+				7124DAAB2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.swift */,
+				7124DAAF2A7E3BC3001D6F67 /* ItemSelectedViewCell.swift */,
 				71BEC6FF2A6F464000DD2090 /* AlarmSettingViewController.swift */,
 				71C6D3622A76297800320723 /* MainAlarmViewCell.swift */,
 				7178EABE2A7663850015DBBE /* MasterItemViewCell.swift */,
+				71D241DE2A7762230069C9AB /* PopUpViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -199,6 +212,8 @@
 			children = (
 				718C361F2A67ED0400BD7E2B /* MainAlarm.storyboard */,
 				71BEC6FD2A6F461300DD2090 /* AlarmSettingViewController.storyboard */,
+				7124DAAC2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.xib */,
+				7124DAB02A7E3BC3001D6F67 /* ItemSelectedViewCell.xib */,
 				71C6D3632A76297800320723 /* MainAlarmViewCell.xib */,
 				7178EABB2A7663370015DBBE /* MasterItemViewCell.xib */,
 			);
@@ -346,10 +361,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				718C36262A67ED0600BD7E2B /* LaunchScreen.storyboard in Resources */,
+				7124DAB22A7E3BC3001D6F67 /* ItemSelectedViewCell.xib in Resources */,
 				718C36232A67ED0600BD7E2B /* Assets.xcassets in Resources */,
 				71BEC6FE2A6F461300DD2090 /* AlarmSettingViewController.storyboard in Resources */,
 				71C6D3652A76297800320723 /* MainAlarmViewCell.xib in Resources */,
 				718C36212A67ED0400BD7E2B /* MainAlarm.storyboard in Resources */,
+				7124DAAE2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,8 +495,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				718C364E2A67F10500BD7E2B /* AlarmItem.swift in Sources */,
+				7124DAAD2A7E3A90001D6F67 /* AlarmStartSettingTimeViewCell.swift in Sources */,
+				7124DAB12A7E3BC3001D6F67 /* ItemSelectedViewCell.swift in Sources */,
 				718C364C2A67EFB100BD7E2B /* AlarmSetting.swift in Sources */,
 				71BEC7002A6F464000DD2090 /* AlarmSettingViewController.swift in Sources */,
+				71D241DF2A7762230069C9AB /* PopUpViewController.swift in Sources */,
 				718C36502A67F41200BD7E2B /* MasterItem.swift in Sources */,
 				718C361E2A67ED0400BD7E2B /* MainAlarmViewController.swift in Sources */,
 				71C6D3642A76297800320723 /* MainAlarmViewCell.swift in Sources */,

@@ -18,6 +18,9 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     //TableViewを紐付け
     @IBOutlet weak var mainAlarmTableView: UITableView!
     
+    //アラーム設定のプロパティ
+    var alarmSettingList: [AlarmSetting] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -30,9 +33,6 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     func configureAlarmSettingButton() {
         alarmSettingButton.layer.cornerRadius = alarmSettingButton.bounds.width / 2
     }
-    
-    //アラーム設定のプロパティ
-    var alarmSettingList: [AlarmSetting] = []
     
     //　＋ボタンがタップされた際に画面遷移する処理
     func transitionToAlarmSettingView() {
@@ -54,6 +54,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         
         //セルの内容を設定
         let alarmSetting = alarmSettingList[indexPath.row]
+        
+        cell.setUp(alarmSetting: alarmSetting)
         
         return cell
     }
