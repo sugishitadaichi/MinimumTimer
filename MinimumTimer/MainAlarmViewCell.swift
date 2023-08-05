@@ -23,9 +23,20 @@ class MainAlarmViewCell: UITableViewCell {
     //削除ボタンを紐付け
     @IBOutlet weak var deleteButton: UIButton!
     
+    //DateFormatterクラスのインスタンス化
+    let dateFormatter = DateFormatter()
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        //カレンダー、ロケール、タイムゾーンの設定（未指定時は端末の設定が採用される）
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
+        //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
+        dateFormatter.dateFormat = "H:mm"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,8 +46,10 @@ class MainAlarmViewCell: UITableViewCell {
     }
     
     func setUp(alarmSetting: AlarmSetting) {
-        
-        //alarmEndSettingTimeLabel.text = alarmSetting.alarmEndSettingTime
+        //データ変換(Date→テキスト)
+        alarmEndSettingTimeLabel.text = dateFormatter.string(from: Date())
+        //終了予定時間のモデルを定義
+        alarmEndSettingTimeLabel.text = alarmSetting.alarmEndSettingTime
         
     }
     
