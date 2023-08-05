@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 //delegateを定義
-protocol MasterItemViewCellDelegate{}
+protocol MainAlarmViewCellDelegate{}
 
 class MainAlarmViewCell: UITableViewCell {
     //削除ボタンを押した際の処理を紐付け
@@ -25,6 +25,8 @@ class MainAlarmViewCell: UITableViewCell {
     
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
+    //MainAlarmViewCellDelegateを定義（他ファイルで使用するため）
+    var delegate: MainAlarmViewCellDelegate?
     
     
     override func awakeFromNib() {
@@ -46,10 +48,12 @@ class MainAlarmViewCell: UITableViewCell {
     }
     
     func setUp(alarmSetting: AlarmSetting) {
-        //データ変換(Date→テキスト)
-        alarmEndSettingTimeLabel.text = dateFormatter.string(from: Date())
-        //終了予定時間のモデルを定義
-        alarmEndSettingTimeLabel.text = alarmSetting.alarmEndSettingTime
+        //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
+        alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
+        //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
+        alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
+        //作業個数のテキストデータを定義
+        byItemLabel.text = String(alarmSetting.itemId)
         
     }
     

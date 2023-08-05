@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class MasterItemViewController: UIViewController, MasterItemViewCellDelegate {
+class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate {
     //＋ボタンが押された際の処理
     @IBAction func popUpButtonAction(_ sender: UIButton) {
         //Segue接続先へ遷移する処理

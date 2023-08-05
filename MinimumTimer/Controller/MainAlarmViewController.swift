@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate {
+class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate, MainAlarmViewCellDelegate, UITableViewDataSource {
     @IBAction func alarmSettingButtonAction(_ sender: UIButton) {
         //+ボタンタップ時に下記関数を実行させる
         transitionToAlarmSettingView()
@@ -24,9 +24,12 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        //セルを登録
+        mainAlarmTableView.register(UINib(nibName: "MainAlarmViewCell", bundle: nil), forCellReuseIdentifier: "MainAlarmViewCell")
         //ホーム画面表示時にボタンの仕様を適用
         configureAlarmSettingButton()
-        //cellの登録
+        
+        mainAlarmTableView.dataSource = self
     }
     
     //＋ボタンの仕様
@@ -47,14 +50,25 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         asvc.delegate = self
     }
     
+    // TableViewに表示するセルの数を返却
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
+        //ダミー完了後はreturn alarmSettingList.count
+    }
+    
     //テーブルビューにセルを作成する
-    private func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //セルの作成or再利用
         let cell = tableView.dequeueReusableCell(withIdentifier: "MainAlarmViewCell", for: indexPath) as! MainAlarmViewCell
         
         //セルの内容を設定
         let alarmSetting = alarmSettingList[indexPath.row]
-        
+        //ダミーデータ作成
+        cell.alarmStartSettingTimeLabel.text = "8:00"
+        cell.alarmEndSettingTimeLabel.text = "9:00"
+        cell.byItemLabel.text = "5"
+        //デリゲートの登録
+        cell.delegate = self
         cell.setUp(alarmSetting: alarmSetting)
         
         return cell
