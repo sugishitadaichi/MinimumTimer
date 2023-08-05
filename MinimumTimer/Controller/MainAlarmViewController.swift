@@ -20,6 +20,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     
     //アラーム設定のプロパティ
     var alarmSettingList: [AlarmSetting] = []
+    //DateFormatterクラスのインスタンス化
+    let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,13 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         configureAlarmSettingButton()
         
         mainAlarmTableView.dataSource = self
+        
+        //カレンダー、ロケール、タイムゾーンの設定（未指定時は端末の設定が採用される）
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
+        //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
+        dateFormatter.dateFormat = "H:mm"
     }
     
     //＋ボタンの仕様
@@ -50,10 +59,15 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         asvc.delegate = self
     }
     
+    //アラームを格納するためのメソッド
+    func setMainAlarm() {
+        let alarmPost1 = AlarmSetting(alarmStartSettingTimeLabel: "8:00", alarmEndSettingTimeLabel: "9:00", byItemLabel: "5")
+    }
+    
     // TableViewに表示するセルの数を返却
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
-        //ダミー完了後はreturn alarmSettingList.count
+        //alarmSettingListにある個数分セルを返却
+        return alarmSettingList.count
     }
     
     //テーブルビューにセルを作成する
@@ -63,10 +77,13 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         
         //セルの内容を設定
         let alarmSetting = alarmSettingList[indexPath.row]
-        //ダミーデータ作成
-        cell.alarmStartSettingTimeLabel.text = "8:00"
-        cell.alarmEndSettingTimeLabel.text = "9:00"
-        cell.byItemLabel.text = "5"
+        //セルの定義
+        //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
+        cell.alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
+        //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
+        cell.alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
+        //作業個数のテキストデータを定義
+        cell.byItemLabel.text = String(alarmSetting.itemId)
         //デリゲートの登録
         cell.delegate = self
         cell.setUp(alarmSetting: alarmSetting)
