@@ -61,7 +61,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     
     //アラームを格納するためのメソッド
     func setMainAlarm() {
-        let alarmPost1 = AlarmSetting(alarmStartSettingTimeLabel: "8:00", alarmEndSettingTimeLabel: "9:00", byItemLabel: "5")
+        let alarmPost1 = AlarmSetting(id: 1, itemId: 1, alarmStartSettingTime: "HH:MM", alarmEndSettingTime: "HH:MM")
+        
     }
     
     // TableViewに表示するセルの数を返却
