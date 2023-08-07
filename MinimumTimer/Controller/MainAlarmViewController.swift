@@ -39,6 +39,9 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
         //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
         dateFormatter.dateFormat = "H:mm"
+        
+        //アラームセルを表示する処理を実行
+        setMainAlarm()
     }
     
     //＋ボタンの仕様
@@ -60,11 +63,21 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     }
     
     //アラームを格納するためのメソッド
-    func setMainAlarm() {
-        let alarmPost1 = AlarmSetting(id: 1, itemId: 1, alarmStartSettingTime: "HH:MM", alarmEndSettingTime: "HH:MM")
+    func setMainAlarm() -> String  {
+        //dateFormatterを定義
+        let dateFormatter = DateFormatter()
+        //Date型への変換？
+        dateFormatter.dateFormat = "HH:mm"
+        let startDateString = "08:00"
+        let endDateString = "09:00"
+
+        guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return "00:00" }
+        guard let dummyEndDate = dateFormatter.date(from: endDateString) else { return "00:00" }
+        
+        let alarmPost1 = AlarmSetting(id: 1, itemId: 1, alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
         
     }
-    
+        
     // TableViewに表示するセルの数を返却
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //alarmSettingListにある個数分セルを返却
