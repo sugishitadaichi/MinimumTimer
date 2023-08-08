@@ -63,7 +63,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     }
     
     //アラームを格納するためのメソッド
-    func setMainAlarm() -> String  {
+    func setMainAlarm() -> Void {
         //dateFormatterを定義
         let dateFormatter = DateFormatter()
         //Date型への変換？
@@ -71,8 +71,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         let startDateString = "08:00"
         let endDateString = "09:00"
 
-        guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return "00:00" }
-        guard let dummyEndDate = dateFormatter.date(from: endDateString) else { return "00:00" }
+        guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return }
+        guard let dummyEndDate = dateFormatter.date(from: endDateString) else { return }
         
         let alarmPost1 = AlarmSetting(id: 1, itemId: 1, alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
         
