@@ -76,6 +76,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         
         let alarmPost1 = AlarmSetting(id: 1, itemId: 1, alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
         
+        alarmSettingList.append(alarmPost1)
     }
         
     // TableViewに表示するセルの数を返却
