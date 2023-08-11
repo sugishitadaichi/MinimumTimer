@@ -38,7 +38,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         dateFormatter.locale = Locale(identifier: "ja_JP")
         dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
         //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
-        dateFormatter.dateFormat = "H:mm"
+        dateFormatter.dateFormat = "HH:mm"
         
         //アラームセルを表示する処理を実行
         setMainAlarm()
@@ -70,9 +70,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         dateFormatter.dateFormat = "HH:mm"
         let startDateString = "08:00"
         let endDateString = "09:00"
-
-        guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return }
-        guard let dummyEndDate = dateFormatter.date(from: endDateString) else { return }
+        //初期値の設定(Date型→String型へ)
+        guard let dummyStartDate = dateFormatter.date(from: startDateString), let dummyEndDate = dateFormatter.date(from: endDateString) else { return }
         
         let alarmPost1 = AlarmSetting(id: 1, itemId: 1, alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
         
@@ -104,6 +103,12 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         cell.setUp(alarmSetting: alarmSetting)
         
         return cell
+    }
+    
+    //テーブルビューにセルの高さを設定
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        tableView.estimatedRowHeight = 120
+        return UITableView.automaticDimension
     }
 
 

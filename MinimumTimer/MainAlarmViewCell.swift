@@ -49,7 +49,7 @@ class MainAlarmViewCell: UITableViewCell {
     
     func setUp(alarmSetting: AlarmSetting) {
         //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
-        alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
+        alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmStartSettingTime)
         //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
         alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
         //作業個数のテキストデータを定義
