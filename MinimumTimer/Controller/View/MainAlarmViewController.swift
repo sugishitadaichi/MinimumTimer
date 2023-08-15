@@ -31,7 +31,10 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //ホーム画面表示時にボタンの仕様を適用
         configureAlarmSettingButton()
         
+        //
         mainAlarmTableView.dataSource = self
+        //delegateを登録
+        mainAlarmTableView.delegate = self
         
         //カレンダー、ロケール、タイムゾーンの設定（未指定時は端末の設定が採用される）
         dateFormatter.calendar = Calendar(identifier: .gregorian)
@@ -84,7 +87,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         return alarmSettingList.count
     }
     
-    //テーブルビューにセルを作成する
+    //テーブルビューにMainAlarmVeiwCellを作成する
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //セルの作成or再利用
         let cell = tableView.dequeueReusableCell(withIdentifier: "MainAlarmViewCell", for: indexPath) as! MainAlarmViewCell
@@ -107,8 +110,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     
     //テーブルビューにセルの高さを設定
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        tableView.estimatedRowHeight = 120
-        return UITableView.automaticDimension
+        
+        return 120
     }
 
 

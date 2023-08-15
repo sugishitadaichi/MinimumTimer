@@ -11,7 +11,9 @@ import RealmSwift
 //delegateを定義
 protocol AlarmSettingViewControllerDelegate{}
 
-class AlarmSettingViewController: UIViewController {
+class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    
     @IBAction func cancelButtonAction(_ sender: UIButton) {
         //キャンセルした際に画面遷移元に戻る処理
         self.dismiss(animated: true, completion: nil)
@@ -24,6 +26,14 @@ class AlarmSettingViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIButton!
     //TableViewを紐付け
     @IBOutlet weak var alarmSettingTableView: UITableView!
+    
+    //項目マスタのプロパティ
+    var masterItemList: [MasterItem] = []
+    //delegateの設定
+    var delegate: AlarmSettingViewControllerDelegate?
+    //フッタービューを定義
+    let footerView = UIView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +58,8 @@ class AlarmSettingViewController: UIViewController {
         
         
         //ヘッダービューの設定
+        //ヘッダービューを定義
+        let headerView = AlarmStartSettingTimeHeader()
         //footerView.frame = CGRect(x: 0, y: 0, width: alarmSettingTableView.frame.width, height: 100)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         //footerView.heightAnchor.constraint(equalToConstant: 1000.0).isActive = true
@@ -59,11 +71,31 @@ class AlarmSettingViewController: UIViewController {
         //alarmSettingTableViewのtableHeaderViewに設定
         alarmSettingTableView.tableHeaderView = headerView
     }
-    //delegateの設定
-    var delegate: AlarmSettingViewControllerDelegate?
-    //フッタービューを定義
-    let footerView = UIView()
-    //ヘッダービューを定義
-    let headerView = UIView()
+
+    
+    //ヘッダービューにAlarmStartSettingTimeHeaderを設定
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //ヘッダーに設定するセルを定義
+        let headerCell = tableView.dequeueReusableCell(withIdentifier: "AlarmStartSettingTimeHeader")as! AlarmStartSettingTimeHeader
+        
+        let headerAlarmView = UIView(frame: .zero)
+        headerAlarmView.addSubview(headerCell)
+        
+        return headerAlarmView
+    }
+    
+    //tableViewにAlarmSettingViewCellの個数を返す
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return 5
+    }
+    
+    //tableViewにMasterItemViewCellを設定
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //セルの作成
+        let alarmSettingViewCell = tableView.dequeueReusableCell(withIdentifier: "AlarmSettingViewCell", for: indexPath)as! AlarmSettingViewCell
+        
+        return alarmSettingViewCell
+    }
     
 }

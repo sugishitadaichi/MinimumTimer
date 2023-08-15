@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class ItemSelectedViewCell: UITableViewCell {
+class ItemSelectedFooter: UIView {
     
     @IBOutlet weak var addButton: UIButton!
     
@@ -19,10 +19,6 @@ class ItemSelectedViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
-    }
     
 }
