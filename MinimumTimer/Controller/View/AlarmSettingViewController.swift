@@ -27,6 +27,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //TableViewを紐付け
     @IBOutlet weak var alarmSettingTableView: UITableView!
     
+    //アラーム設定のプロパティ
+    var alarmSettingList: [AlarmSetting] = []
+    //DateFormatterクラスのインスタンス化
+    let dateFormatter = DateFormatter()
     //項目マスタのプロパティ
     var masterItemList: [MasterItem] = []
     //delegateの設定
@@ -68,8 +72,28 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let feaderHeight:CGFloat = 100.0
         headerView.frame.size.height = feaderHeight
         headerView.frame.size.width = UIScreen.main.bounds.width
-        //alarmSettingTableViewのtableHeaderViewに設定
+        
+
+        //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
         alarmSettingTableView.tableHeaderView = headerView
+    }
+    
+    func setHeader() -> Void {
+        //dateFormatterを定義
+        let dateFormatter = DateFormatter()
+        //Date型への変換？
+        dateFormatter.dateFormat = "HH:mm"
+        //ダミーデータ作成
+        let startDateString = "08:00"
+        //初期値の設定(Date型→String型へ)
+        guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return }
+        
+        let headerPost1 = AlarmSetting(id: nil, itemId: nil, alarmStartSettingTime: startDateString, alarmEndSettingTime: nil)
+        //ヘッダービューを定義
+        let headerView = AlarmStartSettingTimeHeader()
+        
+        
+        
     }
 
     
@@ -77,9 +101,14 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //ヘッダーに設定するセルを定義
         let headerCell = tableView.dequeueReusableCell(withIdentifier: "AlarmStartSettingTimeHeader")as! AlarmStartSettingTimeHeader
+        //セルの内容を設定
+        let alarmSetting = alarmSettingList[indexPath.row]
         
         let headerAlarmView = UIView(frame: .zero)
         headerAlarmView.addSubview(headerCell)
+        
+        //
+        headerCell.alarmStartDatePickerView.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
         
         return headerAlarmView
     }
@@ -90,7 +119,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         return 5
     }
     
-    //tableViewにMasterItemViewCellを設定
+    //tableViewにAlarmSettingViewCellを設定
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //セルの作成
         let alarmSettingViewCell = tableView.dequeueReusableCell(withIdentifier: "AlarmSettingViewCell", for: indexPath)as! AlarmSettingViewCell

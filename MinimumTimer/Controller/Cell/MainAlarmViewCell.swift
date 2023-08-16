@@ -38,7 +38,9 @@ class MainAlarmViewCell: UITableViewCell {
         dateFormatter.locale = Locale(identifier: "ja_JP")
         dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
         //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
-        dateFormatter.dateFormat = "H:mm"
+        dateFormatter.dateFormat = "HH:mm"
+        //画面表示時に角丸を実装
+        setupDeleteButton()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -54,6 +56,13 @@ class MainAlarmViewCell: UITableViewCell {
         alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
         //作業個数のテキストデータを定義
         byItemLabel.text = String(alarmSetting.itemId)
+        
+    }
+    
+    //　削除ボタンの仕様
+    func setupDeleteButton() {
+        deleteButton.layer.cornerRadius = 10
+        deleteButton.clipsToBounds = true
         
     }
     

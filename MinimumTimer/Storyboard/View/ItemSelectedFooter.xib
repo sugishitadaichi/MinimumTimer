@@ -48,6 +48,10 @@
                 <constraint firstItem="upY-XJ-byP" firstAttribute="centerY" secondItem="MuK-od-l6J" secondAttribute="centerY" id="ahx-Ta-Wzy"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="addButton" destination="MuK-od-l6J" id="1eh-9M-PLh"/>
+                <outlet property="itemPickerView" destination="upY-XJ-byP" id="uXF-f3-FQv"/>
+            </connections>
             <point key="canvasLocation" x="-414.50381679389312" y="30.985915492957748"/>
         </view>
     </objects>

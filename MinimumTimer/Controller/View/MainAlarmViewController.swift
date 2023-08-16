@@ -71,6 +71,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         let dateFormatter = DateFormatter()
         //Date型への変換？
         dateFormatter.dateFormat = "HH:mm"
+        //ダミーデータ作成
         let startDateString = "08:00"
         let endDateString = "09:00"
         //初期値の設定(Date型→String型へ)
