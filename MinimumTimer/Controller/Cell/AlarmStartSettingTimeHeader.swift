@@ -9,12 +9,40 @@ import UIKit
 
 class AlarmStartSettingTimeHeader: UIView {
     //アラーム開始時間を紐付け
-    @IBOutlet weak var alarmStartDatePickerView: UIDatePicker!
+    @IBOutlet weak var alarmStartDatePickerText: UITextField!
+
+    var datePicker: UIDatePicker = UIDatePicker()
     
+    //doneボタンが押された際の処理
+    @objc func done() {
+        // 完了ボタンが押された時の処理を記述する
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        // ピッカー設定
+        datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
+        datePicker.timeZone = NSTimeZone.local
+        datePicker.locale = Locale.current
+        alarmStartDatePickerText.inputView = datePicker
+        
+
+        
+        // 決定バーの生成
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: alarmStartDatePickerText.frame.size.width, height: 35))
+        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        toolbar.setItems([spacelItem, doneItem], animated: true)
+        
+        // インプットビュー設定
+        alarmStartDatePickerText.inputView = datePicker
+        alarmStartDatePickerText.inputAccessoryView = toolbar
+        
+        // デフォルト日付
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        datePicker.date = formatter.date(from: "2018-5-14")!
     }
 
 

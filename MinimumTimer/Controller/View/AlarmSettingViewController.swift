@@ -88,7 +88,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //初期値の設定(Date型→String型へ)
         guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return }
         
-        let headerPost1 = AlarmSetting(id: nil, itemId: nil, alarmStartSettingTime: startDateString, alarmEndSettingTime: nil)
+        let headerPost1 = AlarmSetting(id: 0, itemId: 0, alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyStartDate)
         //ヘッダービューを定義
         let headerView = AlarmStartSettingTimeHeader()
         
