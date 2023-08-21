@@ -28,7 +28,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var alarmSettingTableView: UITableView!
     
     //アラーム設定のプロパティ
-    var alarmSettingList: [AlarmSetting] = []
+    var alarmSettingList: AlarmSetting = AlarmSetting()
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     //項目マスタのプロパティ
@@ -102,13 +102,13 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //ヘッダーに設定するセルを定義
         let headerCell = tableView.dequeueReusableCell(withIdentifier: "AlarmStartSettingTimeHeader")as! AlarmStartSettingTimeHeader
         //セルの内容を設定
-        let alarmSetting = alarmSettingList[indexPath.row]
+        let alarmSetting = alarmSettingList
         
         let headerAlarmView = UIView(frame: .zero)
         headerAlarmView.addSubview(headerCell)
         
         //
-        headerCell.alarmStartDatePickerView.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
+        headerCell.alarmStartDatePickerText.text = dateFormatter.string(from: alarmSetting.alarmStartSettingTime)
         
         return headerAlarmView
     }
