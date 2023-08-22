@@ -11,6 +11,8 @@ class AlarmStartSettingTimeHeader: UIView {
     //アラーム開始時間を紐付け
     @IBOutlet weak var alarmStartDatePickerText: UITextField!
 
+
+
     var datePicker: UIDatePicker = UIDatePicker()
     
     //doneボタンが押された際の処理
@@ -44,6 +46,7 @@ class AlarmStartSettingTimeHeader: UIView {
         formatter.dateFormat = "yyyy-MM-dd"
         datePicker.date = formatter.date(from: "2018-5-14")!
     }
+    
 
 
     
@@ -59,6 +62,7 @@ class AlarmStartSettingTimeHeader: UIView {
     }
 
     func loadNib() {
+        //File's Ownerを登録
         if let view = Bundle(for: type(of: self)).loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? UIView {
             view.frame = self.bounds
             self.addSubview(view)

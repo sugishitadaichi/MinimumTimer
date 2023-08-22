@@ -13,6 +13,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //+ボタンタップ時に下記関数を実行させる
         transitionToAlarmSettingView()
     }
+    let startDateString = "08:00"
     //＋ボタンを紐付け
     @IBOutlet weak var alarmSettingButton: UIButton!
     //TableViewを紐付け
