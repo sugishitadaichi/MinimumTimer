@@ -76,9 +76,13 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
 
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
         alarmSettingTableView.tableHeaderView = headerView
+        //setHeaderメソッドを画面が表示される際に実行
+        setHeader()
     }
     
     func setHeader() -> Void {
+        //AlarmSettingモデルを配列として定義
+        var alarmSettingList: [AlarmSetting] = []
         //dateFormatterを定義
         let dateFormatter = DateFormatter()
         //Date型への変換？
