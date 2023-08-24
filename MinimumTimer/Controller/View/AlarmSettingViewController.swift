@@ -87,7 +87,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let dateFormatter = DateFormatter()
         //Date型への変換？
         dateFormatter.dateFormat = "HH:mm"
-        
+        //MainAlarmViewController classをインスタンス化
         let mainAlarmViewController = MainAlarmViewController()
         //ダミーデータ作成
         let startDateString = mainAlarmViewController.startDateString
@@ -95,8 +95,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return }
         
         let headerPost1 = AlarmSetting(id: 0, itemId: 0, alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyStartDate)
-        //ヘッダービューを定義
-        let headerView = AlarmStartSettingTimeHeader()
         
         alarmSettingList.append(headerPost1)
         

@@ -15,32 +15,30 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="AbJ-Jv-9Yh">
-            <rect key="frame" x="0.0" y="0.0" width="409" height="82"/>
+            <rect key="frame" x="0.0" y="0.0" width="347" height="82"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="アラーム" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5F0-Ep-c7u">
                     <rect key="frame" x="9" y="30" width="92" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gkr-ly-100">
-                    <rect key="frame" x="171" y="25" width="208" height="34"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="07:00" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gkr-ly-100">
+                    <rect key="frame" x="201" y="14.999999999999996" width="120" height="51.666666666666657"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="35"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
             </subviews>
             <viewLayoutGuide key="safeArea" id="FPo-hG-lQe"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="Gkr-ly-100" firstAttribute="baseline" secondItem="5F0-Ep-c7u" secondAttribute="baseline" id="4Am-OO-T3v"/>
-                <constraint firstItem="Gkr-ly-100" firstAttribute="top" secondItem="AbJ-Jv-9Yh" secondAttribute="top" constant="25" id="IOQ-nr-CiK"/>
-                <constraint firstItem="FPo-hG-lQe" firstAttribute="trailing" secondItem="Gkr-ly-100" secondAttribute="trailing" constant="30" id="ZTq-rM-l8V"/>
-                <constraint firstItem="Gkr-ly-100" firstAttribute="leading" secondItem="5F0-Ep-c7u" secondAttribute="trailing" constant="70" id="b7C-sw-Rqx"/>
+                <constraint firstItem="Gkr-ly-100" firstAttribute="leading" secondItem="5F0-Ep-c7u" secondAttribute="trailing" constant="100" id="aHY-uS-hzf"/>
+                <constraint firstItem="Gkr-ly-100" firstAttribute="top" secondItem="AbJ-Jv-9Yh" secondAttribute="top" constant="15" id="lBQ-Zm-479"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="335.1145038167939" y="-96.478873239436624"/>
+            <point key="canvasLocation" x="287.78625954198475" y="-96.478873239436624"/>
         </view>
     </objects>
     <resources>

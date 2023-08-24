@@ -98,7 +98,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         let alarmSetting = alarmSettingList[indexPath.row]
         //セルの定義
         //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
-        cell.alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
+        cell.alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmStartSettingTime)
         //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
         cell.alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
         //作業個数のテキストデータを定義
