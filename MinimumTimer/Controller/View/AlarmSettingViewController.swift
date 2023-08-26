@@ -37,6 +37,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     var delegate: AlarmSettingViewControllerDelegate?
     //フッタービューを定義
     let footerView = UIView()
+    //AlarmStartSettingTimeHeader classをインスタンス化
+    let alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
 
     
     override func viewDidLoad() {
