@@ -28,7 +28,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var alarmSettingTableView: UITableView!
     
     //アラーム設定のプロパティ
-    var alarmSettingList: AlarmSetting = AlarmSetting()
+    var alarmSetting: AlarmSetting = AlarmSetting()
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     //項目マスタのプロパティ
@@ -83,8 +83,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func setHeader() -> Void {
-        //AlarmSettingモデルを配列として定義
-        var alarmSettingList: [AlarmSetting] = []
+
         //dateFormatterを定義
         let dateFormatter = DateFormatter()
         //Date型への変換？
@@ -93,31 +92,20 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let mainAlarmViewController = MainAlarmViewController()
         //ダミーデータ作成
         let startDateString = mainAlarmViewController.startDateString
+        //テキストデータの設定
+        alarmStartSettingTimeHeader.alarmStartDatePickerText.text = startDateString
+        
         //初期値の設定(Date型→String型へ)
         guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return }
         
         let headerPost1 = AlarmSetting(id: 0, itemId: 0, alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyStartDate)
         
-        alarmSettingList.append(headerPost1)
+        alarmSetting = headerPost1
         
     }
 
+
     
-    //ヘッダービューにAlarmStartSettingTimeHeaderを設定
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        //ヘッダーに設定するセルを定義
-        let headerCell = tableView.dequeueReusableCell(withIdentifier: "AlarmStartSettingTimeHeader")as! AlarmStartSettingTimeHeader
-        //セルの内容を設定
-        let alarmSetting = alarmSettingList
-        
-        let headerAlarmView = UIView(frame: .zero)
-        headerAlarmView.addSubview(headerCell)
-        
-        //
-        headerCell.alarmStartDatePickerText.text = dateFormatter.string(from: alarmSetting.alarmStartSettingTime)
-        
-        return headerAlarmView
-    }
     
     //tableViewにAlarmSettingViewCellの個数を返す
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
