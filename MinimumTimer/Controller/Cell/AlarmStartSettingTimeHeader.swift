@@ -7,46 +7,59 @@
 
 import UIKit
 
-class AlarmStartSettingTimeHeader: UIView {
+class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     //アラーム開始時間を紐付け
     @IBOutlet weak var alarmStartDatePickerText: UITextField!
-
-
-
-    var datePicker: UIDatePicker = UIDatePicker()
+    //toolBarを定義
+    var toolBar:UIToolbar!
     
-    //doneボタンが押された際の処理
-    @objc func done() {
-        // 完了ボタンが押された時の処理を記述する
-    }
+
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        // ピッカー設定
-        datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
-        datePicker.timeZone = NSTimeZone.local
-        datePicker.locale = Locale.current
-        alarmStartDatePickerText.inputView = datePicker
         
+        //delegateの登録
+        alarmStartDatePickerText.delegate = self
+        //doneボタンの設定を画面表示時に実行
+        setupToolbar()
 
-        
-        // 決定バーの生成
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: alarmStartDatePickerText.frame.size.width, height: 35))
-        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        toolbar.setItems([spacelItem, doneItem], animated: true)
-        
-        // インプットビュー設定
-        alarmStartDatePickerText.inputView = datePicker
-        alarmStartDatePickerText.inputAccessoryView = toolbar
-        
-        // デフォルト日付
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        datePicker.date = formatter.date(from: "2018-5-14")!
     }
     
+    //doneボタンの設定
+    func setupToolbar() {
+            //datepicker上のtoolbarのdoneボタン
+            toolBar = UIToolbar()
+            toolBar.sizeToFit()
+            let toolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(doneButton))
+            toolBar.items = [toolBarButton]
+            alarmStartDatePickerText.inputAccessoryView = toolBar
+    }
+    
+    //テキストフィールがタップされ、入力可能になった後の処理を記載
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let datePickerView:UIDatePicker = UIDatePicker()
+        datePickerView.datePickerMode = UIDatePicker.Mode.time
+        textField.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
+    }
+    
+    //datepickerが選択されたらtextfieldに表示・日付の値を設定する
+    @objc func datePickerValueChanged(sender:UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        alarmStartDatePickerText.text = dateFormatter.string(from: sender.date)
+    }
+    
+    
+    
+
+    
+    //doneボタンが押された際の処理
+    @objc func doneButton() {
+        // 完了ボタンが押された時の処理を記述する(閉じる)
+        alarmStartDatePickerText.resignFirstResponder()
+    }
 
 
     

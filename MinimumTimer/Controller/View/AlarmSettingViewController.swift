@@ -37,8 +37,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     var delegate: AlarmSettingViewControllerDelegate?
     //フッタービューを定義
     let footerView = UIView()
-    //AlarmStartSettingTimeHeader classをインスタンス化
-    let alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
+    //
+    var startDateString: String?
 
     
     override func viewDidLoad() {
@@ -80,6 +80,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmSettingTableView.tableHeaderView = headerView
         //setHeaderメソッドを画面が表示される際に実行
         setHeader()
+        
+        headerView.alarmStartDatePickerText.text = "00:00"
     }
     
     func setHeader() -> Void {
@@ -93,7 +95,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //ダミーデータ作成
         let startDateString = mainAlarmViewController.startDateString
         //テキストデータの設定
-        alarmStartSettingTimeHeader.alarmStartDatePickerText.text = startDateString
         
         //初期値の設定(Date型→String型へ)
         guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return }
