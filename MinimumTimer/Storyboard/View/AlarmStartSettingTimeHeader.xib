@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AlarmStartSettingTimeHeader" customModule="MinimumTimer" customModuleProvider="target">
             <connections>
-                <outlet property="alarmStartDatePickerText" destination="Gkr-ly-100" id="FjZ-db-xCv"/>
+                <outlet property="alarmStartDatePickerText" destination="Gkr-ly-100" id="kEL-iZ-tUW"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
