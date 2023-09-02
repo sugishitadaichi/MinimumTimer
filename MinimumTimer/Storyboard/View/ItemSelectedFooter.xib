@@ -8,21 +8,19 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ItemSelectedFooter" customModule="MinimumTimer" customModuleProvider="target">
+            <connections>
+                <outlet property="addButton" destination="MuK-od-l6J" id="wFI-0n-0CU"/>
+                <outlet property="itemSelectedPickerText" destination="ahm-O1-Fdt" id="PY2-wN-FjI"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="eGW-NI-QVL">
-            <rect key="frame" x="0.0" y="0.0" width="75" height="35"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <state key="normal" title="Button"/>
-            <buttonConfiguration key="configuration" style="plain" title="Button"/>
-            <point key="canvasLocation" x="89" y="-60"/>
-        </button>
-        <view contentMode="scaleToFill" id="XTf-dE-cvd" customClass="ItemSelectedFooter" customModule="MinimumTimer" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="XTf-dE-cvd">
             <rect key="frame" x="0.0" y="0.0" width="351" height="92"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MuK-od-l6J">
-                    <rect key="frame" x="261" y="28.666666666666671" width="80" height="35"/>
+                    <rect key="frame" x="261" y="28.333333333333332" width="80" height="35.333333333333343"/>
                     <color key="backgroundColor" systemColor="systemOrangeColor"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="fv4-Ik-iUL"/>
@@ -31,27 +29,22 @@
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="追加"/>
                 </button>
-                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upY-XJ-byP">
-                    <rect key="frame" x="51" y="-35" width="200" height="162"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="200" id="PMT-BM-hRA"/>
-                    </constraints>
-                </pickerView>
+                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="朝食　　30分" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ahm-O1-Fdt">
+                    <rect key="frame" x="16" y="28" width="237" height="34"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <viewLayoutGuide key="safeArea" id="F9V-Px-iod"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="MuK-od-l6J" firstAttribute="leading" secondItem="upY-XJ-byP" secondAttribute="trailing" constant="10" id="99c-oX-j6z"/>
-                <constraint firstItem="upY-XJ-byP" firstAttribute="centerY" secondItem="XTf-dE-cvd" secondAttribute="centerY" id="D5l-bT-jyI"/>
+                <constraint firstItem="MuK-od-l6J" firstAttribute="centerY" secondItem="XTf-dE-cvd" secondAttribute="centerY" id="7qQ-86-o4k"/>
                 <constraint firstItem="F9V-Px-iod" firstAttribute="trailing" secondItem="MuK-od-l6J" secondAttribute="trailing" constant="10" id="IpI-zA-v0Z"/>
                 <constraint firstItem="F9V-Px-iod" firstAttribute="trailing" secondItem="MuK-od-l6J" secondAttribute="trailing" constant="10" id="KCo-q1-g45"/>
-                <constraint firstItem="upY-XJ-byP" firstAttribute="centerY" secondItem="MuK-od-l6J" secondAttribute="centerY" id="ahx-Ta-Wzy"/>
+                <constraint firstItem="F9V-Px-iod" firstAttribute="bottom" secondItem="MuK-od-l6J" secondAttribute="bottom" constant="28.333333333333329" id="dGu-WI-ha5"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <connections>
-                <outlet property="addButton" destination="MuK-od-l6J" id="1eh-9M-PLh"/>
-                <outlet property="itemPickerView" destination="upY-XJ-byP" id="uXF-f3-FQv"/>
-            </connections>
             <point key="canvasLocation" x="-414.50381679389312" y="30.985915492957748"/>
         </view>
     </objects>

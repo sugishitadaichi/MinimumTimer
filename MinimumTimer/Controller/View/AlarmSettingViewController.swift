@@ -46,14 +46,17 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         // Do any additional setup after loading the view.
         
         //フッタービューの設定
-        //footerView.frame = CGRect(x: 0, y: 0, width: alarmSettingTableView.frame.width, height: 100)
-        footerView.translatesAutoresizingMaskIntoConstraints = false
-        //footerView.heightAnchor.constraint(equalToConstant: 1000.0).isActive = true
-        footerView.backgroundColor = .black
-        
+        //フッタービューのt定義
         let footerHeight:CGFloat = 100.0
+        let footerView = ItemSelectedFooter(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: footerHeight))
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
         footerView.frame.size.height = footerHeight
         footerView.frame.size.width = UIScreen.main.bounds.width
+        
+        //alarmSettingTableViewのtableFooterViewにフッタービューを設定
+        alarmSettingTableView.tableFooterView = footerView
         //フッター内に別のビューを作成
         let footerInnerView = UIView(frame: CGRect(x: 0, y: 0, width: 100.0, height: 40.0))
         footerInnerView.backgroundColor = .yellow
@@ -67,12 +70,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //ヘッダービューを定義
         let headerHeight:CGFloat = 100.0
         let headerView = AlarmStartSettingTimeHeader(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: headerHeight))
-        //footerView.frame = CGRect(x: 0, y: 0, width: alarmSettingTableView.frame.width, height: 100)
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        headerView.frame.size.height = headerHeight
-        headerView.frame.size.width = UIScreen.main.bounds.width
         
 
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
@@ -83,6 +81,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         headerView.alarmStartDatePickerText.text = "00:00"
     }
     
+    //ヘッダーに表示するデータの処理
     func setHeader() -> Void {
 
         //dateFormatterを定義
@@ -102,6 +101,11 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         alarmSetting = headerPost1
         
+    }
+    
+    //フッターに表示するデータの処理
+    func setFooter() -> Void {
+        //アイテムマスタをピッカービューに反映させる？
     }
 
 

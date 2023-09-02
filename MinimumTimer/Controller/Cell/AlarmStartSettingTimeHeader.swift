@@ -84,7 +84,10 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     }
 
     func loadNib() {
-        let nib = UINib(nibName: "AlarmStartSettingTimeHeader", bundle: nil)
+        guard UINib(nibName: String(describing: type(of: self)), bundle: nil).instantiate(withOwner: self, options: nil).first is UIView else {
+                return
+            }
+        
         //File's Ownerを登録
         if let view = Bundle(for: type(of: self)).loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? UIView {
             view.frame = self.bounds
