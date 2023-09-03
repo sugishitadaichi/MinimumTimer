@@ -70,7 +70,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //ヘッダービューを定義
         let headerHeight:CGFloat = 100.0
         let headerView = AlarmStartSettingTimeHeader(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: headerHeight))
-        headerView.translatesAutoresizingMaskIntoConstraints = false
         
 
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
