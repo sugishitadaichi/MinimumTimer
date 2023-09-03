@@ -15,12 +15,13 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     var toolBar:UIToolbar!
 
 
+    //未処理。//init関数に記載
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
 
-        print("処理実行1")
+
 
     }
     
@@ -32,16 +33,15 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         let toolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(doneButton))
         toolBar.items = [toolBarButton]
         alarmStartDatePickerText.inputAccessoryView = toolBar
-        print("処理実行2")
+        
     }
     
-    //テキストフィールがタップされ、入力可能になった後の処理を記載
+    //テキストフィールドがタップされ、入力可能になった後の処理を記載
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let datePickerView:UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePicker.Mode.time
         textField.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
-        print("処理実行3")
     }
     
     //datepickerが選択されたらtextfieldに表示・日付の値を設定する
@@ -49,7 +49,6 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         alarmStartDatePickerText.text = dateFormatter.string(from: sender.date)
-        print("処理実行4")
     }
     
     
@@ -60,7 +59,6 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     @objc func doneButton() {
         // 完了ボタンが押された時の処理を記述する(閉じる)
         alarmStartDatePickerText.resignFirstResponder()
-        print("処理実行5")
     }
 
 

@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 class ItemSelectedFooter: UIView, UITextFieldDelegate {
-    //
+    //項目一覧選択を紐付け
     @IBOutlet weak var itemSelectedPickerText: UITextField!
     
     //追加ボタンを紐付け
@@ -19,9 +19,11 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate {
     var toolBar:UIToolbar!
 
 
+    //未処理。//init関数に記載
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
     
     //doneボタンの設定
@@ -32,29 +34,29 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate {
         let toolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(doneButton))
         toolBar.items = [toolBarButton]
         itemSelectedPickerText.inputAccessoryView = toolBar
+        print("処理実行1")
     }
     
-    //テキストフィールがタップされ、入力可能になった後の処理を記載
+    //テキストフィールドがタップされ、入力可能になった後の処理を記載
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        let datePickerView:UIDatePicker = UIDatePicker()
-        datePickerView.datePickerMode = UIDatePicker.Mode.time
-        textField.inputView = datePickerView
-        datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
-        print("処理実行3")
+        let pickerView:UIPickerView = UIPickerView()
+
+        textField.inputView = pickerView
+        pickerView.addTarget(self, action: #selector(pickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
+        print("処理実行2")
     }
-    //datepickerが選択されたらtextfieldに表示・日付の値を設定する
-    @objc func datePickerValueChanged(sender:UIDatePicker) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        itemSelectedPickerText.text = dateFormatter.string(from: sender.date)
-        print("処理実行4")
+    //pickerviewが選択されたらtextfieldに表示・日付の値を設定する
+    @objc func pickerValueChanged(sender:UIPickerView) {
+        
+        print("処理実行3")
+        
     }
     
     //doneボタンが押された際の処理
     @objc func doneButton() {
         // 完了ボタンが押された時の処理を記述する(閉じる)
         itemSelectedPickerText.resignFirstResponder()
-        print("処理実行5")
+        print("処理実行4")
     }
 
     
