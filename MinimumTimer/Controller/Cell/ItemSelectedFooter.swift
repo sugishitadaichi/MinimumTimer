@@ -8,15 +8,21 @@
 import UIKit
 import RealmSwift
 
-class ItemSelectedFooter: UIView, UITextFieldDelegate {
+class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource{
+    //追加ボタンを押した際の処理（Realm導入後。AlarmSettingViewCellに反映させる？）
+    @IBAction func addButtonAction(_ sender: UIButton) {
+        
+    }
+    
     //項目一覧選択を紐付け
     @IBOutlet weak var itemSelectedPickerText: UITextField!
     
     //追加ボタンを紐付け
     @IBOutlet weak var addButton: UIButton!
-    
-    //toolBarを定義
-    var toolBar:UIToolbar!
+    //UIPickerViewをインスタンス化
+    var pickerView = UIPickerView()
+    //選択データ（ダミーは文字列・実装は項目名＋時間表示）
+    var data = ["朝食　30分", "トイレ　10分", "洗面　10分"]
 
 
     //未処理。//init関数に記載
@@ -26,38 +32,50 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate {
         
     }
     
-    //doneボタンの設定
-    func setupToolbar() {
-        //datepicker上のtoolbarのdoneボタン
-        toolBar = UIToolbar()
+    //UITextField を選択したときに pickerView のキーボードが表示されるよう実装
+    func createPickerView() {
+        pickerView.delegate = self
+        itemSelectedPickerText.inputView = pickerView
+        //toolBarを定義
+        let toolBar = UIToolbar()
         toolBar.sizeToFit()
-        let toolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(doneButton))
-        toolBar.items = [toolBarButton]
+        let doneButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ItemSelectedFooter.donePicker))
+        toolBar.setItems([doneButtonItem], animated: true)
         itemSelectedPickerText.inputAccessoryView = toolBar
+        
         print("処理実行1")
-    }
+        }
     
-    //テキストフィールドがタップされ、入力可能になった後の処理を記載
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        let pickerView:UIPickerView = UIPickerView()
-
-        textField.inputView = pickerView
-        pickerView.addTarget(self, action: #selector(pickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
+    
+    //toolbar上のボタン（done）を押すとキーボードを非表示にする
+    @objc func donePicker() {
+        itemSelectedPickerText.endEditing(true)
         print("処理実行2")
-    }
-    //pickerviewが選択されたらtextfieldに表示・日付の値を設定する
-    @objc func pickerValueChanged(sender:UIPickerView) {
-        
+        }
+    //キーボード以外の場所を押すとキーボードを非表示にする
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        itemSelectedPickerText.endEditing(true)
         print("処理実行3")
-        
+        }
+    //pickerView に表示する列の数
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    //pickerView に表示するデータの数
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        3
+    }
+    //pickerView に設定するデータを登録する
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return data[row]
+    }
+    //pickerView の各種データを選択したときに呼ばれるメソッド
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        //UITextFieldに選択されたデータを表示
+        itemSelectedPickerText.text = data[row]
     }
     
-    //doneボタンが押された際の処理
-    @objc func doneButton() {
-        // 完了ボタンが押された時の処理を記述する(閉じる)
-        itemSelectedPickerText.resignFirstResponder()
-        print("処理実行4")
-    }
+    
 
     
     //initの実装
@@ -66,6 +84,8 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate {
         loadNib()
         //delegateの登録
         itemSelectedPickerText.delegate = self
+        //UITextField を選択したときに pickerView のキーボードが表示
+        createPickerView()
     }
 
     required init?(coder aDecoder: NSCoder) {

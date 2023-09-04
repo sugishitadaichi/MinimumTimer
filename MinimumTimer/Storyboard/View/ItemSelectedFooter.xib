@@ -28,6 +28,9 @@
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="追加"/>
+                    <connections>
+                        <action selector="addButtonAction:" destination="-1" eventType="touchUpInside" id="FXe-8y-dan"/>
+                    </connections>
                 </button>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="朝食　　30分" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ahm-O1-Fdt">
                     <rect key="frame" x="16" y="28" width="237" height="34"/>

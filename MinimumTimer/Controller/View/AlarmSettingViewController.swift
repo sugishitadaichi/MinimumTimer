@@ -49,21 +49,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //フッタービューのt定義
         let footerHeight:CGFloat = 100.0
         let footerView = ItemSelectedFooter(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: footerHeight))
-        footerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        footerView.frame.size.height = footerHeight
-        footerView.frame.size.width = UIScreen.main.bounds.width
         
         //alarmSettingTableViewのtableFooterViewにフッタービューを設定
         alarmSettingTableView.tableFooterView = footerView
-        //フッター内に別のビューを作成
-        let footerInnerView = UIView(frame: CGRect(x: 0, y: 0, width: 100.0, height: 40.0))
-        footerInnerView.backgroundColor = .yellow
-        footerView.addSubview(footerInnerView)
-        footerInnerView.center = footerView.center
-        //alarmSettingTableViewのtableFooterViewに設定
-        alarmSettingTableView.tableFooterView = footerView
+        
         
         
         //ヘッダービューの設定
@@ -104,7 +93,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     //フッターに表示するデータの処理
     func setFooter() -> Void {
-        //アイテムマスタをピッカービューに反映させる？
+        //アイテムマスタをピッカービューに反映させる？(Realm実装時に記載)
     }
 
 
