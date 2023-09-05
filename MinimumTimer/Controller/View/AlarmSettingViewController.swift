@@ -88,6 +88,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //setAlarmItemメソッドを画面が表示される際に実行
         setAlarmItem()
         
+        endSettingTimeLabel.text = "7:40"
+        
     }
     
     //ヘッダーに表示するデータの処理
