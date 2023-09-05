@@ -23,6 +23,9 @@ class AlarmSettingViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        //画面表示時に角丸を実装
+        setupEditButton()
+        setupDeleteButton()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

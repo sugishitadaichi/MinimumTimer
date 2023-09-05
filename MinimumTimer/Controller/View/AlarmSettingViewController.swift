@@ -42,6 +42,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //
     var startDateString: String?
     
+    
+    
 
     
     override func viewDidLoad() {
@@ -121,7 +123,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let dateFormatter = DateFormatter()
         //Date型への変換？
         dateFormatter.dateFormat = "HH:mm"
-        //ダミーデータ作成
+        //ダミーデータ作成1
         let byItemStartTimeString = "07:00"
         let byItemEndTimeString = "07:30"
         //初期値の設定(Date型→String型へ)
@@ -130,6 +132,16 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let alarmSetPost1 = AlarmItem(id: 1, alermSettingId: 1, masterId: 1, byItemStartTime: dummyByItemStartTime, byItemEndTime: dummyByItemEndTime, userSetupName: "朝食", userSetupTime: 30)
         
         alarmItemList.append(alarmSetPost1)
+        
+        //ダミーデータ作成2
+        let byItemStartTimeString2 = "07:30"
+        let byItemEndTimeString2 = "07:40"
+        //初期値の設定(Date型→String型へ)
+        guard let dummyByItemStartTime2 = dateFormatter.date(from: byItemStartTimeString2), let dummyByItemEndTime2 = dateFormatter.date(from: byItemEndTimeString2) else { return }
+        
+        let alarmSetPost2 = AlarmItem(id: 1, alermSettingId: 1, masterId: 1, byItemStartTime: dummyByItemStartTime2, byItemEndTime: dummyByItemEndTime2, userSetupName: "トイレ", userSetupTime: 10)
+        
+        alarmItemList.append(alarmSetPost2)
 
 
     }
@@ -140,7 +152,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //tableViewにAlarmSettingViewCellの個数を返す
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //masterItemListにある個数分セルを返却
-        return masterItemList.count
+        return alarmItemList.count
     }
     
     //tableViewにAlarmSettingViewCellを設定

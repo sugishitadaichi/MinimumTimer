@@ -74,6 +74,12 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         //UITextFieldに選択されたデータを表示
         itemSelectedPickerText.text = data[row]
     }
+    //　追加ボタンの仕様
+    func setupAddButton() {
+        addButton.layer.cornerRadius = 10
+        addButton.clipsToBounds = true
+        
+    }
     
     
 
@@ -86,6 +92,8 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         itemSelectedPickerText.delegate = self
         //UITextField を選択したときに pickerView のキーボードが表示
         createPickerView()
+        //画面表示時に角丸を実装
+        setupAddButton()
     }
 
     required init?(coder aDecoder: NSCoder) {

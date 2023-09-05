@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aay-ui-1WX">
-                        <rect key="frame" x="273" y="2" width="59" height="34.666666666666664"/>
+                        <rect key="frame" x="273" y="2" width="59" height="36.666666666666664"/>
                         <color key="backgroundColor" systemColor="systemRedColor"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
@@ -40,19 +40,19 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="　7時　00分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOP-VA-Rs0">
-                        <rect key="frame" x="232.66666666666666" y="51.666666666666664" width="99.333333333333343" height="20.999999999999993"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="　7時　00分" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOP-VA-Rs0">
+                        <rect key="frame" x="232.66666666666666" y="53.666666666666657" width="99.333333333333343" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="　7時　30分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RU1-oV-OfD">
-                        <rect key="frame" x="232.66666666666666" y="80.666666666666671" width="99.333333333333343" height="22.333333333333329"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="　7時　30分" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RU1-oV-OfD">
+                        <rect key="frame" x="232.66666666666666" y="82.666666666666671" width="99.333333333333343" height="20.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="終了：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PuH-Td-cUq">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="終了：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PuH-Td-cUq">
                         <rect key="frame" x="177" y="81.333333333333329" width="52" height="20.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -66,8 +66,6 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="SwT-3x-qRZ" firstAttribute="centerY" secondItem="nOP-VA-Rs0" secondAttribute="centerY" id="3SL-Ey-HwZ"/>
-                    <constraint firstItem="nOP-VA-Rs0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6Lp-1E-iNh"/>
                     <constraint firstItem="aay-ui-1WX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="8or-xX-GwQ"/>
                     <constraint firstItem="bvh-0j-i77" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="52" id="Bnn-v2-vH9"/>
                     <constraint firstItem="SwT-3x-qRZ" firstAttribute="leading" secondItem="bvh-0j-i77" secondAttribute="trailing" constant="8" symbolic="YES" id="CCm-pu-rLO"/>
@@ -77,6 +75,7 @@
                     <constraint firstItem="SwT-3x-qRZ" firstAttribute="leading" secondItem="PuH-Td-cUq" secondAttribute="leading" id="NSr-U3-zE9"/>
                     <constraint firstAttribute="bottomMargin" secondItem="bvh-0j-i77" secondAttribute="bottom" constant="21" id="Qe0-yl-d3h"/>
                     <constraint firstItem="SwT-3x-qRZ" firstAttribute="top" secondItem="6u5-HQ-ktq" secondAttribute="bottom" constant="14.666666666666664" id="RiG-YD-Yjp"/>
+                    <constraint firstItem="RU1-oV-OfD" firstAttribute="leading" secondItem="PuH-Td-cUq" secondAttribute="trailing" constant="3.6699999999999999" id="Tlm-aB-opL"/>
                     <constraint firstAttribute="trailing" secondItem="RU1-oV-OfD" secondAttribute="trailing" constant="10" id="VfH-tk-96d"/>
                     <constraint firstItem="nOP-VA-Rs0" firstAttribute="leading" secondItem="SwT-3x-qRZ" secondAttribute="trailing" constant="3.6666666666666288" id="W3q-Gy-Ldv"/>
                     <constraint firstAttribute="bottom" secondItem="RU1-oV-OfD" secondAttribute="bottom" constant="21" id="bUi-Rb-k5H"/>
@@ -84,6 +83,7 @@
                     <constraint firstItem="bvh-0j-i77" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="fVy-fj-bqY"/>
                     <constraint firstItem="RU1-oV-OfD" firstAttribute="top" secondItem="nOP-VA-Rs0" secondAttribute="bottom" constant="8" symbolic="YES" id="iYm-Aw-hXy"/>
                     <constraint firstItem="aay-ui-1WX" firstAttribute="leading" secondItem="6u5-HQ-ktq" secondAttribute="trailing" constant="10" id="lI2-Ak-rdl"/>
+                    <constraint firstItem="RU1-oV-OfD" firstAttribute="leading" secondItem="PuH-Td-cUq" secondAttribute="trailing" constant="3.6699999999999999" id="lN5-OS-Tg5"/>
                     <constraint firstItem="PuH-Td-cUq" firstAttribute="top" secondItem="SwT-3x-qRZ" secondAttribute="bottom" constant="9" id="tcu-M2-Sey"/>
                 </constraints>
             </tableViewCellContentView>
