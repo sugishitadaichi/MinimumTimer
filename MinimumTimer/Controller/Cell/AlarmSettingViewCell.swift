@@ -7,6 +7,9 @@
 
 import UIKit
 import RealmSwift
+//delegateを定義
+protocol AlarmSettingViewCellDelegate{}
+
 
 class AlarmSettingViewCell: UITableViewCell {
     @IBOutlet weak var deleteButton: UIButton!
@@ -14,6 +17,8 @@ class AlarmSettingViewCell: UITableViewCell {
     @IBOutlet weak var itemEndTimeLabel: UILabel!
     @IBOutlet weak var itemStartTimeLabel: UILabel!
     @IBOutlet weak var userSetupNameLabel: UILabel!
+    //delegateの設定
+    var delegate: AlarmSettingViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()

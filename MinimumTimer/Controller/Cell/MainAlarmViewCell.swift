@@ -56,7 +56,7 @@ class MainAlarmViewCell: UITableViewCell {
         alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
         //作業個数のテキストデータを定義
         byItemLabel.text = String(alarmSetting.itemId)
-        
+
     }
     
     //　削除ボタンの仕様

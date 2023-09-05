@@ -24,4 +24,17 @@ class AlarmItem: Object {
     @objc dynamic var userSetupName: String = ""
     //ユーザーが項目に設定した時間
     @objc dynamic var userSetupTime: Int = 0
+    
+    //初期化(Relmを使用する引数Objectもクラスは初期化時にconvinienceをつける)
+    convenience init(id: Int, alermSettingId: Int, masterId: Int, byItemStartTime: Date, byItemEndTime: Date, userSetupName: String, userSetupTime: Int) {
+        self.init()
+        self.id = id
+        self.alermSettingId = alermSettingId
+        self.masterId = masterId
+        self.byItemStartTime = byItemStartTime
+        self.byItemEndTime = byItemEndTime
+        self.userSetupName = userSetupName
+        self.userSetupTime = userSetupTime
+    }
+
 }

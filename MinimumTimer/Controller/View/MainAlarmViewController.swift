@@ -9,8 +9,9 @@ import UIKit
 import RealmSwift
 
 class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate, MainAlarmViewCellDelegate, UITableViewDataSource {
+    //+ボタンタップ時に下記関数を実行させる
     @IBAction func alarmSettingButtonAction(_ sender: UIButton) {
-        //+ボタンタップ時に下記関数を実行させる
+        
         transitionToAlarmSettingView()
     }
     let startDateString = "08:00"
@@ -32,7 +33,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //ホーム画面表示時にボタンの仕様を適用
         configureAlarmSettingButton()
         
-        //
+        //データソースの提供
         mainAlarmTableView.dataSource = self
         //delegateを登録
         mainAlarmTableView.delegate = self
@@ -89,7 +90,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         return alarmSettingList.count
     }
     
-    //テーブルビューにMainAlarmVeiwCellを作成する
+    //tableViewにMainAlarmVeiwCellを作成する
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //セルの作成or再利用
         let cell = tableView.dequeueReusableCell(withIdentifier: "MainAlarmViewCell", for: indexPath) as! MainAlarmViewCell
