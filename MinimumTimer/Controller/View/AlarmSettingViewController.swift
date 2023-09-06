@@ -153,7 +153,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     //tableViewにAlarmSettingViewCellの個数を返す
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //masterItemListにある個数分セルを返却
+        //alarmItemListにある個数分セルを返却
         return alarmItemList.count
     }
     

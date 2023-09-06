@@ -8,7 +8,8 @@
 import UIKit
 import RealmSwift
 
-class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate {
+class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UITableViewDelegate, UITableViewDataSource, MasterItemViewCellDelegate {
+    
     //＋ボタンが押された際の処理
     @IBAction func popUpButtonAction(_ sender: UIButton) {
         //Segue接続先へ遷移する処理
@@ -20,16 +21,69 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate {
     //TableViewを紐付け
     @IBOutlet weak var masterItemTableView: UITableView!
     
+    //項目設定のプロパティ
+    var masterItemList: [MasterItem] = []
+    //DateFormatterクラスのインスタンス化
+    let dateFormatter = DateFormatter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        //セルの登録
+        masterItemTableView.register(UINib(nibName: "MasterItemViewCell", bundle: nil), forCellReuseIdentifier: "MasterItemViewCell")
+        //データソースの提供
+        masterItemTableView.dataSource = self
+        //delegateを登録
+        masterItemTableView.delegate = self
         //ホーム画面表示時にボタンの仕様を適用
         configurePopUpButton()
+        //項目が表示されるよう処理を実行
+        setMasterItem()
+    }
+    
+    //項目を格納するためのメソッド
+    func setMasterItem() -> Void {
+        //dateFormatterを定義
+        let dateFormatter = DateFormatter()
+        //Date型への変換？
+        dateFormatter.dateFormat = "HH:mm"
+        //ダミーデータ作成
+        let masterStartDateString = "00:30"
+        //初期値の設定(Date型→String型へ)
+        guard let dummyMasterStartDate = dateFormatter.date(from: masterStartDateString) else { return }
+        
+        let masterItemPost = MasterItem(id: 0, userSetupName: "朝食", userSetupTime: dummyMasterStartDate)
+        
+        masterItemList.append(masterItemPost)
+        
+        
     }
     
     //＋ボタンの仕様
     func configurePopUpButton() {
         popUpButton.layer.cornerRadius = popUpButton.bounds.width / 2
+    }
+    
+    //tableViewにAlarmSettingViewCellの個数を返す
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //masterItemListにある個数分セルを返却
+        return masterItemList.count
+    }
+    //tableViewにAlarmSettingViewCellを設定
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //セルの作成
+        let masterItemViewCell = tableView.dequeueReusableCell(withIdentifier: "MasterItemViewCell", for: indexPath)as! MasterItemViewCell
+        //セルの内容を設定
+        let masterItemSetting = masterItemList[indexPath.row]
+        //セルの定義
+        //項目の作業時間のテキストデータ定義（データ変換(Date→テキスト)）
+        masterItemViewCell.UserSetupTimeLabel.text = dateFormatter.string(from: masterItemSetting.userSetupTime)
+        //項目の名前のテキストデータの定義
+        masterItemViewCell.UserSetupNameLabel.text = String(masterItemSetting.userSetupName)
+        //デリゲートの登録
+        masterItemViewCell.delegate = self
+        
+        return masterItemViewCell
     }
     
     

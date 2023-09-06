@@ -15,5 +15,13 @@ class MasterItem: Object {
     //ユーザーが設定した項目名
     @objc dynamic var userSetupName: String = ""
     //ユーザーが項目に設定した時間
-    @objc dynamic var userSetupTime: Int = 0
+    @objc dynamic var userSetupTime: Date = Date()
+    
+    //初期化(Relmを使用する引数Objectもクラスは初期化時にconvinienceをつける)
+    convenience init(id: Int, userSetupName: String, userSetupTime: Date) {
+        self.init()
+        self.id = id
+        self.userSetupName = userSetupName
+        self.userSetupTime = userSetupTime
+    }
 }

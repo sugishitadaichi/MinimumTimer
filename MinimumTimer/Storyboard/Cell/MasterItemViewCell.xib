@@ -13,7 +13,7 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="124" id="KGk-i7-Jjw" customClass="MasterItemViewCell" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="342" height="124"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM" customClass="MasterItemViewCell" customModule="MinimumTimer">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="342" height="124"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
@@ -60,10 +60,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="UserSetupNameLabel" destination="Tc0-GU-dmM" id="FZX-84-jyf"/>
-                <outlet property="UserSetupTimeLabel" destination="H3E-xS-Acd" id="N8G-pg-tUm"/>
-                <outlet property="deleteButton" destination="9ow-dQ-AlR" id="zUp-hF-0b1"/>
-                <outlet property="editButton" destination="Vs6-bU-cFA" id="NSy-N2-Cn4"/>
+                <outlet property="UserSetupNameLabel" destination="Tc0-GU-dmM" id="SPH-71-iHe"/>
+                <outlet property="UserSetupTimeLabel" destination="H3E-xS-Acd" id="irR-4c-nNg"/>
+                <outlet property="deleteButton" destination="9ow-dQ-AlR" id="VZV-y7-Hpb"/>
+                <outlet property="editButton" destination="Vs6-bU-cFA" id="q1d-au-UdO"/>
             </connections>
             <point key="canvasLocation" x="56.488549618320612" y="47.887323943661976"/>
         </tableViewCell>
