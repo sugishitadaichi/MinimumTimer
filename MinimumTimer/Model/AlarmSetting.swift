@@ -18,5 +18,13 @@ class AlarmSetting: Object {
     @objc dynamic var alarmStartSettingTime: Date = Date()
     //ユーザーが設定した開始時間+各項目の所要時間の合計
     @objc dynamic var alarmEndSettingTime: Date = Date()
+    //初期化(Relmを使用する引数Objectもクラスは初期化時にconvinienceをつける)
+    convenience init(id: Int, itemId: Int, alarmStartSettingTime: Date, alarmEndSettingTime: Date) {
+        self.init()
+        self.id = id
+        self.itemId = itemId
+        self.alarmStartSettingTime = alarmStartSettingTime
+        self.alarmEndSettingTime = alarmEndSettingTime
+    }
     
 }

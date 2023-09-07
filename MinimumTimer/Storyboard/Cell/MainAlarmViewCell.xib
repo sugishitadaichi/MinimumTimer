@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="126" id="S5Q-eg-CcG" customClass="MainAlarmViewCell" customModule="MinimumTimer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="446" height="126"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="S5Q-eg-CcG" id="wxP-Gi-eqJ">
+                <rect key="frame" x="0.0" y="0.0" width="446" height="126"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2u5-JL-f5Z">
+                        <rect key="frame" x="30" y="10" width="206" height="48"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設定作業" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znh-pd-GYp">
+                        <rect key="frame" x="10" y="88" width="70" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgO-eA-9ek">
+                        <rect key="frame" x="336" y="10" width="100" height="35"/>
+                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="8Au-yr-SaW"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="削除"/>
+                        <connections>
+                            <action selector="deleteButtonAction:" destination="S5Q-eg-CcG" eventType="touchUpInside" id="SCj-Aj-HXL"/>
+                        </connections>
+                    </button>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c5w-c1-WTr">
+                        <rect key="frame" x="387" y="55" width="51" height="31"/>
+                    </switch>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4個" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4J-Y5-8Bj">
+                        <rect key="frame" x="90" y="88" width="40" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="Emd-V4-nQ4"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="終了予定時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WSl-t1-PrX">
+                        <rect key="frame" x="240" y="88" width="104" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="104" id="fYW-Ey-46V"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1qL-vN-Wxd">
+                        <rect key="frame" x="364" y="88" width="62" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="62" id="KtJ-Y8-ys4"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2u5-JL-f5Z" firstAttribute="top" secondItem="wxP-Gi-eqJ" secondAttribute="top" constant="10" id="IqX-vG-4lV"/>
+                    <constraint firstItem="1qL-vN-Wxd" firstAttribute="top" secondItem="znh-pd-GYp" secondAttribute="top" id="JtZ-h7-AdP"/>
+                    <constraint firstAttribute="trailing" secondItem="c5w-c1-WTr" secondAttribute="trailing" constant="10" id="Vsh-5F-GSV"/>
+                    <constraint firstItem="g4J-Y5-8Bj" firstAttribute="top" secondItem="znh-pd-GYp" secondAttribute="top" id="ZXp-Bx-6op"/>
+                    <constraint firstItem="znh-pd-GYp" firstAttribute="top" secondItem="2u5-JL-f5Z" secondAttribute="bottom" constant="30" id="bVo-R3-KXZ"/>
+                    <constraint firstItem="2u5-JL-f5Z" firstAttribute="leading" secondItem="wxP-Gi-eqJ" secondAttribute="leading" constant="30" id="eiV-s7-2WT"/>
+                    <constraint firstItem="WSl-t1-PrX" firstAttribute="top" secondItem="znh-pd-GYp" secondAttribute="top" id="fWj-vh-ISd"/>
+                    <constraint firstAttribute="trailing" secondItem="1qL-vN-Wxd" secondAttribute="trailing" constant="20" id="hZF-20-jj7"/>
+                    <constraint firstAttribute="trailing" secondItem="mgO-eA-9ek" secondAttribute="trailing" constant="10" id="q66-ss-Bwe"/>
+                    <constraint firstItem="znh-pd-GYp" firstAttribute="leading" secondItem="wxP-Gi-eqJ" secondAttribute="leading" constant="10" id="q9d-I0-Jwh"/>
+                    <constraint firstItem="g4J-Y5-8Bj" firstAttribute="leading" secondItem="znh-pd-GYp" secondAttribute="trailing" constant="10" id="sCm-pb-ADr"/>
+                    <constraint firstItem="c5w-c1-WTr" firstAttribute="top" secondItem="mgO-eA-9ek" secondAttribute="bottom" constant="10" id="ssT-Bw-I70"/>
+                    <constraint firstItem="mgO-eA-9ek" firstAttribute="leading" secondItem="2u5-JL-f5Z" secondAttribute="trailing" constant="100" id="tLl-dJ-nCV"/>
+                    <constraint firstItem="1qL-vN-Wxd" firstAttribute="leading" secondItem="WSl-t1-PrX" secondAttribute="trailing" constant="20" id="yKS-HZ-bwH"/>
+                    <constraint firstItem="mgO-eA-9ek" firstAttribute="top" secondItem="wxP-Gi-eqJ" secondAttribute="top" constant="10" id="ydf-D1-ns7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="alarmEndSettingTimeLabel" destination="1qL-vN-Wxd" id="uT2-5m-lx2"/>
+                <outlet property="alarmStartSettingTimeLabel" destination="2u5-JL-f5Z" id="9pD-3V-ota"/>
+                <outlet property="byItemLabel" destination="g4J-Y5-8Bj" id="KYk-ro-JQE"/>
+                <outlet property="deleteButton" destination="mgO-eA-9ek" id="b6L-Qw-RPs"/>
+            </connections>
+            <point key="canvasLocation" x="134" y="-133"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
