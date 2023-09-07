@@ -35,6 +35,13 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         masterItemTableView.dataSource = self
         //delegateを登録
         masterItemTableView.delegate = self
+        //カレンダー、ロケール、タイムゾーンの設定（未指定時は端末の設定が採用される）
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
+        //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
+        dateFormatter.dateFormat = "HH:mm"
+        
         //ホーム画面表示時にボタンの仕様を適用
         configurePopUpButton()
         //項目が表示されるよう処理を実行
@@ -48,11 +55,11 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         //Date型への変換？
         dateFormatter.dateFormat = "HH:mm"
         //ダミーデータ作成
-        let masterStartDateString = "00:30"
+        let masterStartDateString = "01:00"
         //初期値の設定(Date型→String型へ)
         guard let dummyMasterStartDate = dateFormatter.date(from: masterStartDateString) else { return }
         
-        let masterItemPost = MasterItem(id: 0, userSetupName: "朝食", userSetupTime: dummyMasterStartDate)
+        let masterItemPost = MasterItem(id: 0, userSetupName: "昼食", userSetupTime: dummyMasterStartDate)
         
         masterItemList.append(masterItemPost)
         

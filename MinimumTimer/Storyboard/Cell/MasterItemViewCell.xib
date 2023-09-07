@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="124" id="KGk-i7-Jjw" customClass="MasterItemViewCell" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="124" id="KGk-i7-Jjw" customClass="MasterItemViewCell" customModule="MinimumTimer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="342" height="124"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -20,13 +20,21 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ow-dQ-AlR">
                         <rect key="frame" x="273" y="2" width="59" height="35"/>
                         <color key="backgroundColor" systemColor="systemRedColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="Ccp-Ra-bch"/>
+                            <constraint firstAttribute="width" constant="59" id="zx3-p9-1wu"/>
+                        </constraints>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="削除"/>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vs6-bU-cFA">
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vs6-bU-cFA">
                         <rect key="frame" x="204" y="2" width="59" height="35"/>
                         <color key="backgroundColor" systemColor="systemTealColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="59" id="i0x-wf-t39"/>
+                            <constraint firstAttribute="height" constant="35" id="rDe-IL-Kad"/>
+                        </constraints>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="編集"/>
@@ -40,10 +48,12 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="30分" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3E-xS-Acd">
-                        <rect key="frame" x="182" y="45" width="150" height="69"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30分" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3E-xS-Acd">
+                        <rect key="frame" x="184" y="45" width="148" height="69"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="69" id="Ulh-yo-9nu"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -51,11 +61,16 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="Tc0-GU-dmM" secondAttribute="bottom" constant="10" id="0II-Zy-DFB"/>
                     <constraint firstAttribute="trailing" secondItem="9ow-dQ-AlR" secondAttribute="trailing" constant="10" id="3Oq-jf-tgV"/>
+                    <constraint firstItem="H3E-xS-Acd" firstAttribute="top" secondItem="Vs6-bU-cFA" secondAttribute="bottom" constant="8" symbolic="YES" id="55J-sB-Wgk"/>
                     <constraint firstItem="Vs6-bU-cFA" firstAttribute="leading" secondItem="Tc0-GU-dmM" secondAttribute="trailing" constant="30" id="5dK-kq-AbC"/>
+                    <constraint firstAttribute="trailing" secondItem="H3E-xS-Acd" secondAttribute="trailing" constant="10" id="EZ3-8t-093"/>
+                    <constraint firstAttribute="bottom" secondItem="H3E-xS-Acd" secondAttribute="bottom" constant="10" id="QnV-K6-moz"/>
                     <constraint firstItem="9ow-dQ-AlR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="S7u-b3-MqQ"/>
                     <constraint firstItem="Tc0-GU-dmM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="40" id="ToC-ve-LIb"/>
                     <constraint firstItem="Vs6-bU-cFA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="fuA-Fm-oOR"/>
                     <constraint firstItem="9ow-dQ-AlR" firstAttribute="leading" secondItem="Vs6-bU-cFA" secondAttribute="trailing" constant="10" id="tbK-4B-L9K"/>
+                    <constraint firstItem="H3E-xS-Acd" firstAttribute="leading" secondItem="Tc0-GU-dmM" secondAttribute="trailing" constant="10" id="uFU-2k-4fy"/>
+                    <constraint firstItem="Tc0-GU-dmM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="zZf-qs-hEe"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

@@ -39,12 +39,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     var delegate: AlarmSettingViewControllerDelegate?
     //フッタービューを定義
     let footerView = UIView()
-    //
-    var startDateString: String?
     
-    
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -14,6 +14,7 @@
 		7124DAAE2A7E3A90001D6F67 /* AlarmStartSettingTimeHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7124DAAC2A7E3A90001D6F67 /* AlarmStartSettingTimeHeader.xib */; };
 		7124DAB12A7E3BC3001D6F67 /* ItemSelectedFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7124DAAF2A7E3BC3001D6F67 /* ItemSelectedFooter.swift */; };
 		7124DAB22A7E3BC3001D6F67 /* ItemSelectedFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7124DAB02A7E3BC3001D6F67 /* ItemSelectedFooter.xib */; };
+		7134C69F2AA9A16C00F0186F /* MasterItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7178EABB2A7663370015DBBE /* MasterItemViewCell.xib */; };
 		7178EAC02A7663850015DBBE /* MasterItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7178EABE2A7663850015DBBE /* MasterItemViewCell.swift */; };
 		718C361A2A67ED0400BD7E2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C36192A67ED0400BD7E2B /* AppDelegate.swift */; };
 		718C361C2A67ED0400BD7E2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718C361B2A67ED0400BD7E2B /* SceneDelegate.swift */; };
@@ -398,6 +399,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7134C69F2AA9A16C00F0186F /* MasterItemViewCell.xib in Resources */,
 				718C36262A67ED0600BD7E2B /* LaunchScreen.storyboard in Resources */,
 				7124DAB22A7E3BC3001D6F67 /* ItemSelectedFooter.xib in Resources */,
 				718C36232A67ED0600BD7E2B /* Assets.xcassets in Resources */,
