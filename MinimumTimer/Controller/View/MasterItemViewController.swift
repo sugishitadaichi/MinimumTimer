@@ -8,6 +8,11 @@
 import UIKit
 import RealmSwift
 
+//delegateを定義
+protocol MasterItemViewControllerDelegate{
+    
+}
+
 class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UITableViewDelegate, UITableViewDataSource, MasterItemViewCellDelegate {
     
     //＋ボタンが押された際の処理
@@ -50,19 +55,12 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
     
     //項目を格納するためのメソッド
     func setMasterItem() -> Void {
-        //dateFormatterを定義
-        let dateFormatter = DateFormatter()
-        //Date型への変換？
-        dateFormatter.dateFormat = "HH:mm"
-        //ダミーデータ作成
-        let masterStartDateString = "01:00"
-        //初期値の設定(Date型→String型へ)
-        guard let dummyMasterStartDate = dateFormatter.date(from: masterStartDateString) else { return }
-        
-        let masterItemPost = MasterItem(id: 0, userSetupName: "昼食", userSetupTime: dummyMasterStartDate)
-        
-        masterItemList.append(masterItemPost)
-        
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //RealmデータベースからMasterItem情報を取得しidの値で降順にソートする
+        let result = realm.objects(MasterItem.self).sorted(byKeyPath: "id", ascending: false)
+        //masterItemListに格納
+        masterItemList = Array(result)
         
     }
     
