@@ -37,6 +37,7 @@ class PopUpViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
         //delegateの登録
         userSetupNameText.delegate = self
+        userSetupTimeText.delegate = self
         //doneボタンの設定を画面表示時に実行
         setupToolbar()
         
