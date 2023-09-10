@@ -12,8 +12,10 @@ protocol MasterItemViewCellDelegate{}
 
 
 class MasterItemViewCell: UITableViewCell, UITableViewDelegate {
-    //項目に設定した時間を紐付け
-    @IBOutlet var UserSetupTimeLabel: UILabel!
+    //項目に設定した時間(時間)を紐付け
+    @IBOutlet weak var UserSetupHourTimeLabel: UITextField!
+    //項目に設定した時間(分)を紐付け
+    @IBOutlet weak var UserSetupMinutesTime: UITextField!
     //項目に設定した名前を紐付け
     @IBOutlet var UserSetupNameLabel: UILabel!
     //削除ボタンを紐付け

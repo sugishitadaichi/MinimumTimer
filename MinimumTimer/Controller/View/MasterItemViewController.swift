@@ -97,8 +97,10 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         //セルの定義
         //セルの項目マスタとmasterItemListの共通化
         masterItemViewCell.masterItem = masterItemSetting
-        //項目の作業時間のテキストデータ定義（データ変換(Date→テキスト)）
-        masterItemViewCell.UserSetupTimeLabel.text = dateFormatter.string(from: masterItemSetting.userSetupTime)
+        //項目の作業時間(時間)のテキストデータ定義
+        masterItemViewCell.UserSetupHourTimeLabel.text =  "\(Int(masterItemSetting.userSetupHourTime ))"
+        //項目の作業時間(分)のテキストデータ定義
+        masterItemViewCell.UserSetupMinutesTime.text =  "\(Int(masterItemSetting.userSetupMinutesTime ))"
         //項目の名前のテキストデータの定義
         masterItemViewCell.UserSetupNameLabel.text = masterItemSetting.userSetupName
         //indexpath

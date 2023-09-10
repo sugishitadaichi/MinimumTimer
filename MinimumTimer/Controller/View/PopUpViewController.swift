@@ -13,6 +13,7 @@ protocol PopUpViewControllerDelegate {
 }
 
 class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+    
     //追加ボタンを押した際の処理
     @IBAction func addButtonAction(_ sender: UIButton) {
         //項目名のテキストの定義・nilの場合は空白を代入
@@ -29,8 +30,11 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     }
     //ユーザーが追加した項目名を紐付け
     @IBOutlet weak var userSetupNameText: UITextField!
-    //ユーザーが項目に設定した時間を紐付け
-    @IBOutlet weak var userSetupTimeText: UITextField!
+    //ユーザーが項目に設定した時間（時間）を紐付け
+    @IBOutlet weak var userSetupHourTimeText: UITextField!
+    //ユーザーが項目に設定した時間（分）を紐付け
+    @IBOutlet weak var userSetupMinutesTimeText: UITextField!
+
 
     //キャンセルボタンを紐付け
     @IBOutlet weak var cancelButton: UIButton!
@@ -40,8 +44,6 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     var masterItemList: [MasterItem] = []
     //項目設定オブジェクトの作成
     var masterItem = MasterItem()
-    //DateFormatterクラスのインスタンス化
-    let dateFormatter = DateFormatter()
     //toolBarを定義
     var toolBar:UIToolbar!
     //delegateの定義
@@ -125,12 +127,6 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     
     //時間設定のdoneボタンの設定と時刻表示
     func setupTimeTextToolbar() {
-        //カレンダー、ロケール、タイムゾーンの設定（未指定時は端末の設定が採用される）
-        dateFormatter.calendar = Calendar(identifier: .gregorian)
-        dateFormatter.locale = Locale(identifier: "ja_JP")
-        dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
-        //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
-        dateFormatter.dateFormat = "HH:mm"
         //時間設定のdatepicker上のtoolbarのdoneボタン
         toolBar = UIToolbar()
         toolBar.sizeToFit()
@@ -138,20 +134,6 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         toolBar.items = [timeTextToolBarButton]
         userSetupTimeText.inputAccessoryView = toolBar
         
-    }
-    //時間設定のテキストフィールドがタップされ、入力可能になった後の処理を記載
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        let datePickerView:UIDatePicker = UIDatePicker()
-        datePickerView.datePickerMode = UIDatePicker.Mode.time
-        //時間設定のテキストのみdatePickerViewを設定
-        userSetupTimeText.inputView = datePickerView
-        datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
-    }
-    //時間設定のdatepickerが選択されたらtextfieldに表示・日付の値を設定する
-    @objc func datePickerValueChanged(sender:UIDatePicker) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        userSetupTimeText.text = dateFormatter.string(from: sender.date)
     }
     //時間設定のdoneボタンが押された際の処理
     @objc func timeTextDoneButton() {
