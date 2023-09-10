@@ -82,8 +82,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         headerView.alarmStartDatePickerText.text = "00:00"
         //setAlarmItemメソッドを画面が表示される際に実行
         setAlarmItem()
-        
-        endSettingTimeLabel.text = "7:40"
+        //全体終了時間を設定
+        endSettingTimeLabel.text = "07:40"
         
     }
     

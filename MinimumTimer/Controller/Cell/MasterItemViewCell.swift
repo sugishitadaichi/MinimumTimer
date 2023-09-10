@@ -11,7 +11,7 @@ import RealmSwift
 protocol MasterItemViewCellDelegate{}
 
 
-class MasterItemViewCell: UITableViewCell {
+class MasterItemViewCell: UITableViewCell, UITableViewDelegate {
     //項目に設定した時間を紐付け
     @IBOutlet var UserSetupTimeLabel: UILabel!
     //項目に設定した名前を紐付け
@@ -23,6 +23,10 @@ class MasterItemViewCell: UITableViewCell {
     
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
+    //indexPath
+    var indexPath: IndexPath?
+    //項目マスタの定義
+    var masterItem: MasterItem?
     //MainAlarmViewCellDelegateを定義（他ファイルで使用するため）
     var delegate: MasterItemViewCellDelegate?
     
@@ -47,6 +51,12 @@ class MasterItemViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    //データを渡す設定(ndexPathがnilでない場合に、textLabelのテキストを設定する処理)
+    func configure() {
+        guard let indexPath = indexPath else { return }
+        textLabel?.text = "Row: \(indexPath.row), Section: \(indexPath.section)"
+    }
+    
     
     //　削除ボタンの仕様
     func setupDeleteButton() {

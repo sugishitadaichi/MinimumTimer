@@ -13,8 +13,7 @@ protocol MasterItemViewControllerDelegate{
     
 }
 
-class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UITableViewDelegate, UITableViewDataSource, MasterItemViewCellDelegate {
-    
+class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UITableViewDelegate, UITableViewDataSource, MasterItemViewCellDelegate, PopUpViewControllerDelegate {
     //＋ボタンが押された際の処理
     @IBAction func popUpButtonAction(_ sender: UIButton) {
         //Segue接続先へ遷移する処理
@@ -31,6 +30,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     
+    //初期設定表示用メソッド
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -52,7 +52,20 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         //項目が表示されるよう処理を実行
         setMasterItem()
     }
-    
+    //ライフサイクルメソッド　viewが表示される直前で呼ばれる
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //viewが表示される直前に項目を格納しデータを反映させる
+        reflectMasterItem()
+    }
+    //項目を格納しデータを反映させる
+    func reflectMasterItem() {
+            //項目を格納
+            setMasterItem()
+            //反映
+            masterItemTableView.reloadData()
+        
+    }
     //項目を格納するためのメソッド
     func setMasterItem() -> Void {
         //Realmをインスタンス化
@@ -63,6 +76,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         masterItemList = Array(result)
         
     }
+    
     
     //＋ボタンの仕様
     func configurePopUpButton() {
@@ -81,10 +95,14 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         //セルの内容を設定
         let masterItemSetting = masterItemList[indexPath.row]
         //セルの定義
+        //セルの項目マスタとmasterItemListの共通化
+        masterItemViewCell.masterItem = masterItemSetting
         //項目の作業時間のテキストデータ定義（データ変換(Date→テキスト)）
         masterItemViewCell.UserSetupTimeLabel.text = dateFormatter.string(from: masterItemSetting.userSetupTime)
         //項目の名前のテキストデータの定義
-        masterItemViewCell.UserSetupNameLabel.text = String(masterItemSetting.userSetupName)
+        masterItemViewCell.UserSetupNameLabel.text = masterItemSetting.userSetupName
+        //indexpath
+        masterItemViewCell.indexPath = indexPath
         //デリゲートの登録
         masterItemViewCell.delegate = self
         

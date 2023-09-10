@@ -5,7 +5,7 @@
 //  Created by 杉下大智 on 2023/07/19.
 //
 
-import Foundation
+import UIKit
 import RealmSwift
 
 //アラームの項目設定に必要なモデルを定義

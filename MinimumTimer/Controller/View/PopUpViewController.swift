@@ -5,12 +5,22 @@
 //  Created by 杉下大智 on 2023/07/31.
 //
 
-import Foundation
+import UIKit
 import RealmSwift
 
-class PopUpViewController: UIViewController, UITextFieldDelegate {
+protocol PopUpViewControllerDelegate {
+    func reflectMasterItem()
+}
+
+class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     //追加ボタンを押した際の処理
     @IBAction func addButtonAction(_ sender: UIButton) {
+        //項目名のテキストの定義・nilの場合は空白を代入
+        let updatedNameText = userSetupNameText.text ?? ""
+        //項目名をupdatedNameTextに保存し画面を閉じる
+        saveName(with: updatedNameText)
+        //delegateの設定
+        delegate?.reflectMasterItem()
     }
         //キャンセルボタンを押した際の処理を紐付け
     @IBAction func cancelButtonAction(_ sender: Any) {
@@ -26,49 +36,126 @@ class PopUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     //追加ボタンを紐付け
     @IBOutlet weak var addButton: UIButton!
-    
+    //項目設定の配列のオブジェクトの作成
+    var masterItemList: [MasterItem] = []
+    //項目設定オブジェクトの作成
+    var masterItem = MasterItem()
+    //DateFormatterクラスのインスタンス化
+    let dateFormatter = DateFormatter()
     //toolBarを定義
     var toolBar:UIToolbar!
+    //delegateの定義
+    var delegate: PopUpViewControllerDelegate?
+    //項目名の文字数を10文字以内に定義
+    let maxUserSetupNameLength = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         //ポップアップの背景色を設定
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+        //userSetupNameTextのテキストにmasterItemの内容を代入
+        userSetupNameText.text = String(masterItem.userSetupName)
+        
         //delegateの登録
-        userSetupNameText.delegate = self
         userSetupTimeText.delegate = self
-        //doneボタンの設定を画面表示時に実行
-        setupToolbar()
+        userSetupNameText.delegate = self
+        
+        
+        //時間設定のdoneボタンの設定を画面表示時に実行
+        setupTimeTextToolbar()
+        //項目名のdoneボタンの設定を画面表示時に実行
+        setupNameTextToolbar()
+        //項目名の初期値
+        userSetupNameText.text = ""
         
     }
     
-    //doneボタンの設定
-    func setupToolbar() {
-        //datepicker上のtoolbarのdoneボタン
+    //項目名を保存・反映する処理
+    func saveName(with text: String) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //保存処理の実装
+        try! realm.write {
+            masterItem.userSetupName = text
+            realm.add(masterItem)
+        }
+        //保存後、処理を閉じる
+        dismiss(animated: true)
+    }
+    //項目名のdoneボタンの設定
+    func setupNameTextToolbar() {
+        //項目名のdatepicker上のtoolbarのdoneボタン
         toolBar = UIToolbar()
         toolBar.sizeToFit()
-        let toolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(doneButton))
-        toolBar.items = [toolBarButton]
+        let nameTextToolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(nameTextDoneButton))
+        toolBar.items = [nameTextToolBarButton]
+        userSetupNameText.inputAccessoryView = toolBar
+        
+    }
+    //項目名のdoneボタンが押された際の処理
+    @objc func nameTextDoneButton() {
+        // 時間設定のdoneボタンが押された時の処理を記述(閉じる)
+        userSetupNameText.resignFirstResponder()
+    }
+    //項目名の文字数制限機能の追加
+    //UITextViewのテキストが変更された時に呼ばれるデリゲートメソッド
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        //テキストがnilでない場合
+        guard userSetupNameText.text != nil else { return }
+        //テキストの文字数が最大文字数を超えていた場合
+        if userSetupNameText.text?.count ?? 0 > maxUserSetupNameLength {
+            //最大文字数を超えた場合は切り捨て
+            userSetupNameText.text = String(userSetupNameText.text!.prefix(maxUserSetupNameLength))
+            
+        }
+    }
+    //UITextFieldのテキストが変更された時に呼ばれるデリゲートメソッド
+    internal func textFieldDidChangeSelection(_ textField: UITextField) {
+        //テキストがnilでない場合
+        guard userSetupNameText.text != nil else { return }
+        //テキストの文字数が最大文字数を超えていた場合
+        if userSetupNameText.text?.count ?? 0 > maxUserSetupNameLength {
+            //　最大文字数を超えた場合は切り捨て
+            userSetupNameText.text = String(userSetupNameText.text!.prefix(maxUserSetupNameLength))
+            
+        }
+    }
+    
+    
+    //時間設定のdoneボタンの設定と時刻表示
+    func setupTimeTextToolbar() {
+        //カレンダー、ロケール、タイムゾーンの設定（未指定時は端末の設定が採用される）
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
+        //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
+        dateFormatter.dateFormat = "HH:mm"
+        //時間設定のdatepicker上のtoolbarのdoneボタン
+        toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        let timeTextToolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(timeTextDoneButton))
+        toolBar.items = [timeTextToolBarButton]
         userSetupTimeText.inputAccessoryView = toolBar
         
     }
-    //テキストフィールドがタップされ、入力可能になった後の処理を記載
+    //時間設定のテキストフィールドがタップされ、入力可能になった後の処理を記載
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let datePickerView:UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePicker.Mode.time
-        textField.inputView = datePickerView
+        //時間設定のテキストのみdatePickerViewを設定
+        userSetupTimeText.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
     }
-    //datepickerが選択されたらtextfieldに表示・日付の値を設定する
+    //時間設定のdatepickerが選択されたらtextfieldに表示・日付の値を設定する
     @objc func datePickerValueChanged(sender:UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         userSetupTimeText.text = dateFormatter.string(from: sender.date)
     }
-    //doneボタンが押された際の処理
-    @objc func doneButton() {
-        // 完了ボタンが押された時の処理を記述する(閉じる)
+    //時間設定のdoneボタンが押された際の処理
+    @objc func timeTextDoneButton() {
+        // 時間設定のdoneボタンが押された時の処理を記述(閉じる)
         userSetupTimeText.resignFirstResponder()
     }
     
