@@ -60,7 +60,8 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         userSetupNameText.text = String(masterItem.userSetupName)
         
         //delegateの登録
-        userSetupTimeText.delegate = self
+        userSetupHourTimeText.delegate = self
+        userSetupMinutesTimeText.delegate = self
         userSetupNameText.delegate = self
         
         
@@ -132,13 +133,15 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         toolBar.sizeToFit()
         let timeTextToolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(timeTextDoneButton))
         toolBar.items = [timeTextToolBarButton]
-        userSetupTimeText.inputAccessoryView = toolBar
+        userSetupHourTimeText.inputAccessoryView = toolBar
+        userSetupMinutesTimeText.inputAccessoryView = toolBar
         
     }
     //時間設定のdoneボタンが押された際の処理
     @objc func timeTextDoneButton() {
         // 時間設定のdoneボタンが押された時の処理を記述(閉じる)
-        userSetupTimeText.resignFirstResponder()
+        userSetupHourTimeText.resignFirstResponder()
+        userSetupMinutesTimeText.resignFirstResponder()
     }
     
 }

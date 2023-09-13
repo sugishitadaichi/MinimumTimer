@@ -110,6 +110,10 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         
         return masterItemViewCell
     }
+    //テーブルビューにセルの高さを設定
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        120
+    }
     
     
 }
