@@ -18,8 +18,16 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     @IBAction func addButtonAction(_ sender: UIButton) {
         //項目名のテキストの定義・nilの場合は空白を代入
         let updatedNameText = userSetupNameText.text ?? ""
-        //項目名をupdatedNameTextに保存し画面を閉じる
+        //時間設定のテキストの定義・nilの場合は0を代入
+        let updatedHourText = Int(userSetupHourTimeText.text ?? "0") ?? 0
+        let updatedMinutesText = Int(userSetupMinutesTimeText.text ?? "0") ?? 0
+        //項目名をupdatedNameText（String型）に保存し画面を閉じる
         saveName(with: updatedNameText)
+        //時間設定をupdatedHourText（Int型）に保存し画面を閉じる
+        saveHourTime(with: updatedHourText)
+        //時間設定をupdatedMinutesText（Int型）に保存し画面を閉じる
+        saveMinutesTime(with: updatedMinutesText)
+        
         //delegateの設定
         delegate?.reflectMasterItem()
     }
@@ -81,6 +89,30 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         //保存処理の実装
         try! realm.write {
             masterItem.userSetupName = text
+            realm.add(masterItem)
+        }
+        //保存後、処理を閉じる
+        dismiss(animated: true)
+    }
+    //時間設定(時間)を保存・反映する処理
+    func saveHourTime(with text: Int) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //保存処理の実装
+        try! realm.write {
+            masterItem.userSetupHourTime = text
+            realm.add(masterItem)
+        }
+        //保存後、処理を閉じる
+        dismiss(animated: true)
+    }
+    //時間設定(分)を保存・反映する処理
+    func saveMinutesTime(with text: Int) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //保存処理の実装
+        try! realm.write {
+            masterItem.userSetupMinutesTime = text
             realm.add(masterItem)
         }
         //保存後、処理を閉じる
