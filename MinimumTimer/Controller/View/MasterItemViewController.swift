@@ -14,11 +14,49 @@ protocol MasterItemViewControllerDelegate{
 }
 
 class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UITableViewDelegate, UITableViewDataSource, MasterItemViewCellDelegate, PopUpViewControllerDelegate {
+    
+    func deleteMasterItem(indexPath: IndexPath) {
+        // Realmのインスタンス化
+        let realm = try!Realm()
+        //　tweetListのインデックス番号のidをtarget定数に取得
+        let target = masterItemList[indexPath.row].id
+        //　targetと同じidを持つRealmデータベース内のデータを検索してdeleteMasterItemに格納
+        let deleteMasterItem = realm.objects(MasterItem.self).filter("id == %@", target).first
+        //　もしもdeleteMasterItemがnilでなければ以下を実行
+        if let deleteMasterItem {
+            //　reaimの書き込み
+            try! realm.write {
+                //　deletePostをRealmから削除
+                realm.delete(deleteMasterItem)
+                
+            }
+            
+        }
+        //masterItemListの配列からインデックス番号に該当する配列を削除
+        masterItemList.remove(at: indexPath.row)
+        //テーブルビューからインデックス番号に該当するセルを削除
+        masterItemTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        //テーブルビューの再読み込み
+        masterItemTableView.reloadData()
+        
+    }
+    
+    func editedMasterItem(indexPath: IndexPath) {
+        
+    }
+    
     //＋ボタンが押された際の処理
     @IBAction func popUpButtonAction(_ sender: UIButton) {
         //Segue接続先へ遷移する処理
         performSegue(withIdentifier: "PopUpSegue", sender: nil)
-        
+        //
+    }
+    //Segueが実行された時に呼ばれる処理（値渡し＝delegate）
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PopUpSegue" {
+            let popUpVC = segue.destination as! PopUpViewController
+            popUpVC.delegate = self //=MasterItemViewController
+        }
     }
     //＋ボタンを紐付け
     @IBOutlet weak var popUpButton: UIButton!
@@ -70,8 +108,13 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
     func setMasterItem() -> Void {
         //Realmをインスタンス化
         let realm = try! Realm()
+        //項目を表示する際の条件
+        let sortProperties = [
+            SortDescriptor(keyPath: "userSetupHourTime", ascending: true),
+            SortDescriptor(keyPath: "userSetupMinutesTime", ascending: true)
+        ]
         //RealmデータベースからMasterItem情報を取得しidの値で降順にソートする
-        let result = realm.objects(MasterItem.self).sorted(byKeyPath: "id", ascending: false)
+        let result = realm.objects(MasterItem.self).sorted(by: sortProperties)
         //masterItemListに格納
         masterItemList = Array(result)
         

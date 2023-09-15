@@ -8,20 +8,35 @@
 import UIKit
 import RealmSwift
 //delegateを定義
-protocol MasterItemViewCellDelegate{}
+protocol MasterItemViewCellDelegate{
+    func deleteMasterItem(indexPath: IndexPath)
+    func editedMasterItem(indexPath: IndexPath)
+}
 
 
 class MasterItemViewCell: UITableViewCell, UITableViewDelegate {
+    //項目に設定した名前を紐付け
+    @IBOutlet weak var UserSetupNameLabel: UILabel!
     //項目に設定した時間(時間)を紐付け
     @IBOutlet weak var UserSetupHourTimeLabel: UITextField!
     //項目に設定した時間(分)を紐付け
     @IBOutlet weak var UserSetupMinutesTime: UITextField!
-    //項目に設定した名前を紐付け
-    @IBOutlet var UserSetupNameLabel: UILabel!
     //削除ボタンを紐付け
     @IBOutlet var deleteButton: UIButton!
+    //削除ボタンを押した際の処理
+    @IBAction func deleteButtonAction(_ sender: UIButton) {
+        //処理はMasterItemViewControllerで行う
+        delegate?.deleteMasterItem(indexPath: indexPath!)
+    }
+
     //編集ボタンを紐付け
     @IBOutlet var editButton: UIButton!
+    //編集ボタンを押した際の処理
+    @IBAction func editButtonActtion( _ sender: UIButton) {
+        //処理はMasterItemViewControllerで行う
+        delegate?.editedMasterItem(indexPath: indexPath!)
+        
+    }
     
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
@@ -53,7 +68,7 @@ class MasterItemViewCell: UITableViewCell, UITableViewDelegate {
 
         // Configure the view for the selected state
     }
-    //データを渡す設定(ndexPathがnilでない場合に、textLabelのテキストを設定する処理)
+    //データを渡す設定(indexPathがnilでない場合に、textLabelのテキストを設定する処理)
     func configure() {
         guard let indexPath = indexPath else { return }
         textLabel?.text = "Row: \(indexPath.row), Section: \(indexPath.section)"

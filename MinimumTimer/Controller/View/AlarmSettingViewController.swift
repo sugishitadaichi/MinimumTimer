@@ -50,6 +50,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmSettingTableView.dataSource = self
         //delegateを登録
         alarmSettingTableView.delegate = self
+        //alarmSettingTableViewに枠色を設定
+        alarmSettingTableView.separatorColor = .black
         
         //カレンダー、ロケール、タイムゾーンの設定（未指定時は端末の設定が採用される）
         dateFormatter.calendar = Calendar(identifier: .gregorian)

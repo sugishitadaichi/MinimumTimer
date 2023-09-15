@@ -71,6 +71,11 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         alarmStartDatePickerText.delegate = self
         //doneボタンの設定を画面表示時に実行
         setupToolbar()
+        //枠線の設定
+        let bottomBorder = CALayer()
+        bottomBorder.frame = CGRect(x: 0, y: self.frame.height - 1, width: self.frame.width, height: 1.0)
+        bottomBorder.backgroundColor = UIColor.lightGray.cgColor
+        self.layer.addSublayer(bottomBorder)
 
         print("処理実行6")
     }

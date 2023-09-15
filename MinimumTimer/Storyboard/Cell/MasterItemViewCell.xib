@@ -28,6 +28,9 @@
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="削除"/>
+                        <connections>
+                            <action selector="deleteButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="iuy-Hb-TPb"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vs6-bU-cFA">
                         <rect key="frame" x="272" y="2" width="59" height="35"/>
@@ -39,6 +42,9 @@
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="編集"/>
+                        <connections>
+                            <action selector="editButtonActtion:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xpE-op-uBr"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="朝食" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tc0-GU-dmM">
                         <rect key="frame" x="10" y="30" width="164" height="84"/>
@@ -107,11 +113,11 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="UserSetupHourTimeLabel" destination="mcu-G3-IJy" id="1mY-qD-gmy"/>
-                <outlet property="UserSetupMinutesTime" destination="QWc-vc-f3y" id="9sS-P9-xdD"/>
-                <outlet property="UserSetupNameLabel" destination="Tc0-GU-dmM" id="SPH-71-iHe"/>
-                <outlet property="deleteButton" destination="9ow-dQ-AlR" id="VZV-y7-Hpb"/>
-                <outlet property="editButton" destination="Vs6-bU-cFA" id="q1d-au-UdO"/>
+                <outlet property="UserSetupHourTimeLabel" destination="mcu-G3-IJy" id="DW0-gt-Pid"/>
+                <outlet property="UserSetupMinutesTime" destination="QWc-vc-f3y" id="OOw-44-c0F"/>
+                <outlet property="UserSetupNameLabel" destination="Tc0-GU-dmM" id="SOA-Yz-jRT"/>
+                <outlet property="deleteButton" destination="9ow-dQ-AlR" id="wk2-p1-EZB"/>
+                <outlet property="editButton" destination="Vs6-bU-cFA" id="Ifg-ya-Ivm"/>
             </connections>
             <point key="canvasLocation" x="112.21374045801527" y="47.887323943661976"/>
         </tableViewCell>

@@ -94,6 +94,11 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         createPickerView()
         //画面表示時に角丸を実装
         setupAddButton()
+        //枠線の設定
+        let bottomBorder = CALayer()
+        bottomBorder.frame = CGRect(x: 0, y: self.frame.height - 1, width: self.frame.width, height: 1.0)
+        bottomBorder.backgroundColor = UIColor.lightGray.cgColor
+        self.layer.addSublayer(bottomBorder)
     }
 
     required init?(coder aDecoder: NSCoder) {
