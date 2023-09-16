@@ -14,42 +14,14 @@ protocol MasterItemViewControllerDelegate{
 }
 
 class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UITableViewDelegate, UITableViewDataSource, MasterItemViewCellDelegate, PopUpViewControllerDelegate {
-    
-    func deleteMasterItem(indexPath: IndexPath) {
-        // Realmのインスタンス化
-        let realm = try!Realm()
-        //　tweetListのインデックス番号のidをtarget定数に取得
-        let target = masterItemList[indexPath.row].id
-        //　targetと同じidを持つRealmデータベース内のデータを検索してdeleteMasterItemに格納
-        let deleteMasterItem = realm.objects(MasterItem.self).filter("id == %@", target).first
-        //　もしもdeleteMasterItemがnilでなければ以下を実行
-        if let deleteMasterItem {
-            //　reaimの書き込み
-            try! realm.write {
-                //　deletePostをRealmから削除
-                realm.delete(deleteMasterItem)
-                
-            }
-            
-        }
-        //masterItemListの配列からインデックス番号に該当する配列を削除
-        masterItemList.remove(at: indexPath.row)
-        //テーブルビューからインデックス番号に該当するセルを削除
-        masterItemTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
-        //テーブルビューの再読み込み
-        masterItemTableView.reloadData()
-        
-    }
-    
-    func editedMasterItem(indexPath: IndexPath) {
-        
-    }
-    
+    //＋ボタンを紐付け
+    @IBOutlet weak var popUpButton: UIButton!
+    //TableViewを紐付け
+    @IBOutlet weak var masterItemTableView: UITableView!
     //＋ボタンが押された際の処理
     @IBAction func popUpButtonAction(_ sender: UIButton) {
         //Segue接続先へ遷移する処理
         performSegue(withIdentifier: "PopUpSegue", sender: nil)
-        //
     }
     //Segueが実行された時に呼ばれる処理（値渡し＝delegate）
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -58,10 +30,6 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
             popUpVC.delegate = self //=MasterItemViewController
         }
     }
-    //＋ボタンを紐付け
-    @IBOutlet weak var popUpButton: UIButton!
-    //TableViewを紐付け
-    @IBOutlet weak var masterItemTableView: UITableView!
     
     //項目設定のプロパティ
     var masterItemList: [MasterItem] = []
@@ -96,6 +64,55 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         //viewが表示される直前に項目を格納しデータを反映させる
         reflectMasterItem()
     }
+    
+    //削除ボタンの実装内容
+    func deleteMasterItem(indexPath: IndexPath) {
+        // Realmのインスタンス化
+        let realm = try!Realm()
+        //masterItemListのインデックス番号のidをdeleteTarget定数に取得
+        let deleteTarget = masterItemList[indexPath.row].id
+        //targetと同じidを持つRealmデータベース内のデータを検索してdeleteMasterItemに格納
+        let deleteMasterItem = realm.objects(MasterItem.self).filter("id == %@", target).first
+        //　もしもdeleteMasterItemがnilでなければ以下を実行
+        if let deleteMasterItem {
+            //　reaimの書き込み
+            try! realm.write {
+                //　deletePostをRealmから削除
+                realm.delete(deleteMasterItem)
+                
+            }
+            
+        }
+        //masterItemListの配列からインデックス番号に該当する配列を削除
+        masterItemList.remove(at: indexPath.row)
+        //テーブルビューからインデックス番号に該当するセルを削除
+        masterItemTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        //テーブルビューの再読み込み
+        masterItemTableView.reloadData()
+        
+    }
+    //編集ボタンの実装内容
+    func editedMasterItem(indexPath: IndexPath) {
+        // Realmのインスタンス化
+        let realm = try!Realm()
+        //masterItemListのインデックス番号のidをeditTarget定数に取得
+        let editTarget = masterItemList[indexPath.row].id
+        //editTargetと同じidを持つRealmデータベース内のデータを検索してeditPostに格納
+        let editPost = realm.objects(MasterItem.self).filter("id == %@", editTarget).first
+        //　もしもeditPostがnilでなければ以下を実行
+        if editPost != nil {
+            // 画面遷移処理（記載済みのテキストデータが必要）
+            let storyboad = UIStoryboard(name: "PopUpViewController", bundle: nil)
+            guard let popupViewController = storyboad.instantiateInitialViewController() as? PopUpViewController else { return }
+            //記載済みのテキストデータを取得
+            popupViewController.masterItem = editPost ?? MasterItem()
+            present(popupViewController, animated: true)
+            popupViewController.delegate = self
+            
+        }
+        
+    }
+    
     //項目を格納しデータを反映させる
     func reflectMasterItem() {
             //項目を格納
