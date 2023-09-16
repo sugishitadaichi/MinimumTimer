@@ -11,7 +11,7 @@ import RealmSwift
 //アラームの項目設定に必要なモデルを定義
 class MasterItem: Object {
     //マスタに追加した作業項目のユニークID(AlarmItemモデルのMasterIdと同義)
-    @objc dynamic var id: Int = 0
+    @objc dynamic var id: String = UUID().uuidString
     //ユーザーが設定した項目名
     @objc dynamic var userSetupName: String = ""
     //項目を設定した日付・時間の管理
@@ -22,7 +22,7 @@ class MasterItem: Object {
     @objc dynamic var userSetupMinutesTime: Int = 0
     
     //初期化(Relmを使用する引数Objectもクラスは初期化時にconvinienceをつける)
-    convenience init(id: Int, userSetupName: String, recordDate: Date, userSetupHourTime: Int, userSetupMinutesTime: Int) {
+    convenience init(id: String, userSetupName: String, recordDate: Date, userSetupHourTime: Int, userSetupMinutesTime: Int) {
         self.init()
         self.id = id
         self.userSetupName = userSetupName

@@ -108,7 +108,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
     func setMasterItem() -> Void {
         //Realmをインスタンス化
         let realm = try! Realm()
-        //項目を表示する際の条件
+        //項目を表示する際の条件(項目設定時間の時間の昇順・分の昇順)
         let sortProperties = [
             SortDescriptor(keyPath: "userSetupHourTime", ascending: true),
             SortDescriptor(keyPath: "userSetupMinutesTime", ascending: true)
