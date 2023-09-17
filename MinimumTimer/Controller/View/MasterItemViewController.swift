@@ -30,13 +30,16 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
             popUpVC.delegate = self //=MasterItemViewController
             //もしIndexPathがあれば（設定済みの項目マスタがあれば）
             if let indexPath = sender as? IndexPath {
-                        // 編集モードの場合は編集対象のMasterItemを渡す
-                        let editMasterItem = masterItemList[indexPath.row]
-                        popUpVC.masterItem = editMasterItem
+                //存在しないindexPathはアクセスしないよう回避
+                guard indexPath.row < masterItemList.count else { return }
+                //編集モードの場合は編集対象のMasterItemを渡す
+                let editMasterItem = masterItemList[indexPath.row]
+                    popUpVC.masterItem = editMasterItem
                     } else {
-                        // 新規作成の場合は新しいMasterItemインスタンスを渡す
-                        let newMasterItem = MasterItem()
-                        popUpVC.masterItem = newMasterItem
+                    //新規作成の場合は新しいMasterItemインスタンスを渡す
+                    let newMasterItem = MasterItem()
+                    popUpVC.masterItem = newMasterItem
+                    
                     }
         }
     }
@@ -120,6 +123,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
 //            popupViewController.delegate = self
 //
 //        }
+        performSegue(withIdentifier: "PopUpSegue", sender: indexPath)
         
     }
     
