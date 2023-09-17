@@ -102,7 +102,7 @@
         <!--Pop Up View Controller-->
         <scene sceneID="1Fd-vE-VDs">
             <objects>
-                <viewController modalPresentationStyle="overCurrentContext" id="OAG-Ke-n0U" customClass="PopUpViewController" customModule="MinimumTimer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PopUpViewControllerID" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OAG-Ke-n0U" customClass="PopUpViewController" customModule="MinimumTimer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qbg-7h-Psn">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

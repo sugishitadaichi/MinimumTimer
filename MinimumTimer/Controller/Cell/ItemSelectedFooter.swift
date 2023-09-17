@@ -13,16 +13,15 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     @IBAction func addButtonAction(_ sender: UIButton) {
         
     }
-    
     //項目一覧選択を紐付け
     @IBOutlet weak var itemSelectedPickerText: UITextField!
-    
     //追加ボタンを紐付け
     @IBOutlet weak var addButton: UIButton!
+    
     //UIPickerViewをインスタンス化
     var pickerView = UIPickerView()
     //選択データ（ダミーは文字列・実装は項目名＋時間表示）
-    var data = ["朝食　30分", "トイレ　10分", "洗面　10分"]
+    var masterItemData = ["朝食　30分", "トイレ　10分", "洗面　10分"]
 
 
     //未処理。//init関数に記載
@@ -67,12 +66,12 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     }
     //pickerView に設定するデータを登録する
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return data[row]
+        return masterItemData[row]
     }
     //pickerView の各種データを選択したときに呼ばれるメソッド
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //UITextFieldに選択されたデータを表示
-        itemSelectedPickerText.text = data[row]
+        itemSelectedPickerText.text = masterItemData[row]
     }
     //　追加ボタンの仕様
     func setupAddButton() {

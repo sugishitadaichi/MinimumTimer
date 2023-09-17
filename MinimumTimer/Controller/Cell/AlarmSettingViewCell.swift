@@ -13,7 +13,6 @@ protocol AlarmSettingViewCellDelegate{}
 
 class AlarmSettingViewCell: UITableViewCell {
     @IBOutlet weak var deleteButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var itemEndTimeLabel: UILabel!
     @IBOutlet weak var itemStartTimeLabel: UILabel!
     @IBOutlet weak var userSetupNameLabel: UILabel!
@@ -24,7 +23,6 @@ class AlarmSettingViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         //画面表示時に角丸を実装
-        setupEditButton()
         setupDeleteButton()
     }
 
@@ -34,12 +32,6 @@ class AlarmSettingViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-
-    //　編集ボタンの仕様
-    func setupEditButton() {
-            editButton.layer.cornerRadius = 10
-        editButton.clipsToBounds = true
-    }
     //　削除ボタンの仕様
     func setupDeleteButton() {
         deleteButton.layer.cornerRadius = 10

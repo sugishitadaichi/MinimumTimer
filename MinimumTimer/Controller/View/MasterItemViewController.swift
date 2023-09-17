@@ -28,6 +28,16 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         if segue.identifier == "PopUpSegue" {
             let popUpVC = segue.destination as! PopUpViewController
             popUpVC.delegate = self //=MasterItemViewController
+            //もしIndexPathがあれば（設定済みの項目マスタがあれば）
+            if let indexPath = sender as? IndexPath {
+                        // 編集モードの場合は編集対象のMasterItemを渡す
+                        let editMasterItem = masterItemList[indexPath.row]
+                        popUpVC.masterItem = editMasterItem
+                    } else {
+                        // 新規作成の場合は新しいMasterItemインスタンスを渡す
+                        let newMasterItem = MasterItem()
+                        popUpVC.masterItem = newMasterItem
+                    }
         }
     }
     
@@ -72,7 +82,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         //masterItemListのインデックス番号のidをdeleteTarget定数に取得
         let deleteTarget = masterItemList[indexPath.row].id
         //targetと同じidを持つRealmデータベース内のデータを検索してdeleteMasterItemに格納
-        let deleteMasterItem = realm.objects(MasterItem.self).filter("id == %@", target).first
+        let deleteMasterItem = realm.objects(MasterItem.self).filter("id == %@", deleteTarget).first
         //　もしもdeleteMasterItemがnilでなければ以下を実行
         if let deleteMasterItem {
             //　reaimの書き込み
@@ -93,23 +103,23 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
     }
     //編集ボタンの実装内容
     func editedMasterItem(indexPath: IndexPath) {
-        // Realmのインスタンス化
-        let realm = try!Realm()
-        //masterItemListのインデックス番号のidをeditTarget定数に取得
-        let editTarget = masterItemList[indexPath.row].id
-        //editTargetと同じidを持つRealmデータベース内のデータを検索してeditPostに格納
-        let editPost = realm.objects(MasterItem.self).filter("id == %@", editTarget).first
-        //　もしもeditPostがnilでなければ以下を実行
-        if editPost != nil {
-            // 画面遷移処理（記載済みのテキストデータが必要）
-            let storyboad = UIStoryboard(name: "PopUpViewController", bundle: nil)
-            guard let popupViewController = storyboad.instantiateInitialViewController() as? PopUpViewController else { return }
-            //記載済みのテキストデータを取得
-            popupViewController.masterItem = editPost ?? MasterItem()
-            present(popupViewController, animated: true)
-            popupViewController.delegate = self
-            
-        }
+//        // Realmのインスタンス化
+//        let realm = try!Realm()
+//        //masterItemListのインデックス番号のidをeditTarget定数に取得
+//        let editTarget = masterItemList[indexPath.row].id
+//        //editTargetと同じidを持つRealmデータベース内のデータを検索してeditPostに格納
+//        let editPost = realm.objects(MasterItem.self).filter("id == %@", editTarget).first
+//        //　もしもeditPostがnilでなければ以下を実行
+//        if editPost != nil {
+//            // 画面遷移処理（記載済みのテキストデータが必要）
+//            let storyboad = UIStoryboard(name: "PopUpViewController", bundle: nil)
+//            guard let popupViewController = storyboad.instantiateInitialViewController() as? PopUpViewController else { return }
+//            //記載済みのテキストデータを取得
+//            popupViewController.masterItem = editPost ?? MasterItem()
+//            present(popupViewController, animated: true)
+//            popupViewController.delegate = self
+//
+//        }
         
     }
     
