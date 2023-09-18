@@ -66,6 +66,10 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
         //userSetupNameTextのテキストにmasterItemの内容を代入
         userSetupNameText.text = String(masterItem.userSetupName)
+        //userSetupHourTimeTextのテキストにmasterItemの内容をString型で代入
+        userSetupHourTimeText.text = String(masterItem.userSetupHourTime)
+        //userSetupMinutesTimeTextのテキストにmasterItemの内容をString型で代入
+        userSetupMinutesTimeText.text = String(masterItem.userSetupMinutesTime)
         
         //delegateの登録
         userSetupHourTimeText.delegate = self
@@ -77,8 +81,6 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         setupTimeTextToolbar()
         //項目名のdoneボタンの設定を画面表示時に実行
         setupNameTextToolbar()
-        //項目名の初期値
-        userSetupNameText.text = ""
         
     }
     
