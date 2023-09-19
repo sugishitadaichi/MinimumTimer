@@ -64,6 +64,7 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         // Do any additional setup after loading the view.
         //ポップアップの背景色を設定
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+        
         //userSetupNameTextのテキストにmasterItemの内容を代入
         userSetupNameText.text = String(masterItem.userSetupName)
         //userSetupHourTimeTextのテキストにmasterItemの内容をString型で代入

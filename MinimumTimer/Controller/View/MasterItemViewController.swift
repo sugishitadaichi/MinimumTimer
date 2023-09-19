@@ -106,23 +106,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
     }
     //編集ボタンの実装内容
     func editedMasterItem(indexPath: IndexPath) {
-//        // Realmのインスタンス化
-//        let realm = try!Realm()
-//        //masterItemListのインデックス番号のidをeditTarget定数に取得
-//        let editTarget = masterItemList[indexPath.row].id
-//        //editTargetと同じidを持つRealmデータベース内のデータを検索してeditPostに格納
-//        let editPost = realm.objects(MasterItem.self).filter("id == %@", editTarget).first
-//        //　もしもeditPostがnilでなければ以下を実行
-//        if editPost != nil {
-//            // 画面遷移処理（記載済みのテキストデータが必要）
-//            let storyboad = UIStoryboard(name: "PopUpViewController", bundle: nil)
-//            guard let popupViewController = storyboad.instantiateInitialViewController() as? PopUpViewController else { return }
-//            //記載済みのテキストデータを取得
-//            popupViewController.masterItem = editPost ?? MasterItem()
-//            present(popupViewController, animated: true)
-//            popupViewController.delegate = self
-//
-//        }
+        //選択したデータをPopUpViewContrrollerへ引き継ぐ
         performSegue(withIdentifier: "PopUpSegue", sender: indexPath)
         
     }

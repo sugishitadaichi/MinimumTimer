@@ -20,8 +20,15 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     
     //UIPickerViewをインスタンス化
     var pickerView = UIPickerView()
-    //選択データ（ダミーは文字列・実装は項目名＋時間表示）
-    var masterItemData = ["朝食　30分", "トイレ　10分", "洗面　10分"]
+    
+    let masterItemViewController = MasterItemViewController()
+    //項目設定オブジェクトの作成
+    var masterItem = MasterItem()
+    //項目設定のプロパティ
+    var masterItemList: [MasterItem] = []
+    //選択データ（項目名＋時間表示）
+    //計算プロパティとしてmasterItemDataを宣言して初期化
+    var masterItemData = ["abcdfg　１時間30分"]
 
 
     //未処理。//init関数に記載
@@ -62,7 +69,8 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     }
     //pickerView に表示するデータの数
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        3
+        //MasterItemViewControllermasterItemListにある個数分セルを返却？
+        return masterItemData.count
     }
     //pickerView に設定するデータを登録する
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
