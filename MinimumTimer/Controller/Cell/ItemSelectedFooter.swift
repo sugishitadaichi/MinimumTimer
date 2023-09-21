@@ -26,12 +26,18 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     let masterItemViewController = MasterItemViewController()
     //項目設定オブジェクトの作成
     var masterItem = MasterItem()
-    //項目設定のプロパティ
+    //項目設定のプロパティ（配列）
     var masterItemList: [MasterItem] = []
     //選択データ（項目名＋時間表示）
     //計算型プロパティとしてmasterItemDataを宣言して初期化
-    var masterItemData: String {
-        return "\(masterItem.userSetupName)   \(masterItem.userSetupHourTime)時間 \(masterItem.userSetupMinutesTime)分"
+    var masterItemFooterSetting: String {
+        let pickerViewTextMasterItem = masterItem
+        return "\(pickerViewTextMasterItem.userSetupName)   \(pickerViewTextMasterItem.userSetupHourTime)時間 \(pickerViewTextMasterItem.userSetupMinutesTime)分"
+    }
+    //masterItemFooterSettingを基に配列masterItemDataを作成
+    var masterItemData: [String] {
+        return [masterItemFooterSetting]
+        
     }
 
 
@@ -48,6 +54,9 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         loadNib()
         //delegateの登録
         itemSelectedPickerText.delegate = self
+        //delegate・datesourceの登録
+        pickerView.delegate = self
+        pickerView.dataSource = self
         //UITextField を選択したときに pickerView のキーボードが表示
         createPickerView()
         //画面表示時に角丸を実装
@@ -134,17 +143,22 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     }
     //pickerView に表示するデータの数
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        //MasterItemViewControllermasterItemListにある個数分セルを返却？
-        return masterItemData.count
+        //MasterItemViewController（項目一覧画面）のmasterItemListにある個数分セルを返却
+        return masterItemList.count
     }
-    //pickerView に設定するデータを登録する
+    //pickerView に設定するデータ(配列)を登録する（Int型→String型の文字列の変換が必要）
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return masterItemData
+        //masterItemList[row]をpickerViewMasterItemとして定義
+        let pickerViewMasterItem = masterItemList[row]
+        //文字列として変換し表示を返す
+        return "\(pickerViewMasterItem.userSetupName)   \(pickerViewMasterItem.userSetupHourTime)時間 \(pickerViewMasterItem.userSetupMinutesTime)分"
     }
     //pickerView の各種データを選択したときに呼ばれるメソッド
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //UITextFieldに選択されたデータを表示
-        itemSelectedPickerText.text = masterItemData
+        //masterItemList[row]をpickerViewMasterItemとして定義
+        let pickerViewMasterItem = masterItemList[row]
+        //UITextFieldに選択されたデータを表示（文字列化）
+        itemSelectedPickerText.text = "\(pickerViewMasterItem.userSetupName)   \(pickerViewMasterItem.userSetupHourTime)時間 \(pickerViewMasterItem.userSetupMinutesTime)分"
         //項目を格納しデータを反映させる
         reflectMasterItem()
     }
@@ -154,12 +168,5 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         addButton.clipsToBounds = true
         
     }
-    
-    
-
-    
-    
-
-
     
 }
