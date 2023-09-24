@@ -11,7 +11,9 @@ import RealmSwift
 //delegateを定義
 protocol AlarmSettingViewControllerDelegate{}
 
-class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate {
+class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate {
+    
+    
     
     //キャンセルボタンを押した際の処理
     @IBAction func cancelButtonAction(_ sender: UIButton) {
@@ -29,6 +31,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     //アラーム設定のプロパティ
     var alarmSetting: AlarmSetting = AlarmSetting()
+    //アラーム設定のプロパティ（配列）
+    var alarmSettingList: [AlarmSetting] = []
     //項目別アラームのプロパティ
     var alarmItemList: [AlarmItem] = []
     //DateFormatterクラスのインスタンス化
@@ -67,6 +71,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         //alarmSettingTableViewのtableFooterViewにフッタービューを設定
         alarmSettingTableView.tableFooterView = footerView
+        //delegateの設定
+        footerView.delegate = self
         
         
         
@@ -89,7 +95,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    //ヘッダーに表示するデータの処理
+    //ヘッダーに表示するデータの処理(フッターは項目追加処理のみのため不要)
     func setHeader() -> Void {
 
         //dateFormatterを定義
@@ -109,11 +115,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         alarmSetting = headerPost1
         
-    }
-    
-    //フッターに表示するデータの処理
-    func setFooter() -> Void {
-        //アイテムマスタをピッカービューに反映させる？(Realm実装時に記載)
     }
     
     //項目別設定を格納するためのメソッド
@@ -143,6 +144,23 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmItemList.append(alarmSetPost2)
 
 
+    }
+    
+    //項目別の終了予定時間を格納しデータを反映させる
+    func reflectItemEndTime() {
+        //項目別の終了予定時間を格納
+        setItemEndTime()
+        //反映
+        alarmSettingTableView.reloadData()
+    }
+    //項目別の終了予定時間を格納するメソッド
+    func setItemEndTime() -> Void {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //項目別終了予定時間を表示する際の条件（idの降順）
+        let resultItemEndTime = realm.objects(AlarmSetting.self).sorted(byKeyPath: "id", ascending: false)
+        //alarmSettingListに格納
+        alarmSettingList = Array(resultItemEndTime)
     }
 
 
