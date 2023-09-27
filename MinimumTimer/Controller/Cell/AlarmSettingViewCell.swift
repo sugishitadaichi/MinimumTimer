@@ -18,6 +18,10 @@ class AlarmSettingViewCell: UITableViewCell {
     @IBOutlet weak var userSetupNameLabel: UILabel!
     //delegateの設定
     var delegate: AlarmSettingViewCellDelegate?
+    //項目マスタの定義
+    var alarmItem: AlarmItem?
+    //indexPath
+    var indexPath: IndexPath?
     
     override func awakeFromNib() {
         super.awakeFromNib()

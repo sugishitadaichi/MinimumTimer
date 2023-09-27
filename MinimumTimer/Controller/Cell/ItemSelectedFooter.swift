@@ -15,7 +15,10 @@ protocol ItemSelectedFooterDelegate{
 
 class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource, PopUpViewControllerDelegate {
     
-    
+    //項目一覧選択を紐付け
+    @IBOutlet weak var itemSelectedPickerText: UITextField!
+    //追加ボタンを紐付け
+    @IBOutlet weak var addButton: UIButton!
     //追加ボタンを押した際の処理（Realm導入後。AlarmSettingViewCellに反映させる？）
     @IBAction func addButtonAction(_ sender: UIButton) {
         //dateFormatterを定義
@@ -27,16 +30,12 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         //初期値の設定(Date型→String型へ)
         guard let updatedItemEndTimeStringText = dateFormatter.date(from: updatedItemEndTimeText) else { return }
         //項目を追加した際の終了予定時間をItemEndTimeStringText（String型）に保存し画面を閉じる
-        addMaster(with: updatedItemEndTimeStringText)
+        addItem(with: updatedItemEndTimeStringText)
         
         //delegateの設定
         delegate?.reflectItemEndTime()
         
     }
-    //項目一覧選択を紐付け
-    @IBOutlet weak var itemSelectedPickerText: UITextField!
-    //追加ボタンを紐付け
-    @IBOutlet weak var addButton: UIButton!
     
     //UIPickerViewをインスタンス化
     var pickerView = UIPickerView()
@@ -46,11 +45,11 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     var masterItem = MasterItem()
     //項目設定のプロパティ（配列）
     var masterItemList: [MasterItem] = []
-    //作業設定時間のプロパティ（配列）
-    var alarmSettingList: [AlarmSetting] = []
     //項目設定オブジェクトの作成
-    var alarmSetting = AlarmSetting()
-    //
+    var alarmItem = AlarmItem()
+    //AlarmStartSettingTimeHeaderをインスタンス化
+    let alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
+    //AlarmSettingViewCellをインスタンス化
     let alarmSettingViewCell = AlarmSettingViewCell()
     //delegateの定義
     var delegate: ItemSelectedFooterDelegate?
@@ -152,21 +151,26 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         print("処理実行1")
         }
     //項目名を保存・反映する処理
-    func addMaster(with text: Date) {
+    func addItem(with text: Date) {
         //Realmをインスタンス化
         let realm = try! Realm()
-        let day = Date()
+        //day（現在時刻）を設定
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
         
         //項目マスタをアラーム時間と足し合わせる
         //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
         try! realm.write {
-            //時間を足し合わせる設定(時間+分)
-            var modifiedTime = Calendar.current.date(byAdding: .hour, value: 1, to: day)! + Calendar.current.date(byAdding: .minute, value: 30, to: day)!.timeIntervalSinceReferenceDate
-            //テキスト・alarmSettingモデル・合計時間の共通化
-            alarmSetting.alarmEndSettingTime = modifiedTime
-            modifiedTime = text
+            //入力された日付文字列をNSDateオブジェクトに変換し、startTimeに代入
+            if let startTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text!){
+                //時間を足し合わせる設定(時間+分)
+                var modifiedTime = Calendar.current.date(byAdding: .hour, value: 1, to: startTime)! + Calendar.current.date(byAdding: .minute, value: 30, to: startTime)!.timeIntervalSinceReferenceDate
+                //テキスト・alarmSettingモデル・合計時間の共通化
+                alarmItem.byItemEndTime = modifiedTime
+                modifiedTime = text
+            }
             
-            realm.add(alarmSetting)
+            realm.add(alarmItem)
         }
     }
     

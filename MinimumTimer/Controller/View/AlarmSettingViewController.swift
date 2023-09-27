@@ -65,7 +65,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         dateFormatter.dateFormat = "HH:mm"
         
         //フッタービューの設定
-        //フッタービューのt定義
+        //フッタービューの定義
         let footerHeight:CGFloat = 100.0
         let footerView = ItemSelectedFooter(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: footerHeight))
         
@@ -100,20 +100,14 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
 
         //dateFormatterを定義
         let dateFormatter = DateFormatter()
-        //Date型への変換？
+        //Date型への変換
         dateFormatter.dateFormat = "HH:mm"
-        //MainAlarmViewController classをインスタンス化
-        let mainAlarmViewController = MainAlarmViewController()
-        //ダミーデータ作成
-        let startDateString = mainAlarmViewController.startDateString
-        //テキストデータの設定
-        
-        //初期値の設定(Date型→String型へ)
-        guard let dummyStartDate = dateFormatter.date(from: startDateString) else { return }
-        
-        let headerPost1 = AlarmSetting(id: 0, itemId: 0, alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyStartDate)
-        
-        alarmSetting = headerPost1
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //アラーム設定を表示する際の条件（時間の昇順）
+        let resultAlarmTime = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
+        //alarmSettingListに格納
+        alarmSettingList = Array(resultAlarmTime)
         
     }
     
@@ -123,44 +117,20 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let dateFormatter = DateFormatter()
         //Date型への変換？
         dateFormatter.dateFormat = "HH:mm"
-        //ダミーデータ作成1
-        let byItemStartTimeString = "07:00"
-        let byItemEndTimeString = "07:30"
-        //初期値の設定(Date型→String型へ)
-        guard let dummyByItemStartTime = dateFormatter.date(from: byItemStartTimeString), let dummyByItemEndTime = dateFormatter.date(from: byItemEndTimeString) else { return }
-        
-        let alarmSetPost1 = AlarmItem(id: 1, alermSettingId: 1, masterId: 1, byItemStartTime: dummyByItemStartTime, byItemEndTime: dummyByItemEndTime, userSetupName: "朝食", userSetupTime: 30)
-        
-        alarmItemList.append(alarmSetPost1)
-        
-        //ダミーデータ作成2
-        let byItemStartTimeString2 = "07:30"
-        let byItemEndTimeString2 = "07:40"
-        //初期値の設定(Date型→String型へ)
-        guard let dummyByItemStartTime2 = dateFormatter.date(from: byItemStartTimeString2), let dummyByItemEndTime2 = dateFormatter.date(from: byItemEndTimeString2) else { return }
-        
-        let alarmSetPost2 = AlarmItem(id: 1, alermSettingId: 1, masterId: 1, byItemStartTime: dummyByItemStartTime2, byItemEndTime: dummyByItemEndTime2, userSetupName: "トイレ", userSetupTime: 10)
-        
-        alarmItemList.append(alarmSetPost2)
-
-
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //項目別設定を表示する際の条件（idの降順）
+        let resultItem = realm.objects(AlarmItem.self).sorted(byKeyPath: "id", ascending: true)
+        //alarmItemListに格納
+        alarmItemList = Array(resultItem)
     }
     
     //項目別の終了予定時間を格納しデータを反映させる
     func reflectItemEndTime() {
-        //項目別の終了予定時間を格納
-        setItemEndTime()
+        //項目別設定を格納
+        setAlarmItem()
         //反映
         alarmSettingTableView.reloadData()
-    }
-    //項目別の終了予定時間を格納するメソッド
-    func setItemEndTime() -> Void {
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //項目別終了予定時間を表示する際の条件（idの降順）
-        let resultItemEndTime = realm.objects(AlarmSetting.self).sorted(byKeyPath: "id", ascending: false)
-        //alarmSettingListに格納
-        alarmSettingList = Array(resultItemEndTime)
     }
 
 
@@ -180,12 +150,16 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //セルの内容を設定
         let alarmItemSetting = alarmItemList[indexPath.row]
         //セルの定義
+        //セルの項目マスタとalarmItemListの共通化
+        alarmSettingViewCell.alarmItem = alarmItemSetting
         //項目別開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmSettingViewCell.itemStartTimeLabel.text = dateFormatter.string(from: alarmItemSetting.byItemStartTime)
         //項目別開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmSettingViewCell.itemEndTimeLabel.text = dateFormatter.string(from: alarmItemSetting.byItemEndTime)
         //項目名のテキストデータを定義
-        alarmSettingViewCell.userSetupNameLabel.text = String(alarmItemSetting.userSetupName)
+        alarmSettingViewCell.userSetupNameLabel.text = alarmItemSetting.userSetupName
+        //indexpath
+        alarmSettingViewCell.indexPath = indexPath
         //デリゲートの登録
         alarmSettingViewCell.delegate = self
 

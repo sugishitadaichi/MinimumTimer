@@ -146,7 +146,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         //masterItemListにある個数分セルを返却
         return masterItemList.count
     }
-    //tableViewにAlarmSettingViewCellを設定
+    //tableViewにMasterItemViewCellを設定
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //セルの作成
         let masterItemViewCell = tableView.dequeueReusableCell(withIdentifier: "MasterItemViewCell", for: indexPath)as! MasterItemViewCell
