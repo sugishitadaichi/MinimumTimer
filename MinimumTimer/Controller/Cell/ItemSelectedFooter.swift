@@ -23,8 +23,13 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     @IBAction func addButtonAction(_ sender: UIButton) {
         //dateFormatterを定義
         let dateFormatter = DateFormatter()
+        //masterItemList[row]をpickerViewMasterItemとして定義
+        let pickerViewMasterItem = masterItemList
         //Date型への変換
         dateFormatter.dateFormat = "HH:mm"
+        //項目名のテキストの定義・nilの場合は空白を代入
+        var updatedItemNameText = alarmSettingViewCell.userSetupNameLabel.text ?? ""
+        updatedItemNameText = pickerViewMasterItem.userSetupName
         //項目別終了時間のテキストの定義・nillの場合は00:00を代入
         let updatedItemEndTimeText = alarmSettingViewCell.itemEndTimeLabel?.text ?? "00:00"
         //初期値の設定(Date型→String型へ)

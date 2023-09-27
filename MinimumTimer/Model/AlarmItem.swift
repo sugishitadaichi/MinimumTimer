@@ -20,9 +20,9 @@ class AlarmItem: Object {
     @objc dynamic var byItemStartTime: Date = Date()
     //AlarmSetting.作業開始時間+AlarmSetup.設定した時間(作業終了時間)
     @objc dynamic var byItemEndTime: Date = Date()
-    //ユーザーが設定した項目名
+    //ユーザーが設定した項目名（不要？）
     @objc dynamic var userSetupName: String = ""
-    //ユーザーが項目に設定した時間
+    //ユーザーが項目に設定した時間（不要？）
     @objc dynamic var userSetupTime: Int = 0
     
     //初期化(Relmを使用する引数Objectもクラスは初期化時にconvinienceをつける)

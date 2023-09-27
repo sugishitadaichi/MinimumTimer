@@ -20,6 +20,7 @@ class AlarmSettingViewCell: UITableViewCell {
     var delegate: AlarmSettingViewCellDelegate?
     //項目マスタの定義
     var alarmItem: AlarmItem?
+    var masterItem: MasterItem?
     //indexPath
     var indexPath: IndexPath?
     
