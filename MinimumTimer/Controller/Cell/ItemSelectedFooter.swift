@@ -23,18 +23,17 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     @IBAction func addButtonAction(_ sender: UIButton) {
         //dateFormatterを定義
         let dateFormatter = DateFormatter()
-        //masterItemList[row]をpickerViewMasterItemとして定義
-        let pickerViewMasterItem = masterItemList
         //Date型への変換
         dateFormatter.dateFormat = "HH:mm"
         //項目名のテキストの定義・nilの場合は空白を代入
-        var updatedItemNameText = alarmSettingViewCell.userSetupNameLabel.text ?? ""
-        updatedItemNameText = pickerViewMasterItem.userSetupName
+        let updatedItemNameText = alarmSettingViewCell.userSetupNameLabel?.text ?? ""
+        //項目名の追加
+        addName(with: updatedItemNameText)
         //項目別終了時間のテキストの定義・nillの場合は00:00を代入
         let updatedItemEndTimeText = alarmSettingViewCell.itemEndTimeLabel?.text ?? "00:00"
         //初期値の設定(Date型→String型へ)
         guard let updatedItemEndTimeStringText = dateFormatter.date(from: updatedItemEndTimeText) else { return }
-        //項目を追加した際の終了予定時間をItemEndTimeStringText（String型）に保存し画面を閉じる
+        //項目を追加した際の終了予定時間をItemEndTimeStringText（String型）に保存
         addItem(with: updatedItemEndTimeStringText)
         
         //delegateの設定
@@ -50,6 +49,8 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     var masterItem = MasterItem()
     //項目設定のプロパティ（配列）
     var masterItemList: [MasterItem] = []
+    //項目設定のプロパティの宣言
+    var selectedMasterItem: MasterItem?
     //項目設定オブジェクトの作成
     var alarmItem = AlarmItem()
     //AlarmStartSettingTimeHeaderをインスタンス化
@@ -119,13 +120,15 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     
     //項目を格納しデータを反映させる
     func reflectMasterItem() {
-        //項目を格納
+        //項目を格納(配列)
         setItemSelectedMasterItem()
+        //項目を格納(プロパティ)
+        setItemSelectedItemName()
         //反映(UItextField)
         itemSelectedPickerText.reloadInputViews()
     }
     
-    //項目を格納するためのメソッド
+    //項目を格納するためのメソッド(配列)
     func setItemSelectedMasterItem() -> Void {
         //Realmをインスタンス化
         let realm = try! Realm()
@@ -135,9 +138,25 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
             SortDescriptor(keyPath: "userSetupMinutesTime", ascending: true)
         ]
         //RealmデータベースからMasterItem情報を取得しidの値で降順にソートする
-        let result = realm.objects(MasterItem.self).sorted(by: sortProperties)
+        let timeResult = realm.objects(MasterItem.self).sorted(by: sortProperties)
         //masterItemListに格納
-        masterItemList = Array(result)
+        masterItemList = Array(timeResult)
+        
+    }
+    //項目を格納するためのメソッド(プロパティ)
+    func setItemSelectedItemName() -> Void {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //RealmデータベースからMasterItem情報を取得しidの値で降順にソートする
+        let nameResult = realm.objects(MasterItem.self).sorted(byKeyPath: "id" , ascending: false)
+        //nameResult.firstの値がnilでないか確認する処理
+        if let firstItem = nameResult.first {
+            selectedMasterItem = firstItem
+        } else {
+            selectedMasterItem = nil
+        }
+        //masterItemListに格納
+        selectedMasterItem = nameResult.first
         
     }
     
@@ -177,6 +196,17 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
             
             realm.add(alarmItem)
         }
+    }
+    //項目名を保存・反映する処理
+    func addName(with text: String) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //保存処理の実装
+        try! realm.write {
+            masterItem.userSetupName = text
+            realm.add(masterItem)
+        }
+        
     }
     
     
