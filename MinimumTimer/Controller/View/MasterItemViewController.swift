@@ -44,7 +44,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         }
     }
     
-    //項目設定のプロパティ
+    //項目設定のプロパティ（配列）
     var masterItemList: [MasterItem] = []
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()

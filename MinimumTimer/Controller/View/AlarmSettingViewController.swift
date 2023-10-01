@@ -14,6 +14,30 @@ protocol AlarmSettingViewControllerDelegate{}
 class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate {
     
     
+    func deleteItem(indexPath: IndexPath) {
+        // Realmのインスタンス化
+        let realm = try!Realm()
+        //　tweetListのインデックス番号のidをtarget定数に取得
+        let deleteItemTarget = alarmSettingList[indexPath.row].id
+        //　targetと同じidを持つRealmデータベース内のデータを検索してdeletePostに格納
+        let deleteItem = realm.objects(AlarmSetting.self).filter("id == %@", deleteItemTarget).first
+        //　もしもdeletePostがnilでなければ以下を実行
+        if let deleteItem {
+            //　reaimの書き込み
+            try! realm.write {
+                //　deletePostをRealmから削除
+                realm.delete(deleteItem)
+            }
+        }
+        //alarmSettingListの配列からインデックス番号に該当する配列を削除
+        alarmSettingList.remove(at: indexPath.row)
+        //デーブルビューからインデックス番号に該当するセルを削除
+        alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        //テーブルビューの再読み込み
+        alarmSettingTableView.reloadData()
+        
+    }
+    
     
     //キャンセルボタンを押した際の処理
     @IBAction func cancelButtonAction(_ sender: UIButton) {

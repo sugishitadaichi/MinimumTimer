@@ -20,7 +20,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     //TableViewを紐付け
     @IBOutlet weak var mainAlarmTableView: UITableView!
     
-    //アラーム設定のプロパティ
+    //アラーム設定のプロパティ（配列）
     var alarmSettingList: [AlarmSetting] = []
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()

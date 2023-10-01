@@ -8,13 +8,24 @@
 import UIKit
 import RealmSwift
 //delegateを定義
-protocol AlarmSettingViewCellDelegate{}
+protocol AlarmSettingViewCellDelegate{
+    func deleteItem(indexPath: IndexPath)
+}
 
 
 class AlarmSettingViewCell: UITableViewCell {
+    //削除ボタンを押した時の処理
+    @IBAction func deleteButtonAction(_ sender: UIButton) {
+        //削除処理を受ける処理
+        delegate?.deleteItem(indexPath: indexPath!)
+    }
+    //削除ボタンを紐付け
     @IBOutlet weak var deleteButton: UIButton!
+    //項目別終了時間を紐付け
     @IBOutlet weak var itemEndTimeLabel: UILabel!
+    //項目別開始時間を紐付け
     @IBOutlet weak var itemStartTimeLabel: UILabel!
+    //項目名を紐付け
     @IBOutlet weak var userSetupNameLabel: UILabel!
     //delegateの設定
     var delegate: AlarmSettingViewCellDelegate?

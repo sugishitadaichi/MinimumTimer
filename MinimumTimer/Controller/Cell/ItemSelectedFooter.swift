@@ -26,7 +26,8 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         //Date型への変換
         dateFormatter.dateFormat = "HH:mm"
         //項目名のテキストの定義・nilの場合は空白を代入
-        let updatedItemNameText = alarmSettingViewCell.userSetupNameLabel?.text ?? ""
+        var updatedItemNameText = alarmSettingViewCell.userSetupNameLabel?.text ?? ""
+        alarmSettingViewCell.userSetupNameLabel?.text = selectedMasterItem?.userSetupName ?? ""
         //項目名の追加
         addName(with: updatedItemNameText)
         //項目別終了時間のテキストの定義・nillの場合は00:00を代入
@@ -120,10 +121,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     
     //項目を格納しデータを反映させる
     func reflectMasterItem() {
-        //項目を格納(配列)
-        setItemSelectedMasterItem()
-        //項目を格納(プロパティ)
-        setItemSelectedItemName()
         //反映(UItextField)
         itemSelectedPickerText.reloadInputViews()
     }
@@ -242,8 +239,11 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         let pickerViewMasterItem = masterItemList[row]
         //UITextFieldに選択されたデータを表示（文字列化）
         itemSelectedPickerText.text = "\(pickerViewMasterItem.userSetupName)   \(pickerViewMasterItem.userSetupHourTime)時間 \(pickerViewMasterItem.userSetupMinutesTime)分"
-        //項目を格納しデータを反映させる
+        //masterItemList[row]をselectedMasterItemとして定義
+        selectedMasterItem = masterItemList[row]
+        //textへ反映
         reflectMasterItem()
+        
     }
     //　追加ボタンの仕様
     func setupAddButton() {
