@@ -13,7 +13,7 @@ protocol ItemSelectedFooterDelegate{
     func reflectItemEndTime()
 }
 
-class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource, PopUpViewControllerDelegate {
+class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource {
     
     //項目一覧選択を紐付け
     @IBOutlet weak var itemSelectedPickerText: UITextField!
@@ -26,8 +26,7 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         //Date型への変換
         dateFormatter.dateFormat = "HH:mm"
         //項目名のテキストの定義・nilの場合は空白を代入
-        var updatedItemNameText = alarmSettingViewCell.userSetupNameLabel?.text ?? ""
-        alarmSettingViewCell.userSetupNameLabel?.text = selectedMasterItem?.userSetupName ?? ""
+        let updatedItemNameText = alarmSettingViewCell.userSetupNameLabel?.text ?? ""
         //項目名の追加
         addName(with: updatedItemNameText)
         //項目別終了時間のテキストの定義・nillの場合は00:00を代入
@@ -119,11 +118,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         }    }
     
     
-    //項目を格納しデータを反映させる
-    func reflectMasterItem() {
-        //反映(UItextField)
-        itemSelectedPickerText.reloadInputViews()
-    }
     
     //項目を格納するためのメソッド(配列)
     func setItemSelectedMasterItem() -> Void {
@@ -196,13 +190,9 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     }
     //項目名を保存・反映する処理
     func addName(with text: String) {
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //保存処理の実装
-        try! realm.write {
-            masterItem.userSetupName = text
-            realm.add(masterItem)
-        }
+        
+        alarmSettingViewCell.userSetupNameLabel?.text = selectedMasterItem?.userSetupName
+        alarmSettingViewCell.userSetupNameLabel?.text = text
         
     }
     
@@ -237,12 +227,10 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //masterItemList[row]をpickerViewMasterItemとして定義
         let pickerViewMasterItem = masterItemList[row]
+        //masterItemList[row] を選択されたマスタ情報として selectedMasterItem にも代入する
+        selectedMasterItem = masterItemList[row]
         //UITextFieldに選択されたデータを表示（文字列化）
         itemSelectedPickerText.text = "\(pickerViewMasterItem.userSetupName)   \(pickerViewMasterItem.userSetupHourTime)時間 \(pickerViewMasterItem.userSetupMinutesTime)分"
-        //masterItemList[row]をselectedMasterItemとして定義
-        selectedMasterItem = masterItemList[row]
-        //textへ反映
-        reflectMasterItem()
         
     }
     //　追加ボタンの仕様
