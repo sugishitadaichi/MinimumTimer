@@ -27,6 +27,8 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         dateFormatter.dateFormat = "HH:mm"
         //項目名のテキストの定義・nilの場合は空白を代入
         let updatedItemNameText = alarmSettingViewCell.userSetupNameLabel?.text ?? ""
+        //alarmItemオブジェクトに項目名のデータを格納
+        alarmItem.userSetupName = selectedMasterItem?.userSetupName ?? ""
         //項目名の追加
         addName(with: updatedItemNameText)
         //項目別終了時間のテキストの定義・nillの場合は00:00を代入
@@ -190,6 +192,7 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     }
     //項目名を保存・反映する処理
     func addName(with text: String) {
+        
         
         alarmSettingViewCell.userSetupNameLabel?.text = selectedMasterItem?.userSetupName
         alarmSettingViewCell.userSetupNameLabel?.text = text
