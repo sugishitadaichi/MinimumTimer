@@ -136,22 +136,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         masterItemList = Array(timeResult)
         
     }
-    //項目を格納するためのメソッド(プロパティ)
-    func setItemSelectedItemName() -> Void {
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //RealmデータベースからMasterItem情報を取得しidの値で降順にソートする
-        let nameResult = realm.objects(MasterItem.self).sorted(byKeyPath: "id" , ascending: false)
-        //nameResult.firstの値がnilでないか確認する処理
-        if let firstItem = nameResult.first {
-            selectedMasterItem = firstItem
-        } else {
-            selectedMasterItem = nil
-        }
-        //masterItemListに格納
-        selectedMasterItem = nameResult.first
-        
-    }
     
     
     //UITextField を選択したときに pickerView のキーボードが表示されるよう実装
@@ -192,8 +176,7 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     }
     //項目名を保存・反映する処理
     func addName(with text: String) {
-        
-        
+        //selectMasteItemに格納されたuserNameをalarmSettingViewCellのuserSetupNameLabelへ継承
         alarmSettingViewCell.userSetupNameLabel?.text = selectedMasterItem?.userSetupName
         alarmSettingViewCell.userSetupNameLabel?.text = text
         

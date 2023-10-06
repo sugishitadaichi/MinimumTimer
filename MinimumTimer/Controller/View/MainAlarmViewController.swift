@@ -79,7 +79,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //初期値の設定(Date型→String型へ)
         guard let dummyStartDate = dateFormatter.date(from: startDateString), let dummyEndDate = dateFormatter.date(from: endDateString) else { return }
         
-        let alarmPost1 = AlarmSetting(id: 1, itemId: 1, alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
+        let alarmPost1 = AlarmSetting(id: "1", itemId: "1", alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
         
         alarmSettingList.append(alarmPost1)
     }
