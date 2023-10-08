@@ -10,7 +10,7 @@ import RealmSwift
 
 //delegateを定義
 protocol ItemSelectedFooterDelegate{
-    func reflectItemEndTime()
+    func reflectItemEndTime(modifiedTime: Date)
 }
 
 class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource {
@@ -36,10 +36,9 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         //初期値の設定(Date型→String型へ)
         guard let updatedItemEndTimeStringText = dateFormatter.date(from: updatedItemEndTimeText) else { return }
         //項目を追加した際の終了予定時間をItemEndTimeStringText（String型）に保存
-        addItem(with: updatedItemEndTimeStringText)
+        addItemEndTime(with: updatedItemEndTimeStringText)
         
-        //delegateの設定
-        delegate?.reflectItemEndTime()
+        
         
     }
     
@@ -55,8 +54,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     var selectedMasterItem: MasterItem?
     //項目設定オブジェクトの作成
     var alarmItem = AlarmItem()
-    //AlarmStartSettingTimeHeaderをインスタンス化
-    let alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
     //AlarmSettingViewCellをインスタンス化
     let alarmSettingViewCell = AlarmSettingViewCell()
     //delegateの定義
@@ -151,28 +148,12 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         
         print("処理実行1")
         }
-    //項目名を保存・反映する処理
-    func addItem(with text: Date) {
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //day（現在時刻）を設定
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
+    //項目の終了予定時間を保存・反映する処理
+    func addItemEndTime(with text: Date) {
+        //delegateの設定（項目別の終了予定時間）
+        delegate?.reflectItemEndTime(modifiedTime: Date())
+        alarmItem.byItemEndTime = text
         
-        //項目マスタをアラーム時間と足し合わせる
-        //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
-        try! realm.write {
-            //入力された日付文字列をNSDateオブジェクトに変換し、startTimeに代入
-            if let startTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text!){
-                //時間を足し合わせる設定(時間+分)
-                var modifiedTime = Calendar.current.date(byAdding: .hour, value: masterItem.userSetupHourTime, to: startTime)! + Calendar.current.date(byAdding: .minute, value: masterItem.userSetupMinutesTime, to: startTime)!.timeIntervalSinceReferenceDate
-                //テキスト・alarmSettingモデル・合計時間の共通化
-                alarmItem.byItemEndTime = modifiedTime
-                modifiedTime = text
-            }
-            
-            realm.add(alarmItem)
-        }
     }
     //項目名を保存・反映する処理
     func addName(with text: String) {

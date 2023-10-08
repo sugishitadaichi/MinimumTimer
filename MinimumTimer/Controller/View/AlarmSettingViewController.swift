@@ -12,6 +12,8 @@ import RealmSwift
 protocol AlarmSettingViewControllerDelegate{}
 
 class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate {
+    
+    
     //キャンセルボタンを押した際の処理
     @IBAction func cancelButtonAction(_ sender: UIButton) {
         //キャンセルした際に画面遷移元に戻る処理
@@ -38,6 +40,12 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     let dateFormatter = DateFormatter()
     //項目マスタのプロパティ
     var masterItemList: [MasterItem] = []
+    //AlarmStartSettingTimeHeaderをインスタンス化
+    let alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
+    //項目設定オブジェクトの作成
+    var masterItem = MasterItem()
+    //項目設定オブジェクトの作成
+    var alarmItem = AlarmItem()
     //delegateの設定
     var delegate: AlarmSettingViewControllerDelegate?
     //フッタービューを定義
@@ -97,6 +105,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             endSettingTimeLabel.text = dateFormatter.string(from: endTime)
         }
         
+        
     }
     
     //削除処理の実装
@@ -153,7 +162,31 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmItemList = Array(resultItem)
     }
     
-    //項目別の終了予定時間を格納しデータを反映させる
+    func reflectItemEndTime(modifiedTime: Date) {
+        //day（現在時刻）を設定
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        //項目マスタをアラーム時間と足し合わせる
+        //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
+            //入力された日付文字列をNSDateオブジェクトに変換し、startTimeに代入
+            if let startTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text!){
+                //時間を足し合わせる設定(時間+分)
+                var modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: masterItem.userSetupHourTime, to: startTime)! + Calendar.current.date(byAdding: .minute, value: masterItem.userSetupMinutesTime, to: startTime)!.timeIntervalSinceReferenceDate
+                //テキスト・alarmSettingモデル・合計時間の共通化
+                alarmItem.byItemEndTime = modifiedItemEndTime
+                modifiedItemEndTime = modifiedTime
+            }
+            
+        //ItemSelectedFooter classをインスタンス化
+        let itemSelectedFooter = ItemSelectedFooter()
+        //ItemSelectedFooterのdelegateメソッド使用を定義
+        itemSelectedFooter.delegate = self
+        //反映
+        alarmSettingTableView.reloadData()
+        
+    }
+    //項目別の終了予定時間を格納しデータを反映させる（不要？要検討）
     func reflectItemEndTime() {
         //項目別設定を格納
         setAlarmItem()
