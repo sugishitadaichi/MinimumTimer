@@ -13,7 +13,6 @@ protocol AlarmSettingViewControllerDelegate{}
 
 class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate {
     
-    
     //キャンセルボタンを押した際の処理
     @IBAction func cancelButtonAction(_ sender: UIButton) {
         //キャンセルした際に画面遷移元に戻る処理
@@ -23,6 +22,21 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var endSettingTimeLabel: UILabel!
     //保存ボタンを紐付け
     @IBOutlet weak var saveButton: UIButton!
+    //保存ボタンを押した際の処理
+    @IBAction func saveButtonAction(_ sender: UIButton) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //保存処理の実装
+        try! realm.write {
+            //MasterItemのオブジェクトを保存
+            realm.add(masterItem)
+            //AlarmSettingのオブジェクトを保存
+            realm.add(alarmSettingObjects)
+            
+        }
+        //画面遷移元に戻る処理
+        self.dismiss(animated: true, completion: nil)
+    }
     //キャンセルボタンを紐付け
     @IBOutlet weak var cancelButton: UIButton!
     //TableViewを紐付け
@@ -32,6 +46,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     var alarmSetting: AlarmSetting = AlarmSetting()
     //アラーム設定のプロパティ（配列）
     var alarmSettingList: [AlarmSetting] = []
+    //アラーム設定のオブジェクト
+    var alarmSettingObjects = AlarmSetting()
     //項目別アラームのプロパティ
     var alarmItemList: [AlarmItem] = []
     //項目設定のプロパティの宣言

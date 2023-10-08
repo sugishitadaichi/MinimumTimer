@@ -14,23 +14,6 @@ protocol PopUpViewControllerDelegate {
 
 class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
-    //追加ボタンを押した際の処理
-    @IBAction func addButtonAction(_ sender: UIButton) {
-        //項目名のテキストの定義・nilの場合は空白を代入
-        let updatedNameText = userSetupNameText.text ?? ""
-        //時間設定のテキストの定義・nilの場合は0を代入
-        let updatedHourText = Int(userSetupHourTimeText.text ?? "0") ?? 0
-        let updatedMinutesText = Int(userSetupMinutesTimeText.text ?? "0") ?? 0
-        //項目名をupdatedNameText（String型）に保存し画面を閉じる
-        saveName(with: updatedNameText)
-        //時間設定をupdatedHourText（Int型）に保存し画面を閉じる
-        saveHourTime(with: updatedHourText)
-        //時間設定をupdatedMinutesText（Int型）に保存し画面を閉じる
-        saveMinutesTime(with: updatedMinutesText)
-        
-        //delegateの設定
-        delegate?.reflectMasterItem()
-    }
         //キャンセルボタンを押した際の処理を紐付け
     @IBAction func cancelButtonAction(_ sender: Any) {
         //キャンセルすると画面を戻る処理
@@ -48,6 +31,24 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     @IBOutlet weak var cancelButton: UIButton!
     //追加ボタンを紐付け
     @IBOutlet weak var addButton: UIButton!
+    //追加ボタンを押した際の処理
+    @IBAction func addButtonAction(_ sender: UIButton) {
+        //項目名のテキストの定義・nilの場合は空白を代入
+        let updatedNameText = userSetupNameText.text ?? ""
+        //時間設定のテキストの定義・nilの場合は0を代入
+        let updatedHourText = Int(userSetupHourTimeText.text ?? "0") ?? 0
+        let updatedMinutesText = Int(userSetupMinutesTimeText.text ?? "0") ?? 0
+        //項目名をupdatedNameText（String型）に保存し画面を閉じる
+        saveName(with: updatedNameText)
+        //時間設定をupdatedHourText（Int型）に保存し画面を閉じる
+        saveHourTime(with: updatedHourText)
+        //時間設定をupdatedMinutesText（Int型）に保存し画面を閉じる
+        saveMinutesTime(with: updatedMinutesText)
+        
+        //delegateの設定
+        delegate?.reflectMasterItem()
+    }
+    
     //項目設定の配列のオブジェクトの作成
     var masterItemList: [MasterItem] = []
     //項目設定オブジェクトの作成
@@ -58,6 +59,10 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     var delegate: PopUpViewControllerDelegate?
     //項目名の文字数を10文字以内に定義
     let maxUserSetupNameLength = 10
+    //設定時間(時間)を0時間以上24時間未満に定義
+    let hourTimeRange = 0..<24
+    //設定時間(時間)を0分以上60分未満に定義
+    let minutesTimeRange = 0..<60
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,8 +74,12 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         userSetupNameText.text = String(masterItem.userSetupName)
         //userSetupHourTimeTextのテキストにmasterItemの内容をString型で代入
         userSetupHourTimeText.text = String(masterItem.userSetupHourTime)
+        //userSetupHourTimeTextのキーボードパットを数字のみの入力
+        userSetupHourTimeText.keyboardType = UIKeyboardType.numberPad
         //userSetupMinutesTimeTextのテキストにmasterItemの内容をString型で代入
         userSetupMinutesTimeText.text = String(masterItem.userSetupMinutesTime)
+        //userSetupMinutesTextのキーボードパットを数字のみの入力
+        userSetupMinutesTimeText.keyboardType = UIKeyboardType.numberPad
         
         //delegateの登録
         userSetupHourTimeText.delegate = self
@@ -159,6 +168,27 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
             
         }
     }
+    
+    //数字制限(要検討)
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        
+//        //入力される文字列（時間）を取得
+//        let limitedHourTimeText = (userSetupHourTimeText.text ?? "") + string
+//        //入力される文字列（分）を取得
+//        let limitedMinutesTimeText = (userSetupMinutesTimeText.text ?? "") + string
+//        //入力されている文字列（時間）が数字でない場合や範囲外の数字の場合は入力を無効にする
+//        if let limitedHourTimeNumber = Int(limitedHourTimeText), hourTimeRange.contains(limitedHourTimeNumber) {
+//                return true
+//            } else{
+//                return false
+//            }
+//        
+//        if let limitedMinutesTimeNumber = Int(limitedMinutesTimeText), minutesTimeRange.contains(limitedMinutesTimeNumber) {
+//                return true
+//            } else{
+//                return false
+//            }
+//    }
     
     
     //時間設定のdoneボタンの設定と時刻表示
