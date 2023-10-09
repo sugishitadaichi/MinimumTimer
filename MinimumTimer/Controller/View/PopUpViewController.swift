@@ -170,25 +170,31 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     }
     
     //数字制限(要検討)
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        
-//        //入力される文字列（時間）を取得
-//        let limitedHourTimeText = (userSetupHourTimeText.text ?? "") + string
-//        //入力される文字列（分）を取得
-//        let limitedMinutesTimeText = (userSetupMinutesTimeText.text ?? "") + string
-//        //入力されている文字列（時間）が数字でない場合や範囲外の数字の場合は入力を無効にする
-//        if let limitedHourTimeNumber = Int(limitedHourTimeText), hourTimeRange.contains(limitedHourTimeNumber) {
-//                return true
-//            } else{
-//                return false
-//            }
-//        
-//        if let limitedMinutesTimeNumber = Int(limitedMinutesTimeText), minutesTimeRange.contains(limitedMinutesTimeNumber) {
-//                return true
-//            } else{
-//                return false
-//            }
-//    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        //時間設定(時間)の数字制限
+        if textField.accessibilityIdentifier == "itemHourTime" {
+            //入力される文字列（時間）を取得
+            let limitedHourTimeText = (userSetupHourTimeText.text ?? "") + string
+            //入力されている文字列（時間）が数字でない場合や範囲外の数字の場合は入力を無効にする
+            if let limitedHourTimeNumber = Int(limitedHourTimeText), hourTimeRange.contains(limitedHourTimeNumber) {
+                    return true
+                } else{
+                    return false
+                }
+        }
+        //時間設定(分)の数字制限
+        if textField.accessibilityIdentifier == "itemMinutesTime" {
+            //入力される文字列（分）を取得
+            let limitedMinutesTimeText = (userSetupMinutesTimeText.text ?? "") + string
+            //入力されている文字列（時間）が数字でない場合や範囲外の数字の場合は入力を無効にする
+            if let limitedMinutesTimeNumber = Int(limitedMinutesTimeText), minutesTimeRange.contains(limitedMinutesTimeNumber) {
+                    return true
+                } else{
+                    return false
+                }
+            
+        }
+    }
     
     
     //時間設定のdoneボタンの設定と時刻表示
