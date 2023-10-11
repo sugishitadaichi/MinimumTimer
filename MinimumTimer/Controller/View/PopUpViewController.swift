@@ -189,11 +189,13 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
             //入力されている文字列（時間）が数字でない場合や範囲外の数字の場合は入力を無効にする
             if let limitedMinutesTimeNumber = Int(limitedMinutesTimeText), minutesTimeRange.contains(limitedMinutesTimeNumber) {
                     return true
-                } else{
+                }    else{
                     return false
                 }
             
         }
+        //上記数字制限以外のテキストは有効にする（今回でゆうと項目名）
+        return true
     }
     
     
