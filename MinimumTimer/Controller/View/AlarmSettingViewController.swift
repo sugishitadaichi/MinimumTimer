@@ -178,7 +178,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmItemList = Array(resultItem)
     }
     
-    func reflectItemEndTime(modifiedTime: Date) {
+    func reflectItemEndTime(selectedMasterItem: MasterItem) {
         //day（現在時刻）を設定
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
@@ -191,13 +191,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
                 var modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: masterItem.userSetupHourTime, to: startTime)! + Calendar.current.date(byAdding: .minute, value: masterItem.userSetupMinutesTime, to: startTime)!.timeIntervalSinceReferenceDate
                 //テキスト・alarmSettingモデル・合計時間の共通化
                 alarmItem.byItemEndTime = modifiedItemEndTime
-                modifiedItemEndTime = modifiedTime
+                modifiedItemEndTime = alarmSetting.alarmEndSettingTime
             }
-            
-        //ItemSelectedFooter classをインスタンス化
-        let itemSelectedFooter = ItemSelectedFooter()
-        //ItemSelectedFooterのdelegateメソッド使用を定義
-        itemSelectedFooter.delegate = self
         //反映
         alarmSettingTableView.reloadData()
         

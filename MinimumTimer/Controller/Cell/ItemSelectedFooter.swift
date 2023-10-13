@@ -10,7 +10,7 @@ import RealmSwift
 
 //delegateを定義
 protocol ItemSelectedFooterDelegate{
-    func reflectItemEndTime(modifiedTime: Date)
+    func reflectItemEndTime(selectedMasterItem: MasterItem)
 }
 
 class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource {
@@ -33,7 +33,7 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         addName(with: updatedItemNameText)
         //項目別終了時間のテキストの定義・nillの場合は00:00を代入
         let updatedItemEndTimeText = alarmSettingViewCell.itemEndTimeLabel?.text ?? "00:00"
-        //初期値の設定(Date型→String型へ)
+        //初期値の設定(String型→Date型へ)
         guard let updatedItemEndTimeStringText = dateFormatter.date(from: updatedItemEndTimeText) else { return }
         //項目を追加した際の終了予定時間をItemEndTimeStringText（String型）に保存
         addItemEndTime(with: updatedItemEndTimeStringText)
@@ -151,7 +151,7 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     //項目の終了予定時間を保存・反映する処理
     func addItemEndTime(with text: Date) {
         //delegateの設定（項目別の終了予定時間）
-        delegate?.reflectItemEndTime(modifiedTime: Date())
+        delegate?.reflectItemEndTime(selectedMasterItem: selectedMasterItem!)
         alarmItem.byItemEndTime = text
         
     }
