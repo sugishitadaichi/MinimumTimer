@@ -193,16 +193,11 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
                 alarmItem.byItemEndTime = modifiedItemEndTime
                 modifiedItemEndTime = alarmSetting.alarmEndSettingTime
             }
-        //反映
+        //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
+        alarmItemList.append(alarmItem)
+        //データ反映
         alarmSettingTableView.reloadData()
         
-    }
-    //項目別の終了予定時間を格納しデータを反映させる（不要？要検討）
-    func reflectItemEndTime() {
-        //項目別設定を格納
-        setAlarmItem()
-        //反映
-        alarmSettingTableView.reloadData()
     }
 
 
