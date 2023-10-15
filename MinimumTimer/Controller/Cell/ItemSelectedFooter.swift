@@ -11,6 +11,7 @@ import RealmSwift
 //delegateを定義
 protocol ItemSelectedFooterDelegate{
     func reflectItemEndTime(selectedMasterItem: MasterItem)
+    func reflectItemName(selectedMasterItem: MasterItem)
 }
 
 class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource {
@@ -157,8 +158,8 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     }
     //項目名を保存・反映する処理
     func addName(with text: String) {
-        //selectMasteItemに格納されたuserNameをalarmSettingViewCellのuserSetupNameLabelへ継承
-        alarmSettingViewCell.userSetupNameLabel?.text = selectedMasterItem?.userSetupName
+        //delegateの設定（項目名）
+        delegate?.reflectItemName(selectedMasterItem: selectedMasterItem!)
         alarmSettingViewCell.userSetupNameLabel?.text = text
         
     }

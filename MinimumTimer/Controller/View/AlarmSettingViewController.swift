@@ -177,14 +177,14 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmItemListに格納
         alarmItemList = Array(resultItem)
     }
-    
+    //項目別の終了時間の実装
     func reflectItemEndTime(selectedMasterItem: MasterItem) {
         //day（現在時刻）を設定
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         
         //項目マスタをアラーム時間と足し合わせる
-        //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
+    //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
             //入力された日付文字列をNSDateオブジェクトに変換し、startTimeに代入
             if let startTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text!){
                 //時間を足し合わせる設定(時間+分)
@@ -198,6 +198,15 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //データ反映
         alarmSettingTableView.reloadData()
         
+    }
+    //項目名の実装
+    func reflectItemName(selectedMasterItem: MasterItem) {
+        //alarmItemとmasteItemのuserSetupNameの共通化（継承）
+        alarmItem.userSetupName = masterItem.userSetupName
+        //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
+        alarmItemList.append(alarmItem)
+        //データ反映
+        alarmSettingTableView.reloadData()
     }
 
 
