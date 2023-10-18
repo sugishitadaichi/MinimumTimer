@@ -7,7 +7,7 @@
 
 import UIKit
 import RealmSwift
-
+// MARK: - delegateの定義
 //delegateを定義
 protocol ItemSelectedFooterDelegate{
     func reflectItemEndTime(selectedMasterItem: MasterItem)
@@ -15,8 +15,9 @@ protocol ItemSelectedFooterDelegate{
     func reloadData(selectedMasterItem: MasterItem)
 }
 
+// MARK: - classの定義＋機能追加
 class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource {
-    
+    // MARK: - 紐付け＋ボタンアクション
     //項目一覧選択を紐付け
     @IBOutlet weak var itemSelectedPickerText: UITextField!
     //追加ボタンを紐付け
@@ -46,10 +47,9 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         
     }
     
+    // MARK: - プロパティ
     //UIPickerViewをインスタンス化
     var pickerView = UIPickerView()
-    
-    let masterItemViewController = MasterItemViewController()
     //項目設定オブジェクトの作成
     var masterItem = MasterItem()
     //項目設定のプロパティ（配列）
@@ -75,13 +75,14 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     }
 
 
+    // MARK: - 初期設定関数
     //未処理。//init関数に記載
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
     }
-    
+    // MARK: - 追加関数
     //initの実装
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -173,11 +174,20 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         itemSelectedPickerText.endEditing(true)
         print("処理実行2")
         }
+    //　追加ボタンの仕様
+    func setupAddButton() {
+        addButton.layer.cornerRadius = 10
+        addButton.clipsToBounds = true
+        
+    }
+    
+    // MARK: - delegateメソッド（TableView関係）
     //キーボード以外の場所を押すとキーボードを非表示にする
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         itemSelectedPickerText.endEditing(true)
         print("処理実行3")
         }
+    
     //pickerView に表示する列の数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
@@ -204,11 +214,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         itemSelectedPickerText.text = "\(pickerViewMasterItem.userSetupName)   \(pickerViewMasterItem.userSetupHourTime)時間 \(pickerViewMasterItem.userSetupMinutesTime)分"
         
     }
-    //　追加ボタンの仕様
-    func setupAddButton() {
-        addButton.layer.cornerRadius = 10
-        addButton.clipsToBounds = true
-        
-    }
+    
     
 }

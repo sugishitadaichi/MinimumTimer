@@ -8,23 +8,28 @@
 import UIKit
 import RealmSwift
 
+// MARK: - classの定義＋機能追加
 class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate, MainAlarmViewCellDelegate, UITableViewDataSource {
+    
+    // MARK: - 紐付け＋ボタンアクション
     //+ボタンタップ時に下記関数を実行させる
     @IBAction func alarmSettingButtonAction(_ sender: UIButton) {
         
         transitionToAlarmSettingView()
     }
-    let startDateString = "08:00"
     //＋ボタンを紐付け
     @IBOutlet weak var alarmSettingButton: UIButton!
     //TableViewを紐付け
     @IBOutlet weak var mainAlarmTableView: UITableView!
     
+    // MARK: - プロパティ
+    let startDateString = "08:00"
     //アラーム設定のプロパティ（配列）
     var alarmSettingList: [AlarmSetting] = []
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     
+    // MARK: - 初期設定関数
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -49,6 +54,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         setMainAlarm()
     }
     
+    // MARK: - 追加関数
     //＋ボタンの仕様
     func configureAlarmSettingButton() {
         alarmSettingButton.layer.cornerRadius = alarmSettingButton.bounds.width / 2
@@ -83,7 +89,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         
         alarmSettingList.append(alarmPost1)
     }
-        
+    
+    // MARK: - delegateメソッド（TableView関係）
     // TableViewに表示するセルの数を返却
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //alarmSettingListにある個数分セルを返却

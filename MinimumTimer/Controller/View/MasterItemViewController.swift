@@ -8,12 +8,15 @@
 import UIKit
 import RealmSwift
 
+// MARK: - delegateの定義
 //delegateを定義
 protocol MasterItemViewControllerDelegate{
     
 }
-
+// MARK: - classの定義＋機能追加
 class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UITableViewDelegate, UITableViewDataSource, MasterItemViewCellDelegate, PopUpViewControllerDelegate {
+    
+    // MARK: - 紐付け＋ボタンアクション
     //＋ボタンを紐付け
     @IBOutlet weak var popUpButton: UIButton!
     //TableViewを紐付け
@@ -44,11 +47,13 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         }
     }
     
+    // MARK: - プロパティ
     //項目設定のプロパティ（配列）
     var masterItemList: [MasterItem] = []
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     
+    // MARK: - 初期設定関数
     //初期設定表示用メソッド
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +76,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         //項目が表示されるよう処理を実行
         setMasterItem()
     }
+    // MARK: - ライフサイクルメソッド追加
     //ライフサイクルメソッド　viewが表示される直前で呼ばれる
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -78,6 +84,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         reflectMasterItem()
     }
     
+    // MARK: - delegateメソッド（MasterItemViewCell）
     //削除ボタンの実装内容
     func deleteMasterItem(indexPath: IndexPath) {
         // Realmのインスタンス化
@@ -111,6 +118,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         
     }
     
+    // MARK: - 追加関数
     //項目を格納しデータを反映させる
     func reflectMasterItem() {
             //項目を格納
@@ -141,6 +149,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
         popUpButton.layer.cornerRadius = popUpButton.bounds.width / 2
     }
     
+    // MARK: - delegateメソッド（TableView関係）
     //tableViewにAlarmSettingViewCellの個数を返す
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //masterItemListにある個数分セルを返却
@@ -172,6 +181,7 @@ class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UIT
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         120
     }
+    // TODO: 無限スクロールの追加
     //無限スクロール（今後対応予定） 〇〇番目のcellが表示される時に呼びだされるメソッド
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         //記事を格納してる配列の総数が8個以上あり、後ろから7番目の記事が表示される時に追加で記事を取得...予定

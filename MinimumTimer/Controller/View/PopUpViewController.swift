@@ -8,13 +8,14 @@
 import UIKit
 import RealmSwift
 
+// MARK: - delegateの定義
 protocol PopUpViewControllerDelegate {
     func reflectMasterItem()
 }
-
+// MARK: - classの定義＋機能追加
 class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
-    
-        //キャンセルボタンを押した際の処理を紐付け
+    // MARK: - 紐付け＋ボタンアクション
+    //キャンセルボタンを押した際の処理を紐付け
     @IBAction func cancelButtonAction(_ sender: Any) {
         //キャンセルすると画面を戻る処理
         dismiss(animated: true, completion: nil)
@@ -25,7 +26,6 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     @IBOutlet weak var userSetupHourTimeText: UITextField!
     //ユーザーが項目に設定した時間（分）を紐付け
     @IBOutlet weak var userSetupMinutesTimeText: UITextField!
-
 
     //キャンセルボタンを紐付け
     @IBOutlet weak var cancelButton: UIButton!
@@ -49,8 +49,7 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         delegate?.reflectMasterItem()
     }
     
-    //項目設定の配列のオブジェクトの作成
-    var masterItemList: [MasterItem] = []
+    // MARK: - プロパティ
     //項目設定オブジェクトの作成
     var masterItem = MasterItem()
     //toolBarを定義
@@ -64,6 +63,7 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     //設定時間(時間)を0分以上60分未満に定義
     let minutesTimeRange = 0..<60
     
+    // MARK: - 初期設定関数
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -94,6 +94,7 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         
     }
     
+    // MARK: - 追加関数
     //項目名を保存・反映する処理
     func saveName(with text: String) {
         //Realmをインスタンス化
@@ -145,6 +146,25 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         // 時間設定のdoneボタンが押された時の処理を記述(閉じる)
         userSetupNameText.resignFirstResponder()
     }
+    //時間設定のdoneボタンの設定と時刻表示
+    func setupTimeTextToolbar() {
+        //時間設定のdatepicker上のtoolbarのdoneボタン
+        toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        let timeTextToolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(timeTextDoneButton))
+        toolBar.items = [timeTextToolBarButton]
+        userSetupHourTimeText.inputAccessoryView = toolBar
+        userSetupMinutesTimeText.inputAccessoryView = toolBar
+        
+    }
+    //時間設定のdoneボタンが押された際の処理
+    @objc func timeTextDoneButton() {
+        // 時間設定のdoneボタンが押された時の処理を記述(閉じる)
+        userSetupHourTimeText.resignFirstResponder()
+        userSetupMinutesTimeText.resignFirstResponder()
+    }
+    
+    // MARK: - delegateメソッド（TableView関係）
     //項目名の文字数制限機能の追加
     //UITextViewのテキストが変更された時に呼ばれるデリゲートメソッド
     func textViewDidChangeSelection(_ textView: UITextView) {
@@ -196,25 +216,6 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         }
         //上記数字制限以外のテキストは有効にする（今回でゆうと項目名）
         return true
-    }
-    
-    
-    //時間設定のdoneボタンの設定と時刻表示
-    func setupTimeTextToolbar() {
-        //時間設定のdatepicker上のtoolbarのdoneボタン
-        toolBar = UIToolbar()
-        toolBar.sizeToFit()
-        let timeTextToolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(timeTextDoneButton))
-        toolBar.items = [timeTextToolBarButton]
-        userSetupHourTimeText.inputAccessoryView = toolBar
-        userSetupMinutesTimeText.inputAccessoryView = toolBar
-        
-    }
-    //時間設定のdoneボタンが押された際の処理
-    @objc func timeTextDoneButton() {
-        // 時間設定のdoneボタンが押された時の処理を記述(閉じる)
-        userSetupHourTimeText.resignFirstResponder()
-        userSetupMinutesTimeText.resignFirstResponder()
     }
     
 }

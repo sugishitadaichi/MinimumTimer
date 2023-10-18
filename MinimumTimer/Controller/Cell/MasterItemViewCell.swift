@@ -7,13 +7,15 @@
 
 import UIKit
 import RealmSwift
+
+// MARK: - delegateの定義
 //delegateを定義
 protocol MasterItemViewCellDelegate{
     func deleteMasterItem(indexPath: IndexPath)
     func editedMasterItem(indexPath: IndexPath)
 }
 
-
+// MARK: - classの定義＋機能追加
 class MasterItemViewCell: UITableViewCell, UITableViewDelegate {
     //項目に設定した名前を紐付け
     @IBOutlet weak var UserSetupNameLabel: UILabel!
@@ -38,6 +40,7 @@ class MasterItemViewCell: UITableViewCell, UITableViewDelegate {
         
     }
     
+    // MARK: - プロパティ
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     //indexPath
@@ -47,6 +50,7 @@ class MasterItemViewCell: UITableViewCell, UITableViewDelegate {
     //MainAlarmViewCellDelegateを定義（他ファイルで使用するため）
     var delegate: MasterItemViewCellDelegate?
     
+    // MARK: - 初期設定関数
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -68,6 +72,8 @@ class MasterItemViewCell: UITableViewCell, UITableViewDelegate {
 
         // Configure the view for the selected state
     }
+    
+    // MARK: - 追加関数
     //データを渡す設定(indexPathがnilでない場合に、textLabelのテキストを設定する処理)
     func configure() {
         guard let indexPath = indexPath else { return }

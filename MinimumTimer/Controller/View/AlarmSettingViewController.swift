@@ -8,13 +8,15 @@
 import UIKit
 import RealmSwift
 
+// MARK: - delegateの定義
 //delegateを定義
 protocol AlarmSettingViewControllerDelegate{}
 
+// MARK: - classの定義＋機能追加
 class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate {
     
     
-    
+    // MARK: - 紐付け＋ボタンアクション
     //キャンセルボタンを押した際の処理
     @IBAction func cancelButtonAction(_ sender: UIButton) {
         //キャンセルした際に画面遷移元に戻る処理
@@ -44,19 +46,15 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //TableViewを紐付け
     @IBOutlet weak var alarmSettingTableView: UITableView!
     
-    
+    // MARK: - プロパティ
     //アラーム設定のプロパティ（配列）
     var alarmSettingList: [AlarmSetting] = []
     //アラーム設定のオブジェクト
     var alarmSettingObjects = AlarmSetting()
     //項目別アラームのプロパティ
     var alarmItemList: [AlarmItem] = []
-    //項目設定のプロパティの宣言
-    var ASVCSelectedMasterItem: MasterItem?
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
-    //項目マスタのプロパティ
-    var masterItemList: [MasterItem] = []
     //AlarmStartSettingTimeHeaderをインスタンス化
     let alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
     //項目設定オブジェクトの作成
@@ -68,7 +66,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //フッタービューを定義
     let footerView = UIView()
     
-    
+    // MARK: - 初期設定関数
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -92,8 +90,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //フッタービューの定義
         let footerHeight:CGFloat = 100.0
         let footerView = ItemSelectedFooter(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: footerHeight))
-        //alarmItemの値の設定
-        //footerView.alarmItem = ASVCSelectedMasterItem
         
         //alarmSettingTableViewのtableFooterViewにフッタービューを設定
         alarmSettingTableView.tableFooterView = footerView
@@ -125,6 +121,39 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
+    
+    // MARK: - 追加関数
+    //ヘッダーに表示するデータの処理(フッターは項目追加処理のみのため不要)
+    func setHeader() -> Void {
+
+        //dateFormatterを定義
+        let dateFormatter = DateFormatter()
+        //Date型への変換
+        dateFormatter.dateFormat = "HH:mm"
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //アラーム設定を表示する際の条件（時間の昇順）
+        let resultAlarmTime = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
+        //alarmSettingListに格納
+        alarmSettingList = Array(resultAlarmTime)
+        
+    }
+    
+    //項目別設定を格納するためのメソッド
+    func setAlarmItem() -> Void {
+        //dateFormatterを定義
+        let dateFormatter = DateFormatter()
+        //Date型への変換？
+        dateFormatter.dateFormat = "HH:mm"
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //項目別設定を表示する際の条件（idの降順）
+        let resultItem = realm.objects(AlarmItem.self).sorted(byKeyPath: "id", ascending: true)
+        //alarmItemListに格納
+        alarmItemList = Array(resultItem)
+    }
+    
+    // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
     func deleteItem(indexPath: IndexPath) {
         // Realmのインスタンス化
@@ -147,39 +176,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
         
     }
-    //ヘッダーに表示するデータの処理(フッターは項目追加処理のみのため不要)
-    func setHeader() -> Void {
-
-        //dateFormatterを定義
-        let dateFormatter = DateFormatter()
-        //Date型への変換
-        dateFormatter.dateFormat = "HH:mm"
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //アラーム設定を表示する際の条件（時間の昇順）
-        let resultAlarmTime = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
-        //alarmSettingListに格納
-        alarmSettingList = Array(resultAlarmTime)
-        
-    }
     
-    
-    
-    //項目別設定を格納するためのメソッド
-    func setAlarmItem() -> Void {
-        //dateFormatterを定義
-        let dateFormatter = DateFormatter()
-        //Date型への変換？
-        dateFormatter.dateFormat = "HH:mm"
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //項目別設定を表示する際の条件（idの降順）
-        let resultItem = realm.objects(AlarmItem.self).sorted(byKeyPath: "id", ascending: true)
-        //alarmItemListに格納
-        alarmItemList = Array(resultItem)
-    }
-    
-    
+    // MARK: - delegateメソッド（ItemSelectedFooter）
     //項目別の終了時間の実装（Footerからのdelegateメソッド）
     func reflectItemEndTime(selectedMasterItem: MasterItem) {
         //day（現在時刻）を設定
@@ -212,10 +210,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //データ反映
         alarmSettingTableView.reloadData()
     }
-
-
     
-    
+    // MARK: - delegateメソッド（TableView関係）
     //tableViewにAlarmSettingViewCellの個数を返す
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //alarmItemListにある個数分セルを返却
@@ -229,8 +225,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         //セルの内容を設定
         let alarmItemSetting = alarmItemList[indexPath.row]
-        //masterItemList[row] を選択されたマスタ情報として ASVCselectedMasterItem にも代入する
-        //ASVCSelectedMasterItem = masterItemList[indexPath.row]
         //セルの定義
         //セルの項目マスタとalarmItemListの共通化
         alarmSettingViewCell.alarmItem = alarmItemSetting

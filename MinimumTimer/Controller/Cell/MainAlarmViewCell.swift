@@ -7,10 +7,13 @@
 
 import UIKit
 import RealmSwift
+
+// MARK: - delegateの定義
 //delegateを定義
 protocol MainAlarmViewCellDelegate{}
-
+// MARK: - classの定義＋機能追加
 class MainAlarmViewCell: UITableViewCell {
+    // MARK: - 紐付け＋ボタンアクション
     //削除ボタンを押した際の処理を紐付け
     @IBAction func deleteButtonAction(_ sender: UIButton) {
     }
@@ -28,7 +31,7 @@ class MainAlarmViewCell: UITableViewCell {
     //MainAlarmViewCellDelegateを定義（他ファイルで使用するため）
     var delegate: MainAlarmViewCellDelegate?
     
-    
+    // MARK: - 初期設定関数
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -49,6 +52,7 @@ class MainAlarmViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
     func setUp(alarmSetting: AlarmSetting) {
         //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmStartSettingTime)
@@ -58,7 +62,7 @@ class MainAlarmViewCell: UITableViewCell {
         byItemLabel.text = String(alarmSetting.itemId)
 
     }
-    
+    // MARK: - 追加関数
     //　削除ボタンの仕様
     func setupDeleteButton() {
         deleteButton.layer.cornerRadius = 10

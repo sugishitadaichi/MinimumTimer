@@ -7,13 +7,15 @@
 
 import UIKit
 import RealmSwift
+// MARK: - delegateの定義
 //delegateを定義
 protocol AlarmSettingViewCellDelegate{
     func deleteItem(indexPath: IndexPath)
 }
 
-
+// MARK: - classの定義＋機能追加
 class AlarmSettingViewCell: UITableViewCell {
+    // MARK: - 紐付け＋ボタンアクション
     //削除ボタンを押した時の処理
     @IBAction func deleteButtonAction(_ sender: UIButton) {
         //削除処理を受ける処理
@@ -27,14 +29,16 @@ class AlarmSettingViewCell: UITableViewCell {
     @IBOutlet weak var itemStartTimeLabel: UILabel!
     //項目名を紐付け
     @IBOutlet weak var userSetupNameLabel: UILabel!
+    
+    // MARK: - プロパティ
     //delegateの設定
     var delegate: AlarmSettingViewCellDelegate?
     //項目マスタの定義
     var alarmItem: AlarmItem?
-    var masterItem: MasterItem?
     //indexPath
     var indexPath: IndexPath?
     
+    // MARK: - 初期設定関数
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -48,6 +52,7 @@ class AlarmSettingViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    // MARK: - 追加関数
     //　削除ボタンの仕様
     func setupDeleteButton() {
         deleteButton.layer.cornerRadius = 10
