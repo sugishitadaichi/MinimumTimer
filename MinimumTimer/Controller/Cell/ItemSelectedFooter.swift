@@ -12,7 +12,7 @@ import RealmSwift
 protocol ItemSelectedFooterDelegate{
     func reflectItemEndTime(selectedMasterItem: MasterItem)
     func reflectItemName(selectedMasterItem: MasterItem)
-    func reloadData()
+    func reloadData(selectedMasterItem: MasterItem)
 }
 
 class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource {
@@ -41,7 +41,7 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         addItemEndTime(with: updatedItemEndTimeStringText)
         
         //更新の処理（delegate）
-        delegate?.reloadData()
+        delegate?.reloadData(selectedMasterItem: selectedMasterItem!)
         
         
     }

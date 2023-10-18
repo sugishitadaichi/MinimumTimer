@@ -44,8 +44,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //TableViewを紐付け
     @IBOutlet weak var alarmSettingTableView: UITableView!
     
-    //アラーム設定のプロパティ
-    var alarmSetting: AlarmSetting = AlarmSetting()
+    
     //アラーム設定のプロパティ（配列）
     var alarmSettingList: [AlarmSetting] = []
     //アラーム設定のオブジェクト
@@ -195,7 +194,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
                 var modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: masterItem.userSetupHourTime, to: startTime)! + Calendar.current.date(byAdding: .minute, value: masterItem.userSetupMinutesTime, to: startTime)!.timeIntervalSinceReferenceDate
                 //テキスト・alarmSettingモデル・合計時間の共通化
                 alarmItem.byItemEndTime = modifiedItemEndTime
-                modifiedItemEndTime = alarmSetting.alarmEndSettingTime
+                modifiedItemEndTime = alarmSettingObjects.alarmEndSettingTime
             }
         
     }
@@ -205,9 +204,11 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmItem.userSetupName = masterItem.userSetupName
     }
     //データの更新（Footerからのdelegateメソッド）
-    func reloadData() {
+    func reloadData(selectedMasterItem: MasterItem) {
+        let addSettingAlarmItem = AlarmItem()
+        addSettingAlarmItem.userSetupName = selectedMasterItem.userSetupName
         //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
-        alarmItemList.append(alarmItem)
+        alarmItemList.append(addSettingAlarmItem)
         //データ反映
         alarmSettingTableView.reloadData()
     }
