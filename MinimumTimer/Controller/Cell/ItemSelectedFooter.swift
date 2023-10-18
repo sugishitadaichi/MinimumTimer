@@ -12,6 +12,7 @@ import RealmSwift
 protocol ItemSelectedFooterDelegate{
     func reflectItemEndTime(selectedMasterItem: MasterItem)
     func reflectItemName(selectedMasterItem: MasterItem)
+    func reloadData()
 }
 
 class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UIPickerViewDataSource {
@@ -39,6 +40,8 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         //項目を追加した際の終了予定時間をItemEndTimeStringText（String型）に保存
         addItemEndTime(with: updatedItemEndTimeStringText)
         
+        //更新の処理（delegate）
+        delegate?.reloadData()
         
         
     }

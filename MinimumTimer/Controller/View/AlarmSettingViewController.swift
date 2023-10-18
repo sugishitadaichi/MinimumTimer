@@ -13,6 +13,8 @@ protocol AlarmSettingViewControllerDelegate{}
 
 class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate {
     
+    
+    
     //キャンセルボタンを押した際の処理
     @IBAction func cancelButtonAction(_ sender: UIButton) {
         //キャンセルした際に画面遷移元に戻る処理
@@ -177,7 +179,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmItemListに格納
         alarmItemList = Array(resultItem)
     }
-    //項目別の終了時間の実装
+    
+    
+    //項目別の終了時間の実装（Footerからのdelegateメソッド）
     func reflectItemEndTime(selectedMasterItem: MasterItem) {
         //day（現在時刻）を設定
         let dateFormatter = DateFormatter()
@@ -193,16 +197,15 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
                 alarmItem.byItemEndTime = modifiedItemEndTime
                 modifiedItemEndTime = alarmSetting.alarmEndSettingTime
             }
-        //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
-        alarmItemList.append(alarmItem)
-        //データ反映
-        alarmSettingTableView.reloadData()
         
     }
-    //項目名の実装
+    //項目名の実装（Footerからのdelegateメソッド）
     func reflectItemName(selectedMasterItem: MasterItem) {
         //alarmItemとmasteItemのuserSetupNameの共通化（継承）
         alarmItem.userSetupName = masterItem.userSetupName
+    }
+    //データの更新（Footerからのdelegateメソッド）
+    func reloadData() {
         //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
         alarmItemList.append(alarmItem)
         //データ反映
