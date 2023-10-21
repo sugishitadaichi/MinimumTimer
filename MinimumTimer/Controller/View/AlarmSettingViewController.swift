@@ -155,25 +155,13 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
-    func deleteItem(indexPath: IndexPath) {
-        // Realmのインスタンス化
-        let realm = try!Realm()
-        //　tweetListのインデックス番号のidをtarget定数に取得
-        let deleteItemTarget = alarmItemList[indexPath.row].id
-        //　targetと同じidを持つRealmデータベース内のデータを検索してdeletePostに格納
-        let deleteItem = realm.objects(AlarmItem.self).filter("id == %@", deleteItemTarget).first
-        //　もしもdeleteItemがnilでなければ以下を実行
-        if let deleteItem {
-            //　reaimの書き込み
-            try! realm.write {
-                //　deletePostをRealmから削除
-                realm.delete(deleteItem)
-            }
-        }
+    func deleteItem(item: AlarmItem) {
         //alarmSettingListの配列からインデックス番号に該当する配列を削除
-        alarmItemList.remove(at: indexPath.row)
-        //デーブルビューからインデックス番号に該当するセルを削除（更新（alarmSettingTableView.reloadData）不要）
-        alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        if let index = alarmItemList.firstIndex(of: item) {
+            alarmItemList.remove(at: index)
+        }
+        //更新
+        alarmSettingTableView.reloadData()
         
     }
     
@@ -203,10 +191,11 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     }
     //データの更新（Footerからのdelegateメソッド）
     func reloadData(selectedMasterItem: MasterItem) {
-        let addSettingAlarmItem = AlarmItem()
-        addSettingAlarmItem.userSetupName = selectedMasterItem.userSetupName
+        // TODO: AlarmItemのイニシャライザを使用したインスタンス化が必要
+        let addSettingAlarmItemName = AlarmItem()
+        addSettingAlarmItemName.userSetupName = selectedMasterItem.userSetupName
         //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
-        alarmItemList.append(addSettingAlarmItem)
+        alarmItemList.append(addSettingAlarmItemName)
         //データ反映
         alarmSettingTableView.reloadData()
     }
