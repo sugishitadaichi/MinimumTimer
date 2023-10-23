@@ -57,13 +57,11 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         bottomBorder.backgroundColor = UIColor.lightGray.cgColor
         self.layer.addSublayer(bottomBorder)
 
-        print("処理実行6")
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         loadNib()
-        print("処理実行7")
     }
 
     func loadNib() {
@@ -76,7 +74,6 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
             view.frame = self.bounds
             self.addSubview(view)
         }
-        print("処理実行8")
     }
     
     // MARK: - delegateメソッド（TableView関係）

@@ -177,23 +177,30 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
             //入力された日付文字列をNSDateオブジェクトに変換し、startTimeに代入
             if let startTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text!){
+                //開始時間の反映確認
+                print("開始時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
+                
                 //時間を足し合わせる設定(時間+分)
-                var modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: masterItem.userSetupHourTime, to: startTime)! + Calendar.current.date(byAdding: .minute, value: masterItem.userSetupMinutesTime, to: startTime)!.timeIntervalSinceReferenceDate
+                let modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: masterItem.userSetupHourTime, to: startTime)! + Calendar.current.date(byAdding: .minute, value: masterItem.userSetupMinutesTime, to: startTime)!.timeIntervalSinceReferenceDate
+                //項目別の時間反映確認
+                print("\(masterItem.userSetupHourTime)時間")
+                print("\(masterItem.userSetupMinutesTime)分")
                 //テキスト・alarmSettingモデル・合計時間の共通化
                 alarmItem.byItemEndTime = modifiedItemEndTime
-                modifiedItemEndTime = alarmSettingObjects.alarmEndSettingTime
-                print("\(modifiedItemEndTime)が出力されました")
+                //合計した時間(終了予定時間)の確認
+                print("終了予定時間は\(modifiedItemEndTime)です")
             }
     }
     //項目名の実装（Footerからのdelegateメソッド）
     func reflectItemName(selectedMasterItem: MasterItem) {
+        print("項目名実装開始")
         //alarmItemとmasteItemのuserSetupNameの共通化（継承）
         alarmItem.userSetupName = masterItem.userSetupName
     }
     //データの更新（Footerからのdelegateメソッド）
-    func reloadData(selectedMasterItem: MasterItem) {
+    func reloadData(selectedMasterItem: MasterItem, alarmItem: AlarmItem) {
         // TODO: AlarmItemのイニシャライザを使用したインスタンス化が必要
-        let addSettingAlarmItem = AlarmItem(id: "", alermSettingId: "", masterId: "", byItemStartTime: Date(), byItemEndTime: Date(), userSetupName: selectedMasterItem.userSetupName)
+        let addSettingAlarmItem = AlarmItem(id: "", alermSettingId: "", masterId: "", byItemStartTime: Date(), byItemEndTime: alarmItem.byItemEndTime, userSetupName: selectedMasterItem.userSetupName)
         //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
         alarmItemList.append(addSettingAlarmItem)
         //データ反映

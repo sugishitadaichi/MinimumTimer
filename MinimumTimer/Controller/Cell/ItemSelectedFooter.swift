@@ -12,7 +12,7 @@ import RealmSwift
 protocol ItemSelectedFooterDelegate{
     func reflectItemEndTime(selectedMasterItem: MasterItem)
     func reflectItemName(selectedMasterItem: MasterItem)
-    func reloadData(selectedMasterItem: MasterItem)
+    func reloadData(selectedMasterItem: MasterItem, alarmItem: AlarmItem)
 }
 
 // MARK: - classの定義＋機能追加
@@ -40,9 +40,10 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         guard let updatedItemEndTimeStringText = dateFormatter.date(from: updatedItemEndTimeText) else { return }
         //項目を追加した際の終了予定時間をItemEndTimeStringText（String型）に保存
         addItemEndTime(with: updatedItemEndTimeStringText)
-        
+        //項目別終了予定時間の処理（delegate）
+        delegate?.reflectItemEndTime(selectedMasterItem: selectedMasterItem!)
         //更新の処理（delegate）
-        delegate?.reloadData(selectedMasterItem: selectedMasterItem!)
+        delegate?.reloadData(selectedMasterItem: selectedMasterItem!, alarmItem: alarmItem)
         
         
     }
@@ -150,8 +151,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         let doneButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ItemSelectedFooter.donePicker))
         toolBar.setItems([doneButtonItem], animated: true)
         itemSelectedPickerText.inputAccessoryView = toolBar
-        
-        print("処理実行1")
         }
     //項目の終了予定時間を保存・反映する処理
     func addItemEndTime(with text: Date) {
@@ -179,7 +178,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     //toolbar上のボタン（done）を押すとキーボードを非表示にする
     @objc func donePicker() {
         itemSelectedPickerText.endEditing(true)
-        print("処理実行2")
         }
     //　追加ボタンの仕様
     func setupAddButton() {
@@ -192,7 +190,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     //キーボード以外の場所を押すとキーボードを非表示にする
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         itemSelectedPickerText.endEditing(true)
-        print("処理実行3")
         }
     
     //pickerView に表示する列の数
