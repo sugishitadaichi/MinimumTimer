@@ -24,22 +24,9 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     @IBOutlet weak var addButton: UIButton!
     //追加ボタンを押した際の処理（Realm導入後。AlarmSettingViewCellに反映させる？）
     @IBAction func addButtonAction(_ sender: UIButton) {
-        //dateFormatterを定義
-        let dateFormatter = DateFormatter()
-        //Date型への変換
-        dateFormatter.dateFormat = "HH:mm"
-        //項目名のテキストの定義・nilの場合は空白を代入
-        let updatedItemNameText = alarmSettingViewCell.userSetupNameLabel?.text ?? ""
-        //alarmItemオブジェクトに項目名のデータを格納
-        alarmItem.userSetupName = selectedMasterItem?.userSetupName ?? ""
-        //項目名の追加
-        addName(with: updatedItemNameText)
-        //項目別終了時間のテキストの定義・nillの場合は00:00を代入
-        let updatedItemEndTimeText = alarmSettingViewCell.itemEndTimeLabel?.text ?? "00:00"
-        //初期値の設定(String型→Date型へ)
-        guard let updatedItemEndTimeStringText = dateFormatter.date(from: updatedItemEndTimeText) else { return }
-        //項目を追加した際の終了予定時間をItemEndTimeStringText（String型）に保存
-        addItemEndTime(with: updatedItemEndTimeStringText)
+
+        //項目名の処理（delegate）
+        delegate?.reflectItemName(selectedMasterItem: selectedMasterItem!)
         //項目別終了予定時間の処理（delegate）
         delegate?.reflectItemEndTime(selectedMasterItem: selectedMasterItem!)
         //更新の処理（delegate）
@@ -152,27 +139,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         toolBar.setItems([doneButtonItem], animated: true)
         itemSelectedPickerText.inputAccessoryView = toolBar
         }
-    //項目の終了予定時間を保存・反映する処理
-    func addItemEndTime(with text: Date) {
-        //delegateの設定（項目別の終了予定時間）
-        delegate?.reflectItemEndTime(selectedMasterItem: selectedMasterItem!)
-        //DateFormatterをインスタンス化
-        let dateFomatter = DateFormatter()
-        //フォーマット指定
-        dateFomatter.dateFormat = "HH:mm"
-        //変換(String型→Date型)
-        let itemEndTimeString = dateFomatter.string(from: text)
-        //代入
-        alarmSettingViewCell.itemEndTimeLabel?.text = itemEndTimeString
-        
-    }
-    //項目名を保存・反映する処理
-    func addName(with text: String) {
-        //delegateの設定（項目名）
-        delegate?.reflectItemName(selectedMasterItem: selectedMasterItem!)
-        alarmSettingViewCell.userSetupNameLabel?.text = text
-        
-    }
     
     
     //toolbar上のボタン（done）を押すとキーボードを非表示にする

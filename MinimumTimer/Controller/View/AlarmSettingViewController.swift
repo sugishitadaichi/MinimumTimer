@@ -176,15 +176,15 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //項目マスタをアラーム時間と足し合わせる
     //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
             //入力された日付文字列をNSDateオブジェクトに変換し、startTimeに代入
-            if let startTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text!){
+        if let startTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text ?? "0:00"){
                 //開始時間の反映確認
-                print("開始時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
+                print("開始時間は\(startTime)です")
                 
                 //時間を足し合わせる設定(時間+分)
-                let modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: masterItem.userSetupHourTime, to: startTime)! + Calendar.current.date(byAdding: .minute, value: masterItem.userSetupMinutesTime, to: startTime)!.timeIntervalSinceReferenceDate
+            let modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: selectedMasterItem.userSetupHourTime, to: startTime)! + Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: startTime)!.timeIntervalSinceReferenceDate
                 //項目別の時間反映確認
-                print("\(masterItem.userSetupHourTime)時間")
-                print("\(masterItem.userSetupMinutesTime)分")
+                print("\(selectedMasterItem.userSetupHourTime)時間")
+                print("\(selectedMasterItem.userSetupMinutesTime)分")
                 //テキスト・alarmSettingモデル・合計時間の共通化
                 alarmItem.byItemEndTime = modifiedItemEndTime
                 //合計した時間(終了予定時間)の確認
@@ -194,8 +194,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //項目名の実装（Footerからのdelegateメソッド）
     func reflectItemName(selectedMasterItem: MasterItem) {
         print("項目名実装開始")
-        //alarmItemとmasteItemのuserSetupNameの共通化（継承）
-        alarmItem.userSetupName = masterItem.userSetupName
+        //alarmItemとselectedMasteItemのuserSetupNameの共通化（継承）
+        alarmItem.userSetupName = selectedMasterItem.userSetupName
     }
     //データの更新（Footerからのdelegateメソッド）
     func reloadData(selectedMasterItem: MasterItem, alarmItem: AlarmItem) {

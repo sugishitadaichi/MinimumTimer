@@ -77,11 +77,15 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     }
     
     // MARK: - delegateメソッド（TableView関係）
-    //テキストフィールドがタップされ、入力可能になった後の処理を記載
+    //textFieldがタップされ、編集が始まった時に呼ばれるメソッド
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        //UIDatePickerの型を持つdatePickerViewを生成
         let datePickerView:UIDatePicker = UIDatePicker()
+        //datepickerのモードを時間モードに設定
         datePickerView.datePickerMode = UIDatePicker.Mode.time
+        //テキストをdatepicker用の入力スタイルへ変更
         textField.inputView = datePickerView
+        //datepickerが入力された際にこのclass(self)のdatePickerValueChangedメソッドを実行する
         datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
     }
     
@@ -90,6 +94,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         alarmStartDatePickerText.text = dateFormatter.string(from: sender.date)
+        print("\(String(describing: alarmStartDatePickerText.text))が入力されました")
     }
     
 }
