@@ -167,33 +167,41 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - delegateメソッド（ItemSelectedFooter）
     //項目別の終了時間の実装（Footerからのdelegateメソッド）
-    func reflectItemEndTime(selectedMasterItem: MasterItem) {
-        print("項目別終了予定時間　実装")
+    func reflectItemTime(selectedMasterItem: MasterItem) {
+        print("項目別予定時間　実装")
         //day（現在時刻）を設定
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         
         //項目マスタをアラーム時間と足し合わせる
-    //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
-            //入力された日付文字列をNSDateオブジェクトに変換し、startTimeに代入
-        if let startTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text ?? "0:00"){
+        //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
+        //項目別開始時間(itemStartTime）をDate型で定義
+        var itemStartTime: Date
+        //alarmItemListが0の場合（項目が追加されていない場合）、ヘッダーの時間を開始時間に反映
+        //Date型に変換できなかった場合は、現在時刻を反映
+        if alarmItemList.count == 0 {
+            itemStartTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text ?? "0:00") ?? Date()
+            //alarmItemListが0でない場合（項目が追加されている場合）
+            //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
+        } else {
+            itemStartTime = alarmItemList.last?.byItemEndTime ?? Date()
+        }
                 //開始時間の反映確認
-                print("開始時間は\(startTime)です")
+                print("開始時間は\(itemStartTime)です")
                 
                 //時間を足し合わせる設定(時間+分)
-            let modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: selectedMasterItem.userSetupHourTime, to: startTime)! + Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: startTime)!.timeIntervalSinceReferenceDate
+        let modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: selectedMasterItem.userSetupHourTime, to: itemStartTime)! + Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: itemStartTime)!.timeIntervalSinceReferenceDate
                 //項目別の時間反映確認
-                print("\(selectedMasterItem.userSetupHourTime)時間")
-                print("\(selectedMasterItem.userSetupMinutesTime)分")
+                print("項目作業時間は\(selectedMasterItem.userSetupHourTime)時間\(selectedMasterItem.userSetupMinutesTime)分です")
                 //テキスト・alarmSettingモデル・合計時間の共通化
                 alarmItem.byItemEndTime = modifiedItemEndTime
                 //合計した時間(終了予定時間)の確認
                 print("終了予定時間は\(modifiedItemEndTime)です")
-            }
     }
+    
     //項目名の実装（Footerからのdelegateメソッド）
     func reflectItemName(selectedMasterItem: MasterItem) {
-        print("項目名実装開始")
+        print("項目名　実装")
         //alarmItemとselectedMasteItemのuserSetupNameの共通化（継承）
         alarmItem.userSetupName = selectedMasterItem.userSetupName
     }

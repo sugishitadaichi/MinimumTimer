@@ -94,6 +94,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         alarmStartDatePickerText.text = dateFormatter.string(from: sender.date)
+        //出力確認
         print("\(String(describing: alarmStartDatePickerText.text))が入力されました")
     }
     

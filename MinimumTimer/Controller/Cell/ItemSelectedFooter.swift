@@ -10,7 +10,7 @@ import RealmSwift
 // MARK: - delegateの定義
 //delegateを定義
 protocol ItemSelectedFooterDelegate{
-    func reflectItemEndTime(selectedMasterItem: MasterItem)
+    func reflectItemTime(selectedMasterItem: MasterItem)
     func reflectItemName(selectedMasterItem: MasterItem)
     func reloadData(selectedMasterItem: MasterItem, alarmItem: AlarmItem)
 }
@@ -28,7 +28,7 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
         //項目名の処理（delegate）
         delegate?.reflectItemName(selectedMasterItem: selectedMasterItem!)
         //項目別終了予定時間の処理（delegate）
-        delegate?.reflectItemEndTime(selectedMasterItem: selectedMasterItem!)
+        delegate?.reflectItemTime(selectedMasterItem: selectedMasterItem!)
         //更新の処理（delegate）
         delegate?.reloadData(selectedMasterItem: selectedMasterItem!, alarmItem: alarmItem)
         
