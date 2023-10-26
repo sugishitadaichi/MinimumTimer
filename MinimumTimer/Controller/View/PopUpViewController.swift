@@ -189,7 +189,7 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         }
     }
     
-    //数字制限(要検討)
+    //数字制限
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         //時間設定(時間)の数字制限
         if textField.accessibilityIdentifier == "itemHourTime" {

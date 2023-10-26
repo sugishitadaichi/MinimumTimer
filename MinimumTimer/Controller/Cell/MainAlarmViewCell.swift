@@ -17,6 +17,8 @@ class MainAlarmViewCell: UITableViewCell {
     //削除ボタンを押した際の処理を紐付け
     @IBAction func deleteButtonAction(_ sender: UIButton) {
     }
+    //設定したアラームの名前を紐付け
+    @IBOutlet weak var alarmNameLabel: UILabel!
     //設定したアラームの総個数を紐付け
     @IBOutlet weak var byItemLabel: UILabel!
     //アラーム終了時間を紐付け

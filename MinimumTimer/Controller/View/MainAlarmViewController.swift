@@ -85,7 +85,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //初期値の設定(Date型→String型へ)
         guard let dummyStartDate = dateFormatter.date(from: startDateString), let dummyEndDate = dateFormatter.date(from: endDateString) else { return }
         
-        let alarmPost1 = AlarmSetting(id: "1", itemId: "1", alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
+        let alarmPost1 = AlarmSetting(id: "1", itemId: "1", alarmName: "朝支度", alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
         
         alarmSettingList.append(alarmPost1)
     }
@@ -105,6 +105,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //セルの内容を設定
         let alarmSetting = alarmSettingList[indexPath.row]
         //セルの定義
+        //アラーム名のテキストデータの定義
+        cell.alarmNameLabel.text = String(alarmSetting.alarmName)
         //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         cell.alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmStartSettingTime)
         //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）

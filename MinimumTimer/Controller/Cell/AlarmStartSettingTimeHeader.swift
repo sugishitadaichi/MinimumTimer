@@ -10,11 +10,19 @@ import RealmSwift
 
 // MARK: - classの定義＋機能追加
 class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
-    // MARK: - プロパティ
+    // MARK: - 紐付け＋ボタンアクション
+    //アラーム名を紐付け
+    @IBOutlet weak var alarmNameText: UITextField!
     //アラーム開始時間を紐付け
     @IBOutlet weak var alarmStartDatePickerText: UITextField!
+    
+    // MARK: - プロパティ
     //toolBarを定義
     var toolBar:UIToolbar!
+    //アラーム設定オブジェクトの作成
+    var alarmSetting = AlarmSetting()
+    //項目名の文字数を10文字以内に定義
+    let maxAlarmNameLength = 5
 
     // MARK: - 初期設定関数
     //未処理。//init関数に記載
@@ -32,6 +40,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         let toolBarButton = UIBarButtonItem(title: "DONE", style: .plain, target: self, action: #selector(doneButton))
         toolBar.items = [toolBarButton]
         alarmStartDatePickerText.inputAccessoryView = toolBar
+        alarmNameText.inputAccessoryView = toolBar
         
     }
     
@@ -39,6 +48,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     @objc func doneButton() {
         // 完了ボタンが押された時の処理を記述する(閉じる)
         alarmStartDatePickerText.resignFirstResponder()
+        alarmNameText.resignFirstResponder()
     }
 
 
@@ -49,6 +59,9 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         loadNib()
         //delegateの登録
         alarmStartDatePickerText.delegate = self
+        alarmNameText.delegate = self
+        //userSetupNameTextのテキストにmasterItemの内容を代入
+        alarmNameText.text = String(alarmSetting.alarmName)
         //doneボタンの設定を画面表示時に実行
         setupToolbar()
         //枠線の設定
@@ -79,14 +92,31 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     // MARK: - delegateメソッド（TableView関係）
     //textFieldがタップされ、編集が始まった時に呼ばれるメソッド
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        //UIDatePickerの型を持つdatePickerViewを生成
-        let datePickerView:UIDatePicker = UIDatePicker()
-        //datepickerのモードを時間モードに設定
-        datePickerView.datePickerMode = UIDatePicker.Mode.time
-        //テキストをdatepicker用の入力スタイルへ変更
-        textField.inputView = datePickerView
-        //datepickerが入力された際にこのclass(self)のdatePickerValueChangedメソッドを実行する
-        datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
+        if textField == alarmStartDatePickerText {
+            //UIDatePickerの型を持つdatePickerViewを生成
+            let datePickerView:UIDatePicker = UIDatePicker()
+            //datepickerのモードを時間モードに設定
+            datePickerView.datePickerMode = UIDatePicker.Mode.time
+            //テキストをdatepicker用の入力スタイルへ変更
+            textField.inputView = datePickerView
+            //datepickerが入力された際にこのclass(self)のdatePickerValueChangedメソッドを実行する
+            datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
+        } else {
+            //通常の入力スタイル
+            textField.inputView = nil
+        }
+    }
+    
+    //UITextFieldのテキストが変更された時に呼ばれるデリゲートメソッド
+    internal func textFieldDidChangeSelection(_ textField: UITextField) {
+        //テキストがnilでない場合
+        guard alarmNameText.text != nil else { return }
+        //テキストの文字数が最大文字数を超えていた場合
+        if alarmNameText.text?.count ?? 0 > maxAlarmNameLength {
+            //　最大文字数を超えた場合は切り捨て
+            alarmNameText.text = String(alarmNameText.text!.prefix(maxAlarmNameLength))
+            
+        }
     }
     
     //datepickerが選択されたらtextfieldに表示・日付の値を設定する
