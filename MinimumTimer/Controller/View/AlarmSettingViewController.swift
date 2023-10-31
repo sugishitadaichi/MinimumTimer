@@ -56,7 +56,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     //AlarmStartSettingTimeHeaderをインスタンス化
-    let alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
+    var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
     //項目設定オブジェクトの作成
     var masterItem = MasterItem()
     //項目設定オブジェクトの作成
@@ -101,15 +101,15 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //ヘッダービューの設定
         //ヘッダービューを定義
         let headerHeight:CGFloat = 100.0
-        let headerView = AlarmStartSettingTimeHeader(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: headerHeight))
+        alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: headerHeight))
         
 
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
-        alarmSettingTableView.tableHeaderView = headerView
+        alarmSettingTableView.tableHeaderView = alarmStartSettingTimeHeader
         //setHeaderメソッドを画面が表示される際に実行
         setHeader()
         //pickerTextの初期値を設定
-        headerView.alarmStartDatePickerText.text = "00:00"
+        //alarmStartSettingTimeHeader.alarmStartDatePickerText.text = "00:00"
         //setAlarmItemメソッドを画面が表示される際に実行
         setAlarmItem()
         //全体終了時間を設定
@@ -171,7 +171,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         print("項目別予定時間　実装")
         //day（現在時刻）を設定
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
         
         //項目マスタをアラーム時間と足し合わせる
         //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
@@ -180,7 +182,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmItemListが0の場合（項目が追加されていない場合）、ヘッダーの時間を開始時間に反映
         //Date型に変換できなかった場合は、現在時刻を反映
         if alarmItemList.count == 0 {
-            itemStartTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text ?? "0:00") ?? Date()
+            itemStartTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text ?? "1999/1/1 0:00") ?? Date()
             //alarmItemListが0でない場合（項目が追加されている場合）
             //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
         } else {
