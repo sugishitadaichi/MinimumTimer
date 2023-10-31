@@ -122,7 +122,9 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     //datepickerが選択されたらtextfieldに表示・日付の値を設定する
     @objc func datePickerValueChanged(sender:UIDatePicker) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
         alarmStartDatePickerText.text = dateFormatter.string(from: sender.date)
         //出力確認
         print("\(String(describing: alarmStartDatePickerText.text))が入力されました")

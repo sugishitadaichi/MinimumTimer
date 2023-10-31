@@ -161,7 +161,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // MARK: - delegateメソッド（ItemSelectedFooter）
-    //項目別の終了時間の実装（Footerからのdelegateメソッド）
+    //項目別の時間の実装（Footerからのdelegateメソッド）
     func reflectItemTime(selectedMasterItem: MasterItem) {
         print("項目別予定時間　実装")
         //day（現在時刻）を設定
@@ -183,17 +183,33 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             itemStartTime = alarmItemList.last?.byItemEndTime ?? Date()
         }
-                //開始時間の反映確認
-                print("開始時間は\(itemStartTime)です")
+        
+        //項目別の開始時間の反映確認
+        print("全体の開始時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
+        print("\(selectedMasterItem.userSetupName)の開始時間は\(itemStartTime)です")
                 
-                //時間を足し合わせる設定(時間+分)
+        //項目別終了時間の反映＝時間を足し合わせる設定(時間+分)
         let modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: selectedMasterItem.userSetupHourTime, to: itemStartTime)! + Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: itemStartTime)!.timeIntervalSinceReferenceDate
                 //項目別の時間反映確認
                 print("項目作業時間は\(selectedMasterItem.userSetupHourTime)時間\(selectedMasterItem.userSetupMinutesTime)分です")
                 //テキスト・alarmSettingモデル・合計時間の共通化
                 alarmItem.byItemEndTime = modifiedItemEndTime
-                //合計した時間(終了予定時間)の確認
-                print("終了予定時間は\(modifiedItemEndTime)です")
+                //項目別の終了予定時間の確認
+                print("\(selectedMasterItem.userSetupName)の終了予定時間は\(modifiedItemEndTime)です")
+        //全体の終了時間
+        var alarmEndTime: Date
+        
+        if alarmItemList.count == 0 {
+            alarmEndTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text ?? "1999/1/1 0:00") ?? Date()
+            //alarmItemListが0でない場合（項目が追加されている場合）
+            //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
+        } else {
+            alarmEndTime = alarmItemList.last?.byItemEndTime ?? Date()
+        }
+        alarmSettingObjects.alarmEndSettingTime = alarmEndTime
+        //合計した時間(終了予定時間)の確認
+        print("全体の終了予定時間は\(alarmEndTime)です")
+        
     }
     
     //項目名の実装（Footerからのdelegateメソッド）
