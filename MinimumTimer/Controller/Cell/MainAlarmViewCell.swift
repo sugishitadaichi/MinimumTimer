@@ -10,12 +10,16 @@ import RealmSwift
 
 // MARK: - delegateの定義
 //delegateを定義
-protocol MainAlarmViewCellDelegate{}
+protocol MainAlarmViewCellDelegate{
+    func deleteMainAlarm(indexPath: IndexPath)
+}
 // MARK: - classの定義＋機能追加
 class MainAlarmViewCell: UITableViewCell {
     // MARK: - 紐付け＋ボタンアクション
     //削除ボタンを押した際の処理を紐付け
     @IBAction func deleteButtonAction(_ sender: UIButton) {
+        //delegateの設定
+        delegate?.deleteMainAlarm(indexPath: indexPath!)
     }
     //設定したアラームの名前を紐付け
     @IBOutlet weak var alarmNameLabel: UILabel!
@@ -28,10 +32,13 @@ class MainAlarmViewCell: UITableViewCell {
     //削除ボタンを紐付け
     @IBOutlet weak var deleteButton: UIButton!
     
+    // MARK: - プロパティ
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     //MainAlarmViewCellDelegateを定義（他ファイルで使用するため）
     var delegate: MainAlarmViewCellDelegate?
+    //IndexPath
+    var indexPath: IndexPath?
     
     // MARK: - 初期設定関数
     override func awakeFromNib() {

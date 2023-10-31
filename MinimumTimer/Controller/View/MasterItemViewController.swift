@@ -14,7 +14,7 @@ protocol MasterItemViewControllerDelegate{
     
 }
 // MARK: - classの定義＋機能追加
-class MasterItemViewController: UIViewController, MainAlarmViewCellDelegate, UITableViewDelegate, UITableViewDataSource, MasterItemViewCellDelegate, PopUpViewControllerDelegate {
+class MasterItemViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MasterItemViewCellDelegate, PopUpViewControllerDelegate {
     
     // MARK: - 紐付け＋ボタンアクション
     //＋ボタンを紐付け

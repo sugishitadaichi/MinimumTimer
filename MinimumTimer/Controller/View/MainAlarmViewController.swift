@@ -75,19 +75,57 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     
     //アラームを格納するためのメソッド
     func setMainAlarm() -> Void {
-        //dateFormatterを定義
-        let dateFormatter = DateFormatter()
-        //Date型への変換？
-        dateFormatter.dateFormat = "HH:mm"
-        //ダミーデータ作成
-        let startDateString = "08:00"
-        let endDateString = "09:00"
-        //初期値の設定(Date型→String型へ)
-        guard let dummyStartDate = dateFormatter.date(from: startDateString), let dummyEndDate = dateFormatter.date(from: endDateString) else { return }
+        // MARK: - ダミーデータ
+//        //dateFormatterを定義
+//        let dateFormatter = DateFormatter()
+//        //Date型への変換？
+//        dateFormatter.dateFormat = "HH:mm"
+//        //ダミーデータ作成
+//        let startDateString = "8:00"
+//        let endDateString = "09:00"
+//        //初期値の設定(Date型→String型へ)
+//        guard let dummyStartDate = dateFormatter.date(from: startDateString), let dummyEndDate = dateFormatter.date(from: endDateString) else { return }
+//        
+//        let alarmPost1 = AlarmSetting(id: "1", itemId: "1", alarmName: "朝支度", alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
+//        
+//        alarmSettingList.append(alarmPost1)
+        // MARK: - 実保存データ
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //RealmデータベースからAlarmSettingというオブジェクトを取得し、"alarmStartSettingTime"というキーパスを基準に昇順でソートされた結果を取得
+        let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
+        //resultという結果を配列に変換して、alarmSettingListに代入
+        alarmSettingList = Array(result)
+    }
+    
+    // MARK: - delegateメソッド（AlarmSettingViewController）
+    func saveMainAlarm() {
+        setMainAlarm()
+        mainAlarmTableView.reloadData()
+    }
+    
+    // MARK: - delegateメソッド（MainAlarmViewCell）
+    func deleteMainAlarm(indexPath: IndexPath) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
         
-        let alarmPost1 = AlarmSetting(id: "1", itemId: "1", alarmName: "朝支度", alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
+        let target = alarmSettingList[indexPath.row].id
+        let deleteMainAlarm = realm.objects(AlarmSetting.self).filter("id == %@", target).first
+        //もしもdeleteMainAlarmがnilでなければ以下を実行
+        if let deleteMainAlarm {
+            //Realmの処理
+            try! realm .write {
+                //deleteMainAlarmをRealmから削除
+                realm.delete(deleteMainAlarm)
+            }
+        }
+        //alarmSettingListの配列からindexPathに該当する配列を削除
+        alarmSettingList.remove(at: indexPath.row)
+        //mainAlarmTableViewからindexPathに該当するセルを削除
+        mainAlarmTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        //mainAlarmTableViewの再読み込み
+        mainAlarmTableView.reloadData()
         
-        alarmSettingList.append(alarmPost1)
     }
     
     // MARK: - delegateメソッド（TableView関係）

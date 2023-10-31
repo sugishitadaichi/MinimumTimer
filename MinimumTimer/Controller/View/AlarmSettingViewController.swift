@@ -10,7 +10,9 @@ import RealmSwift
 
 // MARK: - delegateの定義
 //delegateを定義
-protocol AlarmSettingViewControllerDelegate{}
+protocol AlarmSettingViewControllerDelegate{
+    func saveMainAlarm()
+}
 
 // MARK: - classの定義＋機能追加
 class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate {
@@ -28,16 +30,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var saveButton: UIButton!
     //保存ボタンを押した際の処理
     @IBAction func saveButtonAction(_ sender: UIButton) {
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //保存処理の実装
-        try! realm.write {
-            //MasterItemのオブジェクトを保存
-            realm.add(masterItem)
-            //AlarmSettingのオブジェクトを保存
-            realm.add(alarmSettingObjects)
-            
-        }
+        // TODO: テキストへ保存する処理も必要？（Twitterサンプルアプリ.EVC.16~23行目参照）
+        //delegateの設定
+        delegate?.saveMainAlarm()
         //画面遷移元に戻る処理
         self.dismiss(animated: true, completion: nil)
     }
