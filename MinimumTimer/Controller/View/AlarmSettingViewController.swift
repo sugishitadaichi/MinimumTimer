@@ -53,8 +53,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //AlarmStartSettingTimeHeaderをインスタンス化
     var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
     //項目設定オブジェクトの作成
-    var masterItem = MasterItem()
-    //項目設定オブジェクトの作成
     var alarmItem = AlarmItem()
     //delegateの設定
     var delegate: AlarmSettingViewControllerDelegate?
@@ -249,8 +247,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //セルの定義
         //セルの項目マスタとalarmItemListの共通化
         alarmSettingViewCell.alarmItem = alarmItemSetting
+        //alarmItemSetting.byItemStartTime = dateString
         //項目別開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmSettingViewCell.itemStartTimeLabel.text = dateFormatter.string(from: alarmItemSetting.byItemStartTime)
+        print("\(String(describing: alarmSettingViewCell.itemStartTimeLabel.text))")
         //項目別開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmSettingViewCell.itemEndTimeLabel.text = dateFormatter.string(from: alarmItemSetting.byItemEndTime)
         //項目名のテキストデータを定義

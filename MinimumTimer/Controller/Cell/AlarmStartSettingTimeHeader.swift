@@ -46,7 +46,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     
     //doneボタンが押された際の処理
     @objc func doneButton() {
-        // 完了ボタンが押された時の処理を記述する(閉じる)
+        //doneボタンが押された時の処理を記述する(閉じる)
         alarmStartDatePickerText.resignFirstResponder()
         alarmNameText.resignFirstResponder()
     }
