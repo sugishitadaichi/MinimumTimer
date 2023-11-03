@@ -177,16 +177,20 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmItemListが0の場合（項目が追加されていない場合）、ヘッダーの時間を開始時間に反映
         //Date型に変換できなかった場合は、現在時刻を反映
         if alarmItemList.count == 0 {
-            itemStartTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text ?? "1999/1/1 0:00") ?? Date()
+            //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
+            let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
+            //dateStringの出力確認
+            print("dateString:\(dateString)")
+            itemStartTime = dateFormatter.date(from: dateString) ?? Date()
             //alarmItemListが0でない場合（項目が追加されている場合）
             //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
         } else {
             itemStartTime = alarmItemList.last?.byItemEndTime ?? Date()
         }
         
-        //項目別の開始時間の反映確認
+        //項目別の開始時間の反映確認（日本時間）
         print("全体の開始時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
-        print("\(selectedMasterItem.userSetupName)の開始時間は\(itemStartTime)です")
+        print("\(selectedMasterItem.userSetupName)の開始時間は\(itemStartTime.toStringWithCurrentLocale())です")
                 
         //項目別終了時間の反映＝時間を足し合わせる設定(時間+分)
         let modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: selectedMasterItem.userSetupHourTime, to: itemStartTime)! + Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: itemStartTime)!.timeIntervalSinceReferenceDate
@@ -194,8 +198,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
                 print("項目作業時間は\(selectedMasterItem.userSetupHourTime)時間\(selectedMasterItem.userSetupMinutesTime)分です")
                 //テキスト・alarmSettingモデル・合計時間の共通化
                 alarmItem.byItemEndTime = modifiedItemEndTime
-                //項目別の終了予定時間の確認
-                print("\(selectedMasterItem.userSetupName)の終了予定時間は\(modifiedItemEndTime)です")
+                //項目別の終了予定時間の確認（日本時間）
+        print("\(selectedMasterItem.userSetupName)の終了予定時間は\(modifiedItemEndTime.toStringWithCurrentLocale())です")
         //全体の終了時間
         var alarmEndTime: Date
         
@@ -208,7 +212,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         }
         alarmSettingObjects.alarmEndSettingTime = alarmEndTime
         //合計した時間(終了予定時間)の確認
-        print("全体の終了予定時間は\(alarmEndTime)です")
+        print("全体の終了予定時間は\(alarmEndTime.toStringWithCurrentLocale())です")
         
     }
     
@@ -267,4 +271,20 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     
+}
+
+// MARK: - 追加機能
+//Date型に日本時間が反映できる処理の追加
+extension Date {
+
+    func toStringWithCurrentLocale() -> String {
+
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.locale = Locale.current
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+
+        return formatter.string(from: self)
+    }
+
 }
