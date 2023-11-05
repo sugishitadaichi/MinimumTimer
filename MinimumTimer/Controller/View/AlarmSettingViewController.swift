@@ -248,7 +248,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //セルの項目マスタとalarmItemListの共通化
         alarmSettingViewCell.alarmItem = alarmItemSetting
         //alarmItemSetting.byItemStartTimeとdateString（computed propertyでcombinedDateを定義）を共通化
-        alarmItemSetting.byItemStartTime = alarmStartSettingTimeHeader.combinedDate!
+        alarmItemSetting.byItemStartTime = alarmStartSettingTimeHeader.combinedItemStartTime!
+        
+        alarmItemSetting.byItemEndTime = modifiedItemEndTime
         //項目別開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmSettingViewCell.itemStartTimeLabel.text = dateFormatter.string(from: alarmItemSetting.byItemStartTime)
         print("\(String(describing: alarmSettingViewCell.itemStartTimeLabel.text))")
