@@ -190,8 +190,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         print("全体の開始時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
         print("\(selectedMasterItem.userSetupName)の開始時間は\(itemStartTime.toStringWithCurrentLocale())です")
                 
-        //項目別終了時間の反映＝時間を足し合わせる設定(時間+分)
-        let modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: selectedMasterItem.userSetupHourTime, to: itemStartTime)! + Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: itemStartTime)!.timeIntervalSinceReferenceDate
+        //項目別終了時間の反映＝時間を足し合わせる設定(時間)
+        let modifiedItemEndHourTime = Calendar.current.date(byAdding: .hour, value: selectedMasterItem.userSetupHourTime, to: itemStartTime)!
+        //項目別終了時間の反映＝時間を足し合わせる設定(分)
+        let modifiedItemEndTime = Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: modifiedItemEndHourTime)!
                 //項目別の時間反映確認
                 print("項目作業時間は\(selectedMasterItem.userSetupHourTime)時間\(selectedMasterItem.userSetupMinutesTime)分です")
                 //テキスト・alarmSettingモデル・合計時間の共通化
@@ -250,7 +252,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmItemSetting.byItemStartTimeとdateString（computed propertyでcombinedDateを定義）を共通化
         alarmItemSetting.byItemStartTime = alarmStartSettingTimeHeader.combinedItemStartTime!
         
-        alarmItemSetting.byItemEndTime = modifiedItemEndTime
+        //alarmItemSetting.byItemEndTime = modifiedItemEndTime
         //項目別開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmSettingViewCell.itemStartTimeLabel.text = dateFormatter.string(from: alarmItemSetting.byItemStartTime)
         print("\(String(describing: alarmSettingViewCell.itemStartTimeLabel.text))")
