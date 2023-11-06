@@ -181,13 +181,19 @@ class MasterItemViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         120
     }
-    // TODO: 無限スクロールの追加
+    // TODO: 無限スクロールの追加(if文を実行すると追加処理がおかしくなる＝indexPathのせい？)
     //無限スクロール（今後対応予定） 〇〇番目のcellが表示される時に呼びだされるメソッド
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        //記事を格納してる配列の総数が8個以上あり、後ろから7番目の記事が表示される時に追加で記事を取得...予定
-        if masterItemList.count >= 8 && indexPath.row == (masterItemList.count - 1) {
+        DispatchQueue.main.async {
+            //記事を格納してる配列の総数が6個以上あり、後ろから5番目の記事が表示される時に追加で記事を取得...予定
+//            if indexPath.row == self.masterItemList.count - 5 {
+//                // 追加のデータを取得する処理を書く
+//                self.masterItemList.append(contentsOf: self.masterItemList)
+//                self.masterItemTableView.reloadData()
+//                }
             
         }
+        
     }
     
     

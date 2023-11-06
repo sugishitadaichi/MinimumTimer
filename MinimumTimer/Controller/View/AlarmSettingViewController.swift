@@ -204,7 +204,11 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         var alarmEndTime: Date
         
         if alarmItemList.count == 0 {
-            alarmEndTime = dateFormatter.date(from: alarmStartSettingTimeHeader.alarmStartDatePickerText.text ?? "1999/1/1 0:00") ?? Date()
+            //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
+            let dateEndString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
+            //dateStringの出力確認
+            print("dateEndString:\(dateEndString)")
+            alarmEndTime = dateFormatter.date(from: dateEndString) ?? Date()
             //alarmItemListが0でない場合（項目が追加されている場合）
             //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
         } else {
@@ -225,9 +229,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //データの更新（Footerからのdelegateメソッド）
     func reloadData(selectedMasterItem: MasterItem, alarmItem: AlarmItem) {
         // TODO: AlarmItemのイニシャライザを使用したインスタンス化が必要
-        let addSettingAlarmItem = AlarmItem(id: "", alermSettingId: "", masterId: "", byItemStartTime: Date(), byItemEndTime: alarmItem.byItemEndTime, userSetupName: selectedMasterItem.userSetupName)
+        //let addSettingAlarmItem = AlarmItem(id: "", alermSettingId: "", masterId: "", byItemStartTime: Date(), byItemEndTime: alarmItem.byItemEndTime, userSetupName: selectedMasterItem.userSetupName)
         //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
-        alarmItemList.append(addSettingAlarmItem)
+        alarmItemList.append(alarmItem)
         //データ反映
         alarmSettingTableView.reloadData()
     }
