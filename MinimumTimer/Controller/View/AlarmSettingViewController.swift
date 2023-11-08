@@ -230,6 +230,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     func reloadData(selectedMasterItem: MasterItem, alarmItem: AlarmItem) {
         // TODO: AlarmItemのイニシャライザを使用したインスタンス化が必要
         //let addSettingAlarmItem = AlarmItem(id: "", alermSettingId: "", masterId: "", byItemStartTime: Date(), byItemEndTime: alarmItem.byItemEndTime, userSetupName: selectedMasterItem.userSetupName)
+        alarmItem.userSetupName = selectedMasterItem.userSetupName
         //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
         alarmItemList.append(alarmItem)
         //データ反映

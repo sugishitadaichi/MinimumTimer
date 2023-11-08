@@ -24,6 +24,9 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     @IBOutlet weak var addButton: UIButton!
     //追加ボタンを押した際の処理（Realm導入後。AlarmSettingViewCellに反映させる？）
     @IBAction func addButtonAction(_ sender: UIButton) {
+        //項目設定オブジェクトの作成
+        var alarmItem = AlarmItem()
+        
         //項目名の処理（delegate）
         delegate?.reflectItemName(selectedMasterItem: selectedMasterItem!)
         //項目別終了予定時間の処理（delegate）
@@ -43,8 +46,6 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     var masterItemList: [MasterItem] = []
     //項目設定のプロパティの宣言
     var selectedMasterItem: MasterItem?
-    //項目設定オブジェクトの作成
-    var alarmItem = AlarmItem()
     //AlarmSettingViewCellをインスタンス化
     let alarmSettingViewCell = AlarmSettingViewCell()
     //delegateの定義
