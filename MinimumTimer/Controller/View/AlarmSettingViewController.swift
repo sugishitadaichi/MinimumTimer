@@ -52,8 +52,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     let dateFormatter = DateFormatter()
     //AlarmStartSettingTimeHeaderをインスタンス化
     var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
-    //項目設定オブジェクトの作成
-    var alarmItem = AlarmItem()
     //delegateの設定
     var delegate: AlarmSettingViewControllerDelegate?
     //フッタービューを定義
@@ -105,6 +103,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmStartSettingTimeHeader.alarmStartDatePickerText.text = "00:00"
         //setAlarmItemメソッドを画面が表示される際に実行
         setAlarmItem()
+        
+        
+        
         //全体終了時間を設定
         //alarmItemListの最後の要素からbyItemEndTimeを取得し、endSettingTimeLabel.textにセット
         if let endTime = alarmItemList.last?.byItemEndTime {
@@ -160,7 +161,17 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - delegateメソッド（ItemSelectedFooter）
     //項目別の時間の実装（Footerからのdelegateメソッド）
-    func reflectItemTime(selectedMasterItem: MasterItem) {
+    func reflectItemData(selectedMasterItem: MasterItem) {
+        //項目設定オブジェクトの作成(ローカル変数)
+        var alarmItem = AlarmItem()
+        
+        //　項目名の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        print("項目名　実装")
+        //alarmItemとselectedMasteItemのuserSetupNameの共通化（継承）
+        alarmItem.userSetupName = selectedMasterItem.userSetupName
+        //　項目名の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        
+        //　時間の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         print("項目別予定時間　実装")
         //day（現在時刻）を設定
         let dateFormatter = DateFormatter()
@@ -217,25 +228,17 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmSettingObjects.alarmEndSettingTime = alarmEndTime
         //合計した時間(終了予定時間)の確認
         print("全体の終了予定時間は\(alarmEndTime.toStringWithCurrentLocale())です")
+        //　時間の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         
-    }
-    
-    //項目名の実装（Footerからのdelegateメソッド）
-    func reflectItemName(selectedMasterItem: MasterItem) {
-        print("項目名　実装")
-        //alarmItemとselectedMasteItemのuserSetupNameの共通化（継承）
-        alarmItem.userSetupName = selectedMasterItem.userSetupName
-    }
-    //データの更新（Footerからのdelegateメソッド）
-    func reloadData(selectedMasterItem: MasterItem, alarmItem: AlarmItem) {
-        // TODO: AlarmItemのイニシャライザを使用したインスタンス化が必要
-        //let addSettingAlarmItem = AlarmItem(id: "", alermSettingId: "", masterId: "", byItemStartTime: Date(), byItemEndTime: alarmItem.byItemEndTime, userSetupName: selectedMasterItem.userSetupName)
-        alarmItem.userSetupName = selectedMasterItem.userSetupName
+        //　追加・反映の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         //alarmItemListに新しいalarmItemを追加(追加ボタンを押した際のデータ追加)
         alarmItemList.append(alarmItem)
         //データ反映
         alarmSettingTableView.reloadData()
+        //　追加・反映の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        
     }
+    
     
     // MARK: - delegateメソッド（TableView関係）
     //tableViewにAlarmSettingViewCellの個数を返す

@@ -10,9 +10,7 @@ import RealmSwift
 // MARK: - delegateの定義
 //delegateを定義
 protocol ItemSelectedFooterDelegate{
-    func reflectItemTime(selectedMasterItem: MasterItem)
-    func reflectItemName(selectedMasterItem: MasterItem)
-    func reloadData(selectedMasterItem: MasterItem, alarmItem: AlarmItem)
+    func reflectItemData(selectedMasterItem: MasterItem)
 }
 
 // MARK: - classの定義＋機能追加
@@ -24,15 +22,8 @@ class ItemSelectedFooter: UIView, UITextFieldDelegate , UIPickerViewDelegate, UI
     @IBOutlet weak var addButton: UIButton!
     //追加ボタンを押した際の処理（Realm導入後。AlarmSettingViewCellに反映させる？）
     @IBAction func addButtonAction(_ sender: UIButton) {
-        //項目設定オブジェクトの作成
-        var alarmItem = AlarmItem()
-        
-        //項目名の処理（delegate）
-        delegate?.reflectItemName(selectedMasterItem: selectedMasterItem!)
-        //項目別終了予定時間の処理（delegate）
-        delegate?.reflectItemTime(selectedMasterItem: selectedMasterItem!)
-        //更新の処理（delegate）
-        delegate?.reloadData(selectedMasterItem: selectedMasterItem!, alarmItem: alarmItem)
+        //項目セルのデータ反映の処理（delegate）
+        delegate?.reflectItemData(selectedMasterItem: selectedMasterItem!)
         
         
     }

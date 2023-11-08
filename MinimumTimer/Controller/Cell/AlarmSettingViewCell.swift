@@ -53,6 +53,10 @@ class AlarmSettingViewCell: UITableViewCell {
     }
     
     // MARK: - 追加関数
+    func configure() {
+        guard let indexPath = indexPath else { return }
+        textLabel?.text = "Row: \(indexPath.row), Section: \(indexPath.section)"
+    }
     //　削除ボタンの仕様
     func setupDeleteButton() {
         deleteButton.layer.cornerRadius = 10
