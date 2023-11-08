@@ -23,29 +23,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     var alarmSetting = AlarmSetting()
     //項目名の文字数を10文字以内に定義
     let maxAlarmNameLength = 5
-    //dateStringのcomputed propertyを定義
-    var combinedItemStartTime: Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-        dateFormatter.locale = Locale(identifier: "ja_JP")
-        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-        
-        let dateString = "2023/11/2 " + (alarmStartDatePickerText.text ?? "")
-        
-        return dateFormatter.date(from: dateString)
-    }
-    //dateStringのcomputed propertyを定義
-//    var combinedItemEndTime: Date? {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
-//        dateFormatter.locale = Locale(identifier: "ja_JP")
-//        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-//        
-//        //項目別終了時間の反映＝時間を足し合わせる設定(時間+分)
-//        let modifiedItemEndTime = Calendar.current.date(byAdding: .hour, value: selectedMasterItem.userSetupHourTime, to: itemStartTime)! + Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: itemStartTime)!.timeIntervalSinceReferenceDate
-//        
-//        return dateFormatter.date(from: modifiedItemEndTime)
-//    }
+    
 
     // MARK: - 初期設定関数
     //未処理。//init関数に記載

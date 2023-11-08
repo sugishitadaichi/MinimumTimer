@@ -197,6 +197,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             itemStartTime = alarmItemList.last?.byItemEndTime ?? Date()
         }
         
+        alarmItem.byItemStartTime = itemStartTime
+        print("alarmItem.byItemStartTimeは\(alarmItem.byItemStartTime.toStringWithCurrentLocale())です")
+        
         //項目別の開始時間の反映確認（日本時間）
         print("全体の開始時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
         print("\(selectedMasterItem.userSetupName)の開始時間は\(itemStartTime.toStringWithCurrentLocale())です")
@@ -257,12 +260,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //セルの定義
         //セルの項目マスタとalarmItemListの共通化
         alarmSettingViewCell.alarmItem = alarmItemSetting
-        //alarmItemSetting.byItemStartTimeとdateString（computed propertyでcombinedDateを定義）を共通化
-        alarmItemSetting.byItemStartTime = alarmStartSettingTimeHeader.combinedItemStartTime!
         
-        //alarmItemSetting.byItemEndTime = modifiedItemEndTime
         //項目別開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmSettingViewCell.itemStartTimeLabel.text = dateFormatter.string(from: alarmItemSetting.byItemStartTime)
+        print("alarmItemSetting.byItemStartTimeは\(alarmItemSetting.byItemStartTime.toStringWithCurrentLocale())です")
         print("\(String(describing: alarmSettingViewCell.itemStartTimeLabel.text))")
         //項目別開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmSettingViewCell.itemEndTimeLabel.text = dateFormatter.string(from: alarmItemSetting.byItemEndTime)
