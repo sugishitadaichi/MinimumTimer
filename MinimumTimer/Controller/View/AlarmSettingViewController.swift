@@ -109,9 +109,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //全体終了時間を設定
         //alarmItemListの最後の要素からbyItemEndTimeを取得し、endSettingTimeLabel.textにセット
         if let endTime = alarmItemList.last?.byItemEndTime {
-            endSettingTimeLabel.text = dateFormatter.string(from: endTime)
+            endSettingTimeLabel.text = dateFormatter.string(from: Date() )
+            print("endTimeは\(endTime)です")
         }
-        
         
     }
     

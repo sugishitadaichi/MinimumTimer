@@ -26,15 +26,15 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="247" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="5文字以内で入力" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LLG-Ws-IE5">
-                    <rect key="frame" x="16" y="24" width="153" height="34"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="16" y="19.999999999999996" width="153" height="45.666666666666657"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
             </subviews>
             <viewLayoutGuide key="safeArea" id="FPo-hG-lQe"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="LLG-Ws-IE5" firstAttribute="top" secondItem="AbJ-Jv-9Yh" secondAttribute="top" constant="24" id="Qkk-QV-lIl"/>
+                <constraint firstItem="LLG-Ws-IE5" firstAttribute="top" secondItem="AbJ-Jv-9Yh" secondAttribute="top" constant="20" id="Qkk-QV-lIl"/>
                 <constraint firstItem="LLG-Ws-IE5" firstAttribute="leading" secondItem="FPo-hG-lQe" secondAttribute="leading" constant="16" id="UlE-8S-oRr"/>
                 <constraint firstItem="FPo-hG-lQe" firstAttribute="trailing" secondItem="Gkr-ly-100" secondAttribute="trailing" constant="30" id="c0O-vp-Dex"/>
                 <constraint firstItem="Gkr-ly-100" firstAttribute="leading" secondItem="LLG-Ws-IE5" secondAttribute="trailing" constant="25" id="e73-XT-qpc"/>

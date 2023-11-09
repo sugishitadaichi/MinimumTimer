@@ -98,6 +98,8 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
             let datePickerView:UIDatePicker = UIDatePicker()
             //datepickerのモードを時間モードに設定
             datePickerView.datePickerMode = UIDatePicker.Mode.time
+            //datepickerの外観のスタイルをホイールにする
+            datePickerView.preferredDatePickerStyle = .wheels
             //テキストをdatepicker用の入力スタイルへ変更
             textField.inputView = datePickerView
             //datepickerが入力された際にこのclass(self)のdatePickerValueChangedメソッドを実行する
