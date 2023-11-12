@@ -105,14 +105,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         setAlarmItem()
         
         
-        
-        //全体終了時間を設定
-        //alarmItemListの最後の要素からbyItemEndTimeを取得し、endSettingTimeLabel.textにセット
-        if let endTime = alarmItemList.last?.byItemEndTime {
-            endSettingTimeLabel.text = dateFormatter.string(from: Date() )
-            print("endTimeは\(endTime)です")
-        }
-        
     }
     
     
@@ -163,7 +155,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //項目別の時間の実装（Footerからのdelegateメソッド）
     func reflectItemData(selectedMasterItem: MasterItem) {
         //項目設定オブジェクトの作成(ローカル変数)
-        var alarmItem = AlarmItem()
+        let alarmItem = AlarmItem()
         
         //　項目名の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         print("項目名　実装")
@@ -215,20 +207,23 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
                 //項目別の終了予定時間の確認（日本時間）
         print("\(selectedMasterItem.userSetupName)の終了予定時間は\(modifiedItemEndTime.toStringWithCurrentLocale())です")
         //全体の終了時間
+        //全体の終了時間プロパティの定義
         var alarmEndTime: Date
         
-        if alarmItemList.count == 0 {
-            //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
-            let dateEndString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
-            //dateStringの出力確認
-            print("dateEndString:\(dateEndString)")
-            alarmEndTime = dateFormatter.date(from: dateEndString) ?? Date()
-            //alarmItemListが0でない場合（項目が追加されている場合）
-            //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
-        } else {
-            alarmEndTime = alarmItemList.last?.byItemEndTime ?? Date()
-        }
+        //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
+        let dateEndString = "\(modifiedItemEndTime.toStringWithCurrentLocale())"
+        //dateStringの出力確認
+        print("dateEndString:\(dateEndString)")
+        //dateEndStringの文字列をDate型に変換
+        alarmEndTime = dateFormatter.date(from: dateEndString) ?? Date()
+        //alarmEndTimeをalarmItem.byItemEndTimeへ共通化
+        alarmEndTime = alarmItem.byItemEndTime
+        //alarmEndTimeの出力確認
+        print("alarmEndTime:\(alarmEndTime.toStringWithCurrentLocale())")
+        //alarmEndTimeをalarmSettingObjects.alarmEndSettingTimeへ共通化
         alarmSettingObjects.alarmEndSettingTime = alarmEndTime
+        //全体の終了時間のテキストへ反映
+        endSettingTimeLabel.text = dateFormatter.string(from: alarmEndTime )
         //合計した時間(終了予定時間)の確認
         print("全体の終了予定時間は\(alarmEndTime.toStringWithCurrentLocale())です")
         //　時間の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
