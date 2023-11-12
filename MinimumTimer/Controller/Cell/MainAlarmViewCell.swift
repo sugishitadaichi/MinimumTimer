@@ -35,6 +35,8 @@ class MainAlarmViewCell: UITableViewCell {
     // MARK: - プロパティ
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
+    //全体設定の定義(型をAlarmSettingモデルに設定)
+    var allAlarmSetting: AlarmSetting?
     //MainAlarmViewCellDelegateを定義（他ファイルで使用するため）
     var delegate: MainAlarmViewCellDelegate?
     //IndexPath

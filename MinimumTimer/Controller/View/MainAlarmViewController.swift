@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 // MARK: - classの定義＋機能追加
-class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate, MainAlarmViewCellDelegate, UITableViewDataSource {
+class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate, MainAlarmViewCellDelegate, AlarmStartSettingTimeHeaderDelegate,UITableViewDataSource {
     
     // MARK: - 紐付け＋ボタンアクション
     //+ボタンタップ時に下記関数を実行させる
@@ -26,6 +26,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     let startDateString = "08:00"
     //アラーム設定のプロパティ（配列）
     var alarmSettingList: [AlarmSetting] = []
+    //全体設定のオブジェクトの作成
+    let MAVCAlarmSetting = AlarmSetting()
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     
@@ -49,9 +51,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
         //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
         dateFormatter.dateFormat = "HH:mm"
-        
-        //アラームセルを表示する処理を実行
-        setMainAlarm()
+
     }
     
     // MARK: - 追加関数
@@ -98,9 +98,20 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         alarmSettingList = Array(result)
     }
     
+    // MARK: - delegateメソッド（AlarmStartSettingTimeHeader）
+    func setAllAlarmName(headerAlarmSetting: AlarmSetting) {
+        //アラーム名の実装
+        //localAlarmSettingと??のuserSetupNameの共通化（継承）
+        MAVCAlarmSetting.alarmName = headerAlarmSetting.alarmName
+        print("MAVCAlarmSetting.alarmNameは\(MAVCAlarmSetting.alarmName)です")
+    }
+    
     // MARK: - delegateメソッド（AlarmSettingViewController）
     func saveMainAlarm() {
+        //alarmSettingListに保存
         setMainAlarm()
+        
+        //mainAlarmTableViewの反映更新
         mainAlarmTableView.reloadData()
     }
     
@@ -142,13 +153,18 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         
         //セルの内容を設定
         let alarmSetting = alarmSettingList[indexPath.row]
+        //セルの全体設定とalarmSettigListの共通化
+        cell.allAlarmSetting = alarmSetting
         //セルの定義
         //アラーム名のテキストデータの定義
         cell.alarmNameLabel.text = String(alarmSetting.alarmName)
+        print("項目名は\(alarmSetting.alarmName)です")
         //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         cell.alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmStartSettingTime)
+        print("開始時間は\(alarmSetting.alarmStartSettingTime)です")
         //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
         cell.alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
+        print("終了時間は\(alarmSetting.alarmEndSettingTime)です")
         //作業個数のテキストデータを定義
         cell.byItemLabel.text = String(alarmSetting.itemId)
         //デリゲートの登録

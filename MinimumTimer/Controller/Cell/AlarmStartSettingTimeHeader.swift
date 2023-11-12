@@ -8,6 +8,12 @@
 import UIKit
 import RealmSwift
 
+// MARK: - delegateの定義
+//delegate
+protocol AlarmStartSettingTimeHeaderDelegate{
+    func setAllAlarmName(headerAlarmSetting:AlarmSetting)
+}
+
 // MARK: - classの定義＋機能追加
 class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     // MARK: - 紐付け＋ボタンアクション
@@ -21,6 +27,10 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     var toolBar:UIToolbar!
     //アラーム設定オブジェクトの作成
     var alarmSetting = AlarmSetting()
+    //
+    var headerAlarmSetting: AlarmSetting?
+    //delegateの設定
+    var delegate: AlarmStartSettingTimeHeaderDelegate?
     //項目名の文字数を10文字以内に定義
     let maxAlarmNameLength = 5
     
@@ -47,9 +57,16 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     
     //doneボタンが押された際の処理
     @objc func doneButton() {
-        //doneボタンが押された時の処理を記述する(閉じる)
-        alarmStartDatePickerText.resignFirstResponder()
-        alarmNameText.resignFirstResponder()
+        //alarmStartDatePickerTextがタップされた場合の処理
+        if alarmStartDatePickerText.isFirstResponder {
+            //doneボタンが押された時の処理を記述する(閉じる)
+            alarmStartDatePickerText.resignFirstResponder()
+        } else {
+            alarmNameText.resignFirstResponder()
+            //delegateの設定
+            delegate?.setAllAlarmName(headerAlarmSetting: alarmSetting)
+            print("delegateが実装されました")
+        }
     }
 
 
@@ -93,6 +110,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     // MARK: - delegateメソッド（TableView関係）
     //textFieldがタップされ、編集が始まった時に呼ばれるメソッド
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        //alarmStartDatePickerTextがタップされた場合の処理
         if textField == alarmStartDatePickerText {
             //UIDatePickerの型を持つdatePickerViewを生成
             let datePickerView:UIDatePicker = UIDatePicker()
@@ -104,6 +122,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
             textField.inputView = datePickerView
             //datepickerが入力された際にこのclass(self)のdatePickerValueChangedメソッドを実行する
             datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
+            //alarmStartDatePickerText以外（今回はalarmNameText）がタップされた場合の処理
         } else {
             //通常の入力スタイル
             textField.inputView = nil
