@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 // MARK: - classの定義＋機能追加
-class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate, MainAlarmViewCellDelegate, AlarmStartSettingTimeHeaderDelegate,UITableViewDataSource {
+class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate, MainAlarmViewCellDelegate, UITableViewDataSource {
     
     // MARK: - 紐付け＋ボタンアクション
     //+ボタンタップ時に下記関数を実行させる
@@ -98,13 +98,6 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         alarmSettingList = Array(result)
     }
     
-    // MARK: - delegateメソッド（AlarmStartSettingTimeHeader）
-    func setAllAlarmName(headerAlarmSetting: AlarmSetting) {
-        //アラーム名の実装
-        //localAlarmSettingと??のuserSetupNameの共通化（継承）
-        MAVCAlarmSetting.alarmName = headerAlarmSetting.alarmName
-        print("MAVCAlarmSetting.alarmNameは\(MAVCAlarmSetting.alarmName)です")
-    }
     
     // MARK: - delegateメソッド（AlarmSettingViewController）
     func saveMainAlarm() {

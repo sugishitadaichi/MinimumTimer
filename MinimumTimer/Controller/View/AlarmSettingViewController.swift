@@ -15,7 +15,8 @@ protocol AlarmSettingViewControllerDelegate{
 }
 
 // MARK: - classの定義＋機能追加
-class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate {
+class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate, AlarmStartSettingTimeHeaderDelegate {
+    
     
     
     // MARK: - 紐付け＋ボタンアクション
@@ -52,6 +53,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     let dateFormatter = DateFormatter()
     //AlarmStartSettingTimeHeaderをインスタンス化
     var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
+    //全体設定のオブジェクトの作成
+    let ASVCAlarmSetting = AlarmSetting()
     //delegateの設定
     var delegate: AlarmSettingViewControllerDelegate?
     //フッタービューを定義
@@ -99,12 +102,11 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmSettingTableView.tableHeaderView = alarmStartSettingTimeHeader
         //setHeaderメソッドを画面が表示される際に実行
         setHeader()
-        //pickerTextの初期値を設定
-        //alarmStartSettingTimeHeader.alarmStartDatePickerText.text = "00:00"
         //setAlarmItemメソッドを画面が表示される際に実行
         setAlarmItem()
         
-        
+        //delegate
+        alarmStartSettingTimeHeader.delegate = self
     }
     
     
@@ -220,7 +222,14 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    
+    // MARK: - delegateメソッド（ItemSelectedFooter）
+    func setAllAlarmName(headerAlarmSetting: AlarmSetting){
+        //アラーム名の実装
+        //localAlarmSettingと??のuserSetupNameの共通化（継承）
+        ASVCAlarmSetting.alarmName = headerAlarmSetting.alarmName
+        print("ASVCAlarmSetting.alarmNameは\(ASVCAlarmSetting.alarmName)です")
+        
+    }
     // MARK: - delegateメソッド（TableView関係）
     //tableViewにAlarmSettingViewCellの個数を返す
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

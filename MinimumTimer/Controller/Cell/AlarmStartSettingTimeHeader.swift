@@ -27,7 +27,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     var toolBar:UIToolbar!
     //アラーム設定オブジェクトの作成
     var alarmSetting = AlarmSetting()
-    //
+    //AlarmSettingの型を持つプロパティを作成
     var headerAlarmSetting: AlarmSetting?
     //delegateの設定
     var delegate: AlarmStartSettingTimeHeaderDelegate?
@@ -55,16 +55,33 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         
     }
     
+    //アラーム名を保存・反映する処理
+    func saveAllAlarmName(with text: String) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //保存処理の実装
+        try! realm.write {
+            alarmSetting.alarmName = text
+            realm.add(alarmSetting)
+        }
+    }
+    
     //doneボタンが押された際の処理
     @objc func doneButton() {
         //alarmStartDatePickerTextがタップされた場合の処理
         if alarmStartDatePickerText.isFirstResponder {
-            //doneボタンが押された時の処理を記述する(閉じる)
+            //閉じる処理(datepicker)
             alarmStartDatePickerText.resignFirstResponder()
+            //alarmStartDatePickerText以外（今回でゆうとalarmNameText）がタップされた場合の処理
         } else {
-            alarmNameText.resignFirstResponder()
+            //アラーム名のテキストの定義・nilの場合は空白
+            let updatedAllAlarmNameText = alarmNameText.text ?? ""
+            //アラーム名をupdatedAllAlarmNameText（String型）に保存
+            saveAllAlarmName(with: updatedAllAlarmNameText)
             //delegateの設定
             delegate?.setAllAlarmName(headerAlarmSetting: alarmSetting)
+            //閉じる処理(アラーム名)
+            alarmNameText.resignFirstResponder()
             print("delegateが実装されました")
         }
     }
