@@ -45,8 +45,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - プロパティ
     //アラーム設定のプロパティ（配列）
     var alarmSettingList: [AlarmSetting] = []
-    //アラーム設定のオブジェクト
-    var alarmSettingObjects = AlarmSetting()
     //項目別アラームのプロパティ
     var alarmItemList: [AlarmItem] = []
     //DateFormatterクラスのインスタンス化
@@ -96,8 +94,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //ヘッダービューを定義
         let headerHeight:CGFloat = 100.0
         alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: headerHeight))
-        
-
+        //userSetupNameTextのテキストにAlarmSetting.alarmNameの内容を代入
+        alarmStartSettingTimeHeader.alarmNameText.text = String(ASVCAlarmSetting.alarmName)
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
         alarmSettingTableView.tableHeaderView = alarmStartSettingTimeHeader
         //setHeaderメソッドを画面が表示される際に実行
@@ -208,7 +206,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmEndTimeをalarmItem.byItemEndTimeへ共通化
         alarmEndTime = alarmItem.byItemEndTime
         //alarmEndTimeをalarmSettingObjects.alarmEndSettingTimeへ共通化
-        alarmSettingObjects.alarmEndSettingTime = alarmEndTime
+        ASVCAlarmSetting.alarmEndSettingTime = alarmEndTime
         //全体の終了時間のテキストへ反映
         endSettingTimeLabel.text = alarmEndTime.formattedTime() 
         //　時間の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -222,7 +220,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    // MARK: - delegateメソッド（ItemSelectedFooter）
+    // MARK: - delegateメソッド（AlarmStartSettingTimeHeader）
     func setAllAlarmName(headerAlarmSetting: AlarmSetting){
         //アラーム名の実装
         //localAlarmSettingと??のuserSetupNameの共通化（継承）
@@ -230,6 +228,19 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         print("ASVCAlarmSetting.alarmNameは\(ASVCAlarmSetting.alarmName)です")
         
     }
+    
+    //アラーム名を保存・反映する処理
+    func saveAllAlarmName(with text: String) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //保存処理の実装
+        try! realm.write {
+            ASVCAlarmSetting.alarmName = text
+            realm.add(ASVCAlarmSetting)
+        }
+        
+    }
+    
     // MARK: - delegateメソッド（TableView関係）
     //tableViewにAlarmSettingViewCellの個数を返す
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

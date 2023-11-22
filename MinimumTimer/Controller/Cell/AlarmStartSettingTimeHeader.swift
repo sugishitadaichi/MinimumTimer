@@ -11,7 +11,9 @@ import RealmSwift
 // MARK: - delegateの定義
 //delegate
 protocol AlarmStartSettingTimeHeaderDelegate{
-    func setAllAlarmName(headerAlarmSetting:AlarmSetting)
+    func setAllAlarmName(headerAlarmSetting: AlarmSetting)
+    
+    func saveAllAlarmName(with text: String)
 }
 
 // MARK: - classの定義＋機能追加
@@ -26,9 +28,9 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     //toolBarを定義
     var toolBar:UIToolbar!
     //アラーム設定オブジェクトの作成
-    var alarmSetting = AlarmSetting()
+    //var alarmSetting = AlarmSetting()
     //AlarmSettingの型を持つプロパティを作成
-    var headerAlarmSetting: AlarmSetting?
+    //var headerAlarmSetting: AlarmSetting?
     //delegateの設定
     var delegate: AlarmStartSettingTimeHeaderDelegate?
     //項目名の文字数を10文字以内に定義
@@ -55,16 +57,7 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         
     }
     
-    //アラーム名を保存・反映する処理
-    func saveAllAlarmName(with text: String) {
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //保存処理の実装
-        try! realm.write {
-            alarmSetting.alarmName = text
-            realm.add(alarmSetting)
-        }
-    }
+    
     
     //doneボタンが押された際の処理
     @objc func doneButton() {
@@ -77,9 +70,9 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
             //アラーム名のテキストの定義・nilの場合は空白
             let updatedAllAlarmNameText = alarmNameText.text ?? ""
             //アラーム名をupdatedAllAlarmNameText（String型）に保存
-            saveAllAlarmName(with: updatedAllAlarmNameText)
+            delegate?.saveAllAlarmName(with: updatedAllAlarmNameText)
             //delegateの設定
-            delegate?.setAllAlarmName(headerAlarmSetting: alarmSetting)
+            delegate?.setAllAlarmName(headerAlarmSetting: AlarmSetting)
             //閉じる処理(アラーム名)
             alarmNameText.resignFirstResponder()
             print("delegateが実装されました")
@@ -95,8 +88,6 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         //delegateの登録
         alarmStartDatePickerText.delegate = self
         alarmNameText.delegate = self
-        //userSetupNameTextのテキストにmasterItemの内容を代入
-        alarmNameText.text = String(alarmSetting.alarmName)
         //doneボタンの設定を画面表示時に実行
         setupToolbar()
         //枠線の設定
