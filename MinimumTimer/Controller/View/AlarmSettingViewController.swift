@@ -44,7 +44,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - プロパティ
     //アラーム設定のプロパティ（配列）
-    var alarmSettingList: [AlarmSetting] = []
+    //var alarmSettingList: [AlarmSetting] = []
     //項目別アラームのプロパティ
     var alarmItemList: [AlarmItem] = []
     //DateFormatterクラスのインスタンス化
@@ -95,11 +95,11 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let headerHeight:CGFloat = 100.0
         alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: headerHeight))
         //userSetupNameTextのテキストにAlarmSetting.alarmNameの内容を代入
-        alarmStartSettingTimeHeader.alarmNameText.text = String(ASVCAlarmSetting.alarmName)
+        alarmStartSettingTimeHeader.alarmNameText.text = ASVCAlarmSetting.alarmName
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
         alarmSettingTableView.tableHeaderView = alarmStartSettingTimeHeader
         //setHeaderメソッドを画面が表示される際に実行
-        setHeader()
+        //setHeader()
         //setAlarmItemメソッドを画面が表示される際に実行
         setAlarmItem()
         
@@ -110,20 +110,20 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - 追加関数
     //ヘッダーに表示するデータの処理(フッターは項目追加処理のみのため不要)
-    func setHeader() -> Void {
-
-        //dateFormatterを定義
-        let dateFormatter = DateFormatter()
-        //Date型への変換
-        dateFormatter.dateFormat = "HH:mm"
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //アラーム設定を表示する際の条件（時間の昇順）
-        let resultAlarmTime = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
-        //alarmSettingListに格納
-        alarmSettingList = Array(resultAlarmTime)
-        
-    }
+//    func setHeader() -> Void {
+//
+//        //dateFormatterを定義
+//        let dateFormatter = DateFormatter()
+//        //Date型への変換
+//        dateFormatter.dateFormat = "HH:mm"
+//        //Realmをインスタンス化
+//        let realm = try! Realm()
+//        //アラーム設定を表示する際の条件（時間の昇順）
+//        let resultAlarmTime = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
+//        //alarmSettingListに格納
+//        alarmSettingList = Array(resultAlarmTime)
+//        
+//    }
     
     //項目別設定を格納するためのメソッド
     func setAlarmItem() -> Void {
@@ -221,14 +221,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // MARK: - delegateメソッド（AlarmStartSettingTimeHeader）
-    func setAllAlarmName(headerAlarmSetting: AlarmSetting){
-        //アラーム名の実装
-        //localAlarmSettingと??のuserSetupNameの共通化（継承）
-        ASVCAlarmSetting.alarmName = headerAlarmSetting.alarmName
-        print("ASVCAlarmSetting.alarmNameは\(ASVCAlarmSetting.alarmName)です")
-        
-    }
-    
     //アラーム名を保存・反映する処理
     func saveAllAlarmName(with text: String) {
         //Realmをインスタンス化
@@ -238,6 +230,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             ASVCAlarmSetting.alarmName = text
             realm.add(ASVCAlarmSetting)
         }
+        print("ASVCAlarmSetting.alarmNameは\(ASVCAlarmSetting.alarmName)です")
         
     }
     

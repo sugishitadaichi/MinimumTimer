@@ -11,8 +11,7 @@ import RealmSwift
 // MARK: - delegateの定義
 //delegate
 protocol AlarmStartSettingTimeHeaderDelegate{
-    func setAllAlarmName(headerAlarmSetting: AlarmSetting)
-    
+    //アラーム名を保存する処理
     func saveAllAlarmName(with text: String)
 }
 
@@ -27,10 +26,6 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
     // MARK: - プロパティ
     //toolBarを定義
     var toolBar:UIToolbar!
-    //アラーム設定オブジェクトの作成
-    //var alarmSetting = AlarmSetting()
-    //AlarmSettingの型を持つプロパティを作成
-    //var headerAlarmSetting: AlarmSetting?
     //delegateの設定
     var delegate: AlarmStartSettingTimeHeaderDelegate?
     //項目名の文字数を10文字以内に定義
@@ -71,8 +66,6 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
             let updatedAllAlarmNameText = alarmNameText.text ?? ""
             //アラーム名をupdatedAllAlarmNameText（String型）に保存
             delegate?.saveAllAlarmName(with: updatedAllAlarmNameText)
-            //delegateの設定
-            delegate?.setAllAlarmName(headerAlarmSetting: AlarmSetting)
             //閉じる処理(アラーム名)
             alarmNameText.resignFirstResponder()
             print("delegateが実装されました")
