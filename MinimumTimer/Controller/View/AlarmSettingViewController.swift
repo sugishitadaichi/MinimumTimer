@@ -44,6 +44,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - プロパティ
     //アラーム設定のプロパティ（配列）
+    // TODO: alarmSettingListの要不要の検討必要
     var alarmSettingList: [AlarmSetting] = []
     //項目別アラームのプロパティ
     var alarmItemList: [AlarmItem] = []
@@ -99,6 +100,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
         alarmSettingTableView.tableHeaderView = alarmStartSettingTimeHeader
         //setHeaderメソッドを画面が表示される際に実行
+        // TODO: setHeader()の要不要の検討必要
         setHeader()
         //setAlarmItemメソッドを画面が表示される際に実行
         setAlarmItem()
@@ -110,6 +112,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - 追加関数
     //ヘッダーに表示するデータの処理(フッターは項目追加処理のみのため不要)
+    // TODO: setHeader()の要不要の検討必要
     func setHeader() -> Void {
 
         //dateFormatterを定義

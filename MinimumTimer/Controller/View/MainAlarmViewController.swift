@@ -27,7 +27,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     //アラーム設定のプロパティ（配列）
     var alarmSettingList: [AlarmSetting] = []
     //全体設定のオブジェクトの作成
-    let MAVCAlarmSetting = AlarmSetting()
+    let alarmSetting = AlarmSetting()
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     
@@ -40,10 +40,14 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //ホーム画面表示時にボタンの仕様を適用
         configureAlarmSettingButton()
         
-        //データソースの提供
+        //mainAlarmTableViewのデータソースの提供
         mainAlarmTableView.dataSource = self
-        //delegateを登録
+        //mainAlarmTableViewのdelegateを登録
         mainAlarmTableView.delegate = self
+        
+        //AlarmSettingViewControllerのdelegateを登録
+        let alarmSettingViewController = AlarmSettingViewController()
+        alarmSettingViewController.delegate = self
         
         //カレンダー、ロケール、タイムゾーンの設定（未指定時は端末の設定が採用される）
         dateFormatter.calendar = Calendar(identifier: .gregorian)
