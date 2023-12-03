@@ -43,9 +43,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var alarmSettingTableView: UITableView!
     
     // MARK: - プロパティ
-    //アラーム設定のプロパティ（配列）
-    // TODO: alarmSettingListの要不要の検討必要
-    var alarmSettingList: [AlarmSetting] = []
     //項目別アラームのプロパティ
     var alarmItemList: [AlarmItem] = []
     //DateFormatterクラスのインスタンス化
@@ -99,9 +96,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmStartSettingTimeHeader.alarmNameText.text = alarmSetting.alarmName
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
         alarmSettingTableView.tableHeaderView = alarmStartSettingTimeHeader
-        //setHeaderメソッドを画面が表示される際に実行
-        // TODO: setHeader()の要不要の検討必要
-        setHeader()
         //setAlarmItemメソッドを画面が表示される際に実行
         setAlarmItem()
         
@@ -111,23 +105,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     
     // MARK: - 追加関数
-    //ヘッダーに表示するデータの処理(フッターは項目追加処理のみのため不要)
-    // TODO: setHeader()の要不要の検討必要
-    func setHeader() -> Void {
-
-        //dateFormatterを定義
-        let dateFormatter = DateFormatter()
-        //Date型への変換
-        dateFormatter.dateFormat = "HH:mm"
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //アラーム設定を表示する際の条件（時間の昇順）
-        let resultAlarmTime = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
-        //alarmSettingListに格納
-        alarmSettingList = Array(resultAlarmTime)
-        
-    }
-    
     //項目別設定を格納するためのメソッド
     func setAlarmItem() -> Void {
         //dateFormatterを定義
@@ -208,8 +185,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmEndTime = dateFormatter.date(from: dateEndString) ?? Date()
         //alarmEndTimeをalarmItem.byItemEndTimeへ共通化
         alarmEndTime = alarmItem.byItemEndTime
-        //alarmEndTimeをalarmSettingObjects.alarmEndSettingTimeへ共通化
-        alarmSetting.alarmEndSettingTime = alarmEndTime
+
         //全体の終了時間のテキストへ反映
         endSettingTimeLabel.text = alarmEndTime.formattedTime() 
         //　時間の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -220,7 +196,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //データ反映
         alarmSettingTableView.reloadData()
         //　追加・反映の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-        
     }
     
     // MARK: - delegateメソッド（AlarmStartSettingTimeHeader）
