@@ -32,8 +32,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //保存ボタンを押した際の処理
     @IBAction func saveButtonAction(_ sender: UIButton) {
         // TODO: テキストへ保存する処理も必要？（Twitterサンプルアプリ.EVC.16~23行目参照）
+        print("saveMainAlarmのdelegateメソッドが実行されようとしています")
         //delegateの設定
         delegate?.saveMainAlarm()
+        print("saveMainAlarmのdelegateメソッドが実行されました")
         //画面遷移元に戻る処理
         self.dismiss(animated: true, completion: nil)
     }
@@ -122,7 +124,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
     func deleteItem(item: AlarmItem) {
-        //alarmSettingListの配列からインデックス番号に該当する配列を削除
+        //alarmItemListの配列からインデックス番号に該当する配列を削除
         if let index = alarmItemList.firstIndex(of: item) {
             alarmItemList.remove(at: index)
         }

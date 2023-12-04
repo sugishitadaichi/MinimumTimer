@@ -100,6 +100,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
         //resultという結果を配列に変換して、alarmSettingListに代入
         alarmSettingList = Array(result)
+        print("alarmSettingListの内容は\(alarmSettingList)です1")
     }
     
     
@@ -107,7 +108,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     func saveMainAlarm() {
         //alarmSettingListに保存
         setMainAlarm()
-        
+        print("alarmSettingListの個数は\(alarmSettingList.count)個です1")
         //mainAlarmTableViewの反映更新
         mainAlarmTableView.reloadData()
     }
@@ -139,6 +140,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     // MARK: - delegateメソッド（TableView関係）
     // TableViewに表示するセルの数を返却
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("alarmSettingList個数は\(alarmSettingList.count)個です2")
         //alarmSettingListにある個数分セルを返却
         return alarmSettingList.count
     }
@@ -157,13 +159,23 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         cell.alarmNameLabel.text = String(alarmSetting.alarmName)
         print("項目名は\(alarmSetting.alarmName)です")
         //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
-        cell.alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmStartSettingTime)
-        print("開始時間は\(alarmSetting.alarmStartSettingTime)です")
+        let allAlarmStartTime = "\(alarmSetting.alarmStartSettingTime.toStringWithCurrentLocale())"
+        cell.alarmStartSettingTimeLabel.text = allAlarmStartTime
+        print("開始時間は\(allAlarmStartTime)です")
         //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
-        cell.alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
-        print("終了時間は\(alarmSetting.alarmEndSettingTime)です")
+        let allAlarmEndTime = "\(alarmSetting.alarmEndSettingTime.toStringWithCurrentLocale())"
+        cell.alarmEndSettingTimeLabel.text = allAlarmEndTime
+        print("終了時間は\(allAlarmEndTime)です")
         //作業個数のテキストデータを定義
-        cell.byItemLabel.text = String(alarmSetting.itemId)
+        //AlarmSettingViewCellを配列へ変更
+        let alarmSettingViewCell = AlarmSettingViewCell()
+        let cellList = [alarmSettingViewCell]
+        //AlarmSettingモデルのitemIdCountにセルの個数を共通化
+        alarmSetting.itemIdCount = cellList.count
+        //上記で表示した配列の個数を表示
+        cell.byItemLabel.text = String(alarmSetting.itemIdCount)
+        print("設定作業の個数は\(alarmSetting.itemIdCount)個です")
+        //print("設定作業の個数を表示しているセルは\(String(describing: cell.byItemLabel.text))個と表示されています")
         //デリゲートの登録
         cell.delegate = self
         cell.setUp(alarmSetting: alarmSetting)
