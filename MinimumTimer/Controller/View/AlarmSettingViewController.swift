@@ -36,6 +36,12 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //delegateの設定
         delegate?.saveMainAlarm()
         print("saveMainAlarmのdelegateメソッドが実行されました")
+        //alarmItemプロパティにデータを保存
+//        let realm = try! Realm()
+//        try! realm.write {
+//            realm.add(alarmItem)
+//        }
+        //alarmSetting.itemIdCount = alarmItemList.count
         //画面遷移元に戻る処理
         self.dismiss(animated: true, completion: nil)
     }
@@ -51,8 +57,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     let dateFormatter = DateFormatter()
     //AlarmStartSettingTimeHeaderをインスタンス化
     var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
-    //全体設定のオブジェクトの作成
+    //全体設定のプロパティの作成
     var alarmSetting = AlarmSetting()
+    //各作業内容のプロパティの作成
+    var alarmItem = AlarmItem()
     //delegateの設定
     var delegate: AlarmSettingViewControllerDelegate?
     //フッタービューを定義
@@ -198,6 +206,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //データ反映
         alarmSettingTableView.reloadData()
         //　追加・反映の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        print("alarmItemListの個数は\(alarmItemList.count)個です")
     }
     
     // MARK: - delegateメソッド（AlarmStartSettingTimeHeader）

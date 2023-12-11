@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vW1-EF-URw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vW1-EF-URw">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,10 +21,13 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="710"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="aWO-Kl-Jlg">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWO-Kl-Jlg">
                                 <rect key="frame" x="321" y="652" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="5Ws-2v-ncS"/>
+                                    <constraint firstAttribute="height" constant="60" id="pZo-Sq-ce7"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" systemColor="systemBackgroundColor"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -37,6 +40,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemCyanColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aWO-Kl-Jlg" secondAttribute="trailing" constant="12" id="4xj-0F-tET"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="aWO-Kl-Jlg" secondAttribute="bottom" constant="57" id="9qx-nx-Hku"/>
                             <constraint firstItem="i2a-fq-HO4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DRc-4w-Oi7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="i2a-fq-HO4" secondAttribute="trailing" id="LWp-09-8lI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="i2a-fq-HO4" secondAttribute="bottom" id="oFM-np-aXF"/>
@@ -66,10 +71,13 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="710"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="4pD-GU-rJr">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4pD-GU-rJr">
                                 <rect key="frame" x="321" y="652" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="9rD-cw-Zz9"/>
+                                    <constraint firstAttribute="height" constant="60" id="m8p-mN-Pho"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -85,7 +93,9 @@
                         <constraints>
                             <constraint firstItem="kbK-U7-DDc" firstAttribute="top" secondItem="tfQ-gn-888" secondAttribute="top" id="7GR-ro-RMT"/>
                             <constraint firstItem="tfQ-gn-888" firstAttribute="trailing" secondItem="kbK-U7-DDc" secondAttribute="trailing" id="AxD-6j-8DZ"/>
+                            <constraint firstItem="tfQ-gn-888" firstAttribute="trailing" secondItem="4pD-GU-rJr" secondAttribute="trailing" constant="12" id="OZY-Ue-b4I"/>
                             <constraint firstItem="tfQ-gn-888" firstAttribute="bottom" secondItem="kbK-U7-DDc" secondAttribute="bottom" id="eih-gu-i7P"/>
+                            <constraint firstItem="tfQ-gn-888" firstAttribute="bottom" secondItem="4pD-GU-rJr" secondAttribute="bottom" constant="57" id="qxu-hz-Alc"/>
                             <constraint firstItem="kbK-U7-DDc" firstAttribute="leading" secondItem="tfQ-gn-888" secondAttribute="leading" id="tdh-mN-SY5"/>
                         </constraints>
                     </view>

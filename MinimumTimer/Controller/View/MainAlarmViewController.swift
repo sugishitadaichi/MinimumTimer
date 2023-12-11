@@ -59,6 +59,19 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     }
     
     // MARK: - 追加関数
+    //ライフサイクルメソッド
+    //MainAlarmViewControllerが表示される直前に実行される
+    override func viewWillAppear(_ animated: Bool) {
+        //アラームを整列
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //RealmデータベースからAlarmSettingというオブジェクトを取得し、"alarmStartSettingTime"というキーパスを基準に昇順でソートされた結果を取得
+        let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
+        //resultという結果を配列に変換して、alarmSettingListに代入
+        alarmSettingList = Array(result)
+        
+        
+    }
     //＋ボタンの仕様
     func configureAlarmSettingButton() {
         alarmSettingButton.layer.cornerRadius = alarmSettingButton.bounds.width / 2
@@ -77,7 +90,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         asvc.delegate = self
     }
     
-    //アラームを格納するためのメソッド
+    //アラームを保存・格納するためのメソッド
     func setMainAlarm() -> Void {
         // MARK: - ダミーデータ
 //        //dateFormatterを定義
@@ -96,6 +109,10 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         // MARK: - 実保存データ
         //Realmをインスタンス化
         let realm = try! Realm()
+        //alarmSettingプロパティへデータ保存
+        try! realm.write {
+            realm.add(alarmSetting)
+        }
         //RealmデータベースからAlarmSettingというオブジェクトを取得し、"alarmStartSettingTime"というキーパスを基準に昇順でソートされた結果を取得
         let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
         //resultという結果を配列に変換して、alarmSettingListに代入
@@ -167,13 +184,10 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         cell.alarmEndSettingTimeLabel.text = allAlarmEndTime
         print("終了時間は\(allAlarmEndTime)です")
         //作業個数のテキストデータを定義
-        //AlarmSettingViewCellを配列へ変更
-        let alarmSettingViewCell = AlarmSettingViewCell()
-        let cellList = [alarmSettingViewCell]
-        //AlarmSettingモデルのitemIdCountにセルの個数を共通化
-        alarmSetting.itemIdCount = cellList.count
-        //上記で表示した配列の個数を表示
-        cell.byItemLabel.text = String(alarmSetting.itemIdCount)
+        //AlarmSettingモデルのitemIdCountにセルの個数を共通化 ここがおかしい
+        //alarmSetting.itemIdCount = alarmSettingList.count
+        //上記で表示した配列の個数を表示　ここがおかしい
+        //cell.byItemLabel.text = String(alarmSetting.itemIdCount)
         print("設定作業の個数は\(alarmSetting.itemIdCount)個です")
         //print("設定作業の個数を表示しているセルは\(String(describing: cell.byItemLabel.text))個と表示されています")
         //デリゲートの登録
