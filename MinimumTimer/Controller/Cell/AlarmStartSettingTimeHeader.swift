@@ -62,13 +62,13 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
             alarmStartDatePickerText.resignFirstResponder()
             //alarmStartDatePickerText以外（今回でゆうとalarmNameText）がタップされた場合の処理
         } else {
-            //アラーム名のテキストの定義・nilの場合は空白
-            let updatedAllAlarmNameText = alarmNameText.text ?? ""
-            //アラーム名をupdatedAllAlarmNameText（String型）に保存
-            delegate?.saveAllAlarmName(with: updatedAllAlarmNameText)
-            //閉じる処理(アラーム名)
+//            //アラーム名のテキストの定義・nilの場合は空白
+//            let updatedAllAlarmNameText = alarmNameText.text ?? ""
+//            //アラーム名をupdatedAllAlarmNameText（String型）に保存
+//            delegate?.saveAllAlarmName(with: updatedAllAlarmNameText)
+//            //閉じる処理(アラーム名)
             alarmNameText.resignFirstResponder()
-            print("delegateが実装されました")
+//            print("delegateが実装されました")
         }
     }
 

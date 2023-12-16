@@ -32,16 +32,13 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //保存ボタンを押した際の処理
     @IBAction func saveButtonAction(_ sender: UIButton) {
         // TODO: テキストへ保存する処理も必要？（Twitterサンプルアプリ.EVC.16~23行目参照）
-        print("saveMainAlarmのdelegateメソッドが実行されようとしています")
-        //delegateの設定
+        saveMainAlarm2()
+        //print("saveMainAlarmのdelegateメソッドが実行されようとしています")
+        //delegateの設定(reloadDate()が必要？)
         delegate?.saveMainAlarm()
-        print("saveMainAlarmのdelegateメソッドが実行されました")
-        //alarmItemプロパティにデータを保存
-//        let realm = try! Realm()
-//        try! realm.write {
-//            realm.add(alarmItem)
-//        }
+        //アラームに設定した作業の個数（alarmItemList.count）をメイン画面の作業個数(alarmSetting.itemIdCount)に反映
         //alarmSetting.itemIdCount = alarmItemList.count
+        //print("saveMainAlarmのdelegateメソッドが実行されました")
         //画面遷移元に戻る処理
         self.dismiss(animated: true, completion: nil)
     }
@@ -57,6 +54,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     let dateFormatter = DateFormatter()
     //AlarmStartSettingTimeHeaderをインスタンス化
     var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
+    //AlarmSettingの配列
+    var alarmSettingList: [AlarmSetting] = []
     //全体設定のプロパティの作成
     var alarmSetting = AlarmSetting()
     //各作業内容のプロパティの作成
@@ -129,6 +128,27 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmItemList = Array(resultItem)
     }
     
+    //AlarmSettingプロパティで諸々のデータを保存（試し）
+    func saveMainAlarm2() {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //alarmSettingプロパティへデータ保存
+        try! realm.write {
+            //メイン画面の作業個数(alarmSetting.itemIdCount)とアラームに設定した作業の個数（alarmItemList.count）を共通化
+            alarmSetting.itemIdCount = alarmItemList.count
+            //項目名の共通化
+            alarmSetting.alarmName = alarmStartSettingTimeHeader.alarmNameText.text ?? ""
+            //全体の開始時間の共通化(reflectItemDataメソッドで記載済)
+            //全体終了時間の共通化
+            alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
+            realm.add(alarmSetting)
+        }
+        //RealmデータベースからAlarmSettingというオブジェクトを取得し、"alarmStartSettingTime"というキーパスを基準に昇順でソートされた結果を取得
+        let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
+        //resultという結果を配列に変換して、alarmSettingListに代入
+        alarmSettingList = Array(result)
+        
+    }
     // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
     func deleteItem(item: AlarmItem) {
@@ -161,6 +181,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         //項目マスタをアラーム時間と足し合わせる
         //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
+        
         //項目別開始時間(itemStartTime）をDate型で定義
         var itemStartTime: Date
         //alarmItemListが0の場合（項目が追加されていない場合）、ヘッダーの時間を開始時間に反映
@@ -170,6 +191,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
             
             itemStartTime = dateFormatter.date(from: dateString) ?? Date()
+            //全体の開始時間の共通化
+            alarmSetting.alarmStartSettingTime = itemStartTime
             //alarmItemListが0でない場合（項目が追加されている場合）
             //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
         } else {

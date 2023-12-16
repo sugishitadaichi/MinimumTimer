@@ -108,24 +108,24 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
 //        alarmSettingList.append(alarmPost1)
         // MARK: - 実保存データ
         //Realmをインスタンス化
-        let realm = try! Realm()
-        //alarmSettingプロパティへデータ保存
-        try! realm.write {
-            realm.add(alarmSetting)
-        }
-        //RealmデータベースからAlarmSettingというオブジェクトを取得し、"alarmStartSettingTime"というキーパスを基準に昇順でソートされた結果を取得
-        let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
-        //resultという結果を配列に変換して、alarmSettingListに代入
-        alarmSettingList = Array(result)
-        print("alarmSettingListの内容は\(alarmSettingList)です1")
+//        let realm = try! Realm()
+//        //alarmSettingプロパティへデータ保存
+//        try! realm.write {
+//            realm.add(alarmSetting)
+//        }
+//        //RealmデータベースからAlarmSettingというオブジェクトを取得し、"alarmStartSettingTime"というキーパスを基準に昇順でソートされた結果を取得
+//        let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
+//        //resultという結果を配列に変換して、alarmSettingListに代入
+//        alarmSettingList = Array(result)
+//        print("alarmSettingListの内容は\(alarmSettingList)です1")
     }
     
     
     // MARK: - delegateメソッド（AlarmSettingViewController）
     func saveMainAlarm() {
         //alarmSettingListに保存
-        setMainAlarm()
-        print("alarmSettingListの個数は\(alarmSettingList.count)個です1")
+        //setMainAlarm()
+        //print("alarmSettingListの個数は\(alarmSettingList.count)個です1")
         //mainAlarmTableViewの反映更新
         mainAlarmTableView.reloadData()
     }
