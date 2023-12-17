@@ -54,8 +54,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     let dateFormatter = DateFormatter()
     //AlarmStartSettingTimeHeaderをインスタンス化
     var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
-    //AlarmSettingの配列
-    var alarmSettingList: [AlarmSetting] = []
     //全体設定のプロパティの作成
     var alarmSetting = AlarmSetting()
     //各作業内容のプロパティの作成
@@ -143,10 +141,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
             realm.add(alarmSetting)
         }
-        //RealmデータベースからAlarmSettingというオブジェクトを取得し、"alarmStartSettingTime"というキーパスを基準に昇順でソートされた結果を取得
-        let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
-        //resultという結果を配列に変換して、alarmSettingListに代入
-        alarmSettingList = Array(result)
+        
         
     }
     // MARK: - delegateメソッド（AlarmSettingViewCell）

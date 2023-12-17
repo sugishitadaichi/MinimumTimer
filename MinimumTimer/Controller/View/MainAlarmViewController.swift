@@ -126,6 +126,13 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //alarmSettingListに保存
         //setMainAlarm()
         //print("alarmSettingListの個数は\(alarmSettingList.count)個です1")
+        //アラームを整列
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //RealmデータベースからAlarmSettingというオブジェクトを取得し、"alarmStartSettingTime"というキーパスを基準に昇順でソートされた結果を取得
+        let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
+        //resultという結果を配列に変換して、alarmSettingListに代入
+        alarmSettingList = Array(result)
         //mainAlarmTableViewの反映更新
         mainAlarmTableView.reloadData()
     }
