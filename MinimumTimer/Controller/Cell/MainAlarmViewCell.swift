@@ -70,7 +70,7 @@ class MainAlarmViewCell: UITableViewCell {
         //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
         alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
         //作業個数のテキストデータを定義
-        byItemLabel.text = String(alarmSetting.itemIdCount)
+        byItemLabel.text = "\(alarmSetting.itemIdCount)個"
 
     }
     // MARK: - 追加関数

@@ -23,11 +23,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     @IBOutlet weak var mainAlarmTableView: UITableView!
     
     // MARK: - プロパティ
-    let startDateString = "08:00"
     //アラーム設定のプロパティ（配列）
     var alarmSettingList: [AlarmSetting] = []
-    //全体設定のオブジェクトの作成
-    let alarmSetting = AlarmSetting()
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
     
@@ -90,42 +87,9 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         asvc.delegate = self
     }
     
-    //アラームを保存・格納するためのメソッド
-    func setMainAlarm() -> Void {
-        // MARK: - ダミーデータ
-//        //dateFormatterを定義
-//        let dateFormatter = DateFormatter()
-//        //Date型への変換？
-//        dateFormatter.dateFormat = "HH:mm"
-//        //ダミーデータ作成
-//        let startDateString = "8:00"
-//        let endDateString = "09:00"
-//        //初期値の設定(Date型→String型へ)
-//        guard let dummyStartDate = dateFormatter.date(from: startDateString), let dummyEndDate = dateFormatter.date(from: endDateString) else { return }
-//        
-//        let alarmPost1 = AlarmSetting(id: "1", itemId: "1", alarmName: "朝支度", alarmStartSettingTime: dummyStartDate, alarmEndSettingTime: dummyEndDate)
-//        
-//        alarmSettingList.append(alarmPost1)
-        // MARK: - 実保存データ
-        //Realmをインスタンス化
-//        let realm = try! Realm()
-//        //alarmSettingプロパティへデータ保存
-//        try! realm.write {
-//            realm.add(alarmSetting)
-//        }
-//        //RealmデータベースからAlarmSettingというオブジェクトを取得し、"alarmStartSettingTime"というキーパスを基準に昇順でソートされた結果を取得
-//        let result = realm.objects(AlarmSetting.self).sorted(byKeyPath: "alarmStartSettingTime", ascending: true)
-//        //resultという結果を配列に変換して、alarmSettingListに代入
-//        alarmSettingList = Array(result)
-//        print("alarmSettingListの内容は\(alarmSettingList)です1")
-    }
-    
     
     // MARK: - delegateメソッド（AlarmSettingViewController）
-    func saveMainAlarm() {
-        //alarmSettingListに保存
-        //setMainAlarm()
-        //print("alarmSettingListの個数は\(alarmSettingList.count)個です1")
+    func arrayMainAlarm() {
         //アラームを整列
         //Realmをインスタンス化
         let realm = try! Realm()
@@ -191,10 +155,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         cell.alarmEndSettingTimeLabel.text = allAlarmEndTime
         print("終了時間は\(allAlarmEndTime)です")
         //作業個数のテキストデータを定義
-        //AlarmSettingモデルのitemIdCountにセルの個数を共通化 ここがおかしい
-        //alarmSetting.itemIdCount = alarmSettingList.count
-        //上記で表示した配列の個数を表示　ここがおかしい
-        //cell.byItemLabel.text = String(alarmSetting.itemIdCount)
+        //上記で表示した配列の個数を表示
+        cell.byItemLabel.text = "\(alarmSetting.itemIdCount)個"
         print("設定作業の個数は\(alarmSetting.itemIdCount)個です")
         //print("設定作業の個数を表示しているセルは\(String(describing: cell.byItemLabel.text))個と表示されています")
         //デリゲートの登録

@@ -11,7 +11,7 @@ import RealmSwift
 // MARK: - delegateの定義
 //delegateを定義
 protocol AlarmSettingViewControllerDelegate{
-    func saveMainAlarm()
+    func arrayMainAlarm()
 }
 
 // MARK: - classの定義＋機能追加
@@ -32,13 +32,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //保存ボタンを押した際の処理
     @IBAction func saveButtonAction(_ sender: UIButton) {
         // TODO: テキストへ保存する処理も必要？（Twitterサンプルアプリ.EVC.16~23行目参照）
-        saveMainAlarm2()
+        saveMainAlarm()
         //print("saveMainAlarmのdelegateメソッドが実行されようとしています")
-        //delegateの設定(reloadDate()が必要？)
-        delegate?.saveMainAlarm()
-        //アラームに設定した作業の個数（alarmItemList.count）をメイン画面の作業個数(alarmSetting.itemIdCount)に反映
-        //alarmSetting.itemIdCount = alarmItemList.count
-        //print("saveMainAlarmのdelegateメソッドが実行されました")
+        //delegateの設定（整列と更新）
+        delegate?.arrayMainAlarm()
         //画面遷移元に戻る処理
         self.dismiss(animated: true, completion: nil)
     }
@@ -127,7 +124,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     //AlarmSettingプロパティで諸々のデータを保存（試し）
-    func saveMainAlarm2() {
+    func saveMainAlarm() {
         //Realmをインスタンス化
         let realm = try! Realm()
         //alarmSettingプロパティへデータ保存
@@ -139,9 +136,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             //全体の開始時間の共通化(reflectItemDataメソッドで記載済)
             //全体終了時間の共通化
             alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
+            print("alarmSetting.alarmEndSettingTime2の時間は\(alarmSetting.alarmEndSettingTime)")
             realm.add(alarmSetting)
         }
-        
+        print("alarmItem.byItemEndTimeの時間は\(alarmItem.byItemEndTime)")
         
     }
     // MARK: - delegateメソッド（AlarmSettingViewCell）
@@ -186,8 +184,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
             
             itemStartTime = dateFormatter.date(from: dateString) ?? Date()
+            print("itemStartTimeの時間は\(itemStartTime)")
             //全体の開始時間の共通化
             alarmSetting.alarmStartSettingTime = itemStartTime
+            print("alarmSetting.alarmStartSettingTimeの時間は\(alarmSetting.alarmStartSettingTime)")
             //alarmItemListが0でない場合（項目が追加されている場合）
             //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
         } else {
@@ -202,20 +202,25 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let modifiedItemEndTime = Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: modifiedItemEndHourTime)!
         //テキスト・alarmSettingモデル・合計時間の共通化
         alarmItem.byItemEndTime = modifiedItemEndTime
+        print("modifiedItemEndTimeの時間は\(modifiedItemEndTime)")
         
         //全体の終了時間
         //全体の終了時間プロパティの定義
         var alarmEndTime: Date
         
+        // TODO: ここが怪しい！（dateStringと形が違う）
         //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
         let dateEndString = "\(modifiedItemEndTime.toStringWithCurrentLocale())"
+        print("dateEndStringの時間は\(dateEndString)")
         //dateEndStringの文字列をDate型に変換
         alarmEndTime = dateFormatter.date(from: dateEndString) ?? Date()
         //alarmEndTimeをalarmItem.byItemEndTimeへ共通化
         alarmEndTime = alarmItem.byItemEndTime
+        print("alarmEndTimeの時間は\(alarmEndTime)")
 
         //全体の終了時間のテキストへ反映
         endSettingTimeLabel.text = alarmEndTime.formattedTime() 
+        print("alarmEndTime.formattedTime() の時間は\(alarmEndTime.formattedTime() )")
         //　時間の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         
         //　追加・反映の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
