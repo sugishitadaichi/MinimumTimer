@@ -31,7 +31,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var saveButton: UIButton!
     //保存ボタンを押した際の処理
     @IBAction func saveButtonAction(_ sender: UIButton) {
-        // TODO: テキストへ保存する処理も必要？（Twitterサンプルアプリ.EVC.16~23行目参照）
         saveMainAlarm()
         //print("saveMainAlarmのdelegateメソッドが実行されようとしています")
         //delegateの設定（整列と更新）
@@ -134,8 +133,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             //項目名の共通化
             alarmSetting.alarmName = alarmStartSettingTimeHeader.alarmNameText.text ?? ""
             //全体の開始時間の共通化(reflectItemDataメソッドで記載済)
-            //全体終了時間の共通化
-            alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
+            //全体終了時間の共通化(reflectItemDataメソッドで記載済)
             print("alarmSetting.alarmEndSettingTime2の時間は\(alarmSetting.alarmEndSettingTime)")
             realm.add(alarmSetting)
         }
@@ -216,6 +214,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmEndTime = dateFormatter.date(from: dateEndString) ?? Date()
         //alarmEndTimeをalarmItem.byItemEndTimeへ共通化
         alarmEndTime = alarmItem.byItemEndTime
+        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ継承
+        alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
         print("alarmEndTimeの時間は\(alarmEndTime)")
 
         //全体の終了時間のテキストへ反映
