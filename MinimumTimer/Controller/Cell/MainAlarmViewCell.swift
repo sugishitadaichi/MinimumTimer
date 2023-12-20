@@ -82,3 +82,11 @@ class MainAlarmViewCell: UITableViewCell {
     }
     
 }
+// MARK: - 追加機能
+extension MainAlarmViewCell: UITableViewDelegate {
+    //セルがタップされた際にアラーム設定画面に戻る処理
+    //セルがタップされた際の処理
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: ここを記載がまだ
+    }
+}

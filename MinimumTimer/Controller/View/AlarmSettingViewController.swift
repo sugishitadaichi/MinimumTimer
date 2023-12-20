@@ -128,6 +128,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let realm = try! Realm()
         //alarmSettingプロパティへデータ保存
         try! realm.write {
+            //AlarmSettingのitemIdとAlarmItemのItemIdの共通化（編集遷移時に特定に必要なため）
+            alarmSetting.itemId = alarmItem.id
             //メイン画面の作業個数(alarmSetting.itemIdCount)とアラームに設定した作業の個数（alarmItemList.count）を共通化
             alarmSetting.itemIdCount = alarmItemList.count
             //項目名の共通化
