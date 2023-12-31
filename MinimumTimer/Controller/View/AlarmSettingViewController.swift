@@ -53,7 +53,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //全体設定のプロパティの作成
     var alarmSetting = AlarmSetting()
     //各作業内容のプロパティの作成
-    var alarmItem = AlarmItem()
+    //var alarmItem = AlarmItem()
     //delegateの設定
     var delegate: AlarmSettingViewControllerDelegate?
     //フッタービューを定義
@@ -134,7 +134,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmSettingプロパティへデータ保存
         try! realm.write {
             //AlarmSettingのitemIdとAlarmItemのItemIdの共通化（編集遷移時に特定に必要なため）
-            alarmSetting.itemId = alarmItemList.id
+            alarmSetting.itemId = alarmItemList.map { $0.id }
             //メイン画面の作業個数(alarmSetting.itemIdCount)とアラームに設定した作業の個数（alarmItemList.count）を共通化
             alarmSetting.itemIdCount = alarmItemList.count
             //項目名の共通化
@@ -144,7 +144,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             print("alarmSetting.alarmEndSettingTime2の時間は\(alarmSetting.alarmEndSettingTime)")
             realm.add(alarmSetting)
         }
-        print("alarmItem.byItemEndTimeの時間は\(alarmItem.byItemEndTime)")
         
     }
     // MARK: - delegateメソッド（AlarmSettingViewCell）
