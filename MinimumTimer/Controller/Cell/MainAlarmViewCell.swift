@@ -84,31 +84,3 @@ class MainAlarmViewCell: UITableViewCell {
     }
     
 }
-// MARK: - 追加機能
-extension MainAlarmViewCell: UITableViewDelegate,AlarmSettingViewControllerDelegate {
-    func arrayMainAlarm() {
-        //無記載
-    }
-    
-    //セルがタップされた際にアラーム設定画面に戻る処理
-    //セルがタップされた際の処理
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        // TODO: ここの記載がまだ
-//        // Realmのインスタンス化
-//        let realm = try!Realm()
-//        //　alarmSettingListのインデックス番号のidをeditTarget定数に取得
-//        let editTarget = alarmSettingList[indexPath.row].id
-//        //　targetと同じidを持つRealmデータベース内のデータを検索してeditPostに格納
-//        let editMainAlarm = realm.objects(AlarmSetting.self).filter("id == %@", editTarget).first
-//        //　もしもeditPostがnilでなければ以下を実行
-//        if editMainAlarm != nil {
-//            // 画面遷移処理（記載済みのテキストデータが必要？）
-//            let storyboad = UIStoryboard(name: "AlarmSettingViewController", bundle: nil)
-//            guard let alarmSettingViewController = storyboad.instantiateInitialViewController() as? AlarmSettingViewController else { return }
-//            //記載済みのテキストデータを取得
-//            editorViewController.tweet = editMainAlarm ?? AlarmSetting()
-//            present(alarmSettingViewController, animated: true)
-//            alarmSettingViewController.delegate = self
-//        }
-//    }
-}

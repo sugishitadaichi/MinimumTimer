@@ -102,6 +102,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     }
     
     // MARK: - delegateメソッド（MainAlarmViewCell）
+    //全体設定の削除機能
     func deleteMainAlarm(indexPath: IndexPath) {
         //Realmをインスタンス化
         let realm = try! Realm()
@@ -171,7 +172,29 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         
         return 120
     }
-
+    
+    //セルがタップされた際にアラーム設定画面に戻る処理(全体設定の編集機能)
+    //セルがタップされた際の処理
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: ここの記載がまだ
+        print("セルがタップされました")
+        // Realmのインスタンス化
+        let realm = try!Realm()
+        //　alarmSettingListのインデックス番号のidをeditTarget定数に取得
+        let editTarget = alarmSettingList[indexPath.row].id
+        //　targetと同じidを持つRealmデータベース内のデータを検索してeditMainAlarmに格納
+        let editMainAlarm = realm.objects(AlarmSetting.self).filter("id == %@", editTarget).first
+        //　もしもeditPostがnilでなければ以下を実行
+        if editMainAlarm != nil {
+            // 画面遷移処理（記載済みのテキストデータが必要？）
+            let storyboad = UIStoryboard(name: "AlarmSettingViewController", bundle: nil)
+            guard let alarmSettingViewController = storyboad.instantiateInitialViewController() as? AlarmSettingViewController else { return }
+            //記載済みのテキストデータを取得
+            alarmSettingViewController.alarmSetting = editMainAlarm ?? AlarmSetting()
+            present(alarmSettingViewController, animated: true)
+            alarmSettingViewController.delegate = self
+        }
+    }
 
 }
 
