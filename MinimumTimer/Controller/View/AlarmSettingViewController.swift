@@ -100,7 +100,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
         alarmSettingTableView.tableHeaderView = alarmStartSettingTimeHeader
         //setAlarmItemメソッドを画面が表示される際に実行
-        setAlarmItem()
+        //setAlarmItem()
         
         //delegate
         alarmStartSettingTimeHeader.delegate = self
@@ -108,19 +108,20 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     
     
     // MARK: - 追加関数
+    // TODO: 不要？今後検討（設定の新規作成の際に前回や前々回の設定項目が引き継がれる）
     //項目別設定を格納するためのメソッド
-    func setAlarmItem() -> Void {
-        //dateFormatterを定義
-        let dateFormatter = DateFormatter()
-        //Date型への変換？
-        dateFormatter.dateFormat = "HH:mm"
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //項目別設定を表示する際の条件（idの降順）
-        let resultItem = realm.objects(AlarmItem.self).sorted(byKeyPath: "id", ascending: true)
-        //alarmItemListに格納
-        alarmItemList = Array(resultItem)
-    }
+//    func setAlarmItem() -> Void {
+//        //dateFormatterを定義
+//        let dateFormatter = DateFormatter()
+//        //Date型への変換？
+//        dateFormatter.dateFormat = "HH:mm"
+//        //Realmをインスタンス化
+//        let realm = try! Realm()
+//        //項目別設定を表示する際の条件（idの降順）
+//        let resultItem = realm.objects(AlarmItem.self).sorted(byKeyPath: "id", ascending: true)
+//        //alarmItemListに格納
+//        alarmItemList = Array(resultItem)
+//    }
     
     //AlarmSettingプロパティで諸々のデータを保存（試し）
     func saveMainAlarm() {
