@@ -147,14 +147,16 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //アラーム名のテキストデータの定義
         cell.alarmNameLabel.text = String(alarmSetting.alarmName)
         print("項目名は\(alarmSetting.alarmName)です")
+        
+        // TODO: 全体開始時間と全体終了時間の登録は不要？（今後検討　1/4記載）
         //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
-        let allAlarmStartTime = "\(alarmSetting.alarmStartSettingTime.toStringWithCurrentLocale())"
-        cell.alarmStartSettingTimeLabel.text = allAlarmStartTime
-        print("開始時間は\(allAlarmStartTime)です")
+//        let allAlarmStartTime = "\(alarmSetting.alarmStartSettingTime.toStringWithCurrentLocale())"
+//        cell.alarmStartSettingTimeLabel.text = allAlarmStartTime
+        //print("開始時間は\(allAlarmStartTime)です")
         //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
-        let allAlarmEndTime = "\(alarmSetting.alarmEndSettingTime.toStringWithCurrentLocale())"
-        cell.alarmEndSettingTimeLabel.text = allAlarmEndTime
-        print("終了時間は\(allAlarmEndTime)です")
+//        let allAlarmEndTime = "\(alarmSetting.alarmEndSettingTime.toStringWithCurrentLocale())"
+//        cell.alarmEndSettingTimeLabel.text = allAlarmEndTime
+//        print("終了時間は\(allAlarmEndTime)です")
         //作業個数のテキストデータを定義
         //上記で表示した配列の個数を表示
         cell.byItemLabel.text = "\(alarmSetting.itemIdCount)個"
@@ -182,18 +184,21 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         let realm = try!Realm()
         //　alarmSettingListのインデックス番号のidをeditTarget定数に取得
         let editTarget = alarmSettingList[indexPath.row].id
+        print("選択したalarmSettingListのidは\(editTarget)")
         //　targetと同じidを持つRealmデータベース内のデータを検索してeditMainAlarmに格納
-        let editMainAlarm = realm.objects(AlarmSetting.self).filter("id == %@", editTarget).first
+        //let editMainAlarm = realm.objects(AlarmSetting.self).filter("id == %@", editTarget).first
         //　もしもeditPostがnilでなければ以下を実行
-        if editMainAlarm != nil {
+        //if editMainAlarm != nil {
             // 画面遷移処理（記載済みのテキストデータが必要？）
             let storyboad = UIStoryboard(name: "AlarmSettingViewController", bundle: nil)
             guard let alarmSettingViewController = storyboad.instantiateInitialViewController() as? AlarmSettingViewController else { return }
             //記載済みのテキストデータを取得
-            alarmSettingViewController.alarmSetting = editMainAlarm ?? AlarmSetting()
-            present(alarmSettingViewController, animated: true)
+            alarmSettingViewController.alarmSetting = editTarget
+            //delegateの登録
             alarmSettingViewController.delegate = self
-        }
+            //画面遷移処理
+            present(alarmSettingViewController, animated: true)
+        //}
     }
 
 }

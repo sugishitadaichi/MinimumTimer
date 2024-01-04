@@ -15,7 +15,7 @@ protocol AlarmSettingViewControllerDelegate{
 }
 
 // MARK: - classの定義＋機能追加
-class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate, AlarmStartSettingTimeHeaderDelegate {
+class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,AlarmSettingViewCellDelegate, ItemSelectedFooterDelegate {
     
     
     
@@ -32,7 +32,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //保存ボタンを押した際の処理
     @IBAction func saveButtonAction(_ sender: UIButton) {
         saveMainAlarm()
-        //print("saveMainAlarmのdelegateメソッドが実行されようとしています")
+        print("設定したidは\(alarmSetting.id)")
         //delegateの設定（整列と更新）
         delegate?.arrayMainAlarm()
         //画面遷移元に戻る処理
@@ -102,8 +102,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //setAlarmItemメソッドを画面が表示される際に実行
         //setAlarmItem()
         
-        //delegate
-        alarmStartSettingTimeHeader.delegate = self
     }
     
     
@@ -140,11 +138,16 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             alarmSetting.itemIdCount = alarmItemList.count
             //項目名の共通化
             alarmSetting.alarmName = alarmStartSettingTimeHeader.alarmNameText.text ?? ""
+            print("保存したalarmSetting.alarmNameは\(alarmSetting.alarmName)です")
             //全体の開始時間の共通化(reflectItemDataメソッドで記載済)
+            //alarmSetting.alarmStartSettingTime = alarmItem.byItemStartTime
+            print("保存したalarmSetting.alarmStartSettingTimeは\(alarmSetting.alarmStartSettingTime)です")
             //全体終了時間の共通化(reflectItemDataメソッドで記載済)
-            print("alarmSetting.alarmEndSettingTime2の時間は\(alarmSetting.alarmEndSettingTime)")
+            //alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
+            print("保存したalarmSetting.alarmEndSettingTimeは\(alarmSetting.alarmEndSettingTime)です")
             realm.add(alarmSetting)
         }
+        print("alarmSettingの内容は\(alarmSetting)です")
         
     }
     // MARK: - delegateメソッド（AlarmSettingViewCell）
@@ -187,6 +190,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         if alarmItemList.count == 0 {
             //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
             let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
+            print("alarmStartSettingTimeHeader.alarmStartDatePickerText.textの内容は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))")
             
             itemStartTime = dateFormatter.date(from: dateString) ?? Date()
             print("itemStartTimeの時間は\(itemStartTime)")
@@ -212,8 +216,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //全体の終了時間
         //全体の終了時間プロパティの定義
         var alarmEndTime: Date
-        
-        // TODO: ここが怪しい！（dateStringと形が違う）
         //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
         let dateEndString = "\(modifiedItemEndTime.toStringWithCurrentLocale())"
         print("dateEndStringの時間は\(dateEndString)")
@@ -239,19 +241,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         print("alarmItemListの個数は\(alarmItemList.count)個です")
     }
     
-    // MARK: - delegateメソッド（AlarmStartSettingTimeHeader）
-    //アラーム名を保存・反映する処理
-    func saveAllAlarmName(with text: String) {
-        //Realmをインスタンス化
-        let realm = try! Realm()
-        //保存処理の実装
-        try! realm.write {
-            alarmSetting.alarmName = text
-            realm.add(alarmSetting)
-        }
-        print("alarmSetting.alarmNameは\(alarmSetting.alarmName)です")
-        
-    }
     
     // MARK: - delegateメソッド（TableView関係）
     //tableViewにAlarmSettingViewCellの個数を返す
