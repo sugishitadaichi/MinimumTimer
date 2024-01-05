@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AlarmStartSettingTimeHeader" customModule="MinimumTimer" customModuleProvider="target">
             <connections>
+                <outlet property="alarmNameText" destination="LLG-Ws-IE5" id="nhz-Vs-MyF"/>
                 <outlet property="alarmStartDatePickerText" destination="Gkr-ly-100" id="kEL-iZ-tUW"/>
             </connections>
         </placeholder>
@@ -18,23 +20,24 @@
             <rect key="frame" x="0.0" y="0.0" width="347" height="82"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="アラーム" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5F0-Ep-c7u">
-                    <rect key="frame" x="9" y="30" width="92" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="07:00" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gkr-ly-100">
-                    <rect key="frame" x="201" y="14.999999999999996" width="120" height="51.666666666666657"/>
+                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="00:00" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gkr-ly-100">
+                    <rect key="frame" x="194" y="14.999999999999996" width="123" height="51.666666666666657"/>
                     <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="247" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="5文字以内で入力" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LLG-Ws-IE5">
+                    <rect key="frame" x="16" y="19.999999999999996" width="153" height="45.666666666666657"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
             </subviews>
             <viewLayoutGuide key="safeArea" id="FPo-hG-lQe"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="Gkr-ly-100" firstAttribute="leading" secondItem="5F0-Ep-c7u" secondAttribute="trailing" constant="100" id="aHY-uS-hzf"/>
+                <constraint firstItem="LLG-Ws-IE5" firstAttribute="top" secondItem="AbJ-Jv-9Yh" secondAttribute="top" constant="20" id="Qkk-QV-lIl"/>
+                <constraint firstItem="LLG-Ws-IE5" firstAttribute="leading" secondItem="FPo-hG-lQe" secondAttribute="leading" constant="16" id="UlE-8S-oRr"/>
+                <constraint firstItem="FPo-hG-lQe" firstAttribute="trailing" secondItem="Gkr-ly-100" secondAttribute="trailing" constant="30" id="c0O-vp-Dex"/>
+                <constraint firstItem="Gkr-ly-100" firstAttribute="leading" secondItem="LLG-Ws-IE5" secondAttribute="trailing" constant="25" id="e73-XT-qpc"/>
                 <constraint firstItem="Gkr-ly-100" firstAttribute="top" secondItem="AbJ-Jv-9Yh" secondAttribute="top" constant="15" id="lBQ-Zm-479"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

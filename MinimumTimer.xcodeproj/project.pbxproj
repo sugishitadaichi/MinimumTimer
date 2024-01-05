@@ -139,8 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				718C361D2A67ED0400BD7E2B /* MainAlarmViewController.swift */,
-				7109B0C62A6D3D6600D287CB /* MasterItemViewController.swift */,
 				71BEC6FF2A6F464000DD2090 /* AlarmSettingViewController.swift */,
+				7109B0C62A6D3D6600D287CB /* MasterItemViewController.swift */,
 				71D241DE2A7762230069C9AB /* PopUpViewController.swift */,
 			);
 			path = View;

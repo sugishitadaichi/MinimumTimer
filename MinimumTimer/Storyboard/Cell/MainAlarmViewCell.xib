@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,23 +17,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="446" height="126"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2u5-JL-f5Z">
-                        <rect key="frame" x="30" y="10" width="206" height="48"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2u5-JL-f5Z">
+                        <rect key="frame" x="156" y="10" width="150" height="48"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設定作業" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znh-pd-GYp">
-                        <rect key="frame" x="10" y="88" width="70" height="21"/>
+                        <rect key="frame" x="9.9999999999999964" y="88" width="63.666666666666657" height="20.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgO-eA-9ek">
-                        <rect key="frame" x="336" y="10" width="100" height="35"/>
+                        <rect key="frame" x="356" y="10" width="80" height="35"/>
                         <color key="backgroundColor" systemColor="systemRedColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="100" id="8Au-yr-SaW"/>
+                            <constraint firstAttribute="width" constant="80" id="8Au-yr-SaW"/>
                         </constraints>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
@@ -45,7 +46,7 @@
                         <rect key="frame" x="387" y="55" width="51" height="31"/>
                     </switch>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4個" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4J-Y5-8Bj">
-                        <rect key="frame" x="90" y="88" width="40" height="21"/>
+                        <rect key="frame" x="83.666666666666671" y="88" width="40" height="20.333333333333329"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="Emd-V4-nQ4"/>
                         </constraints>
@@ -71,37 +72,52 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="朝支度" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQI-5b-7nb">
+                        <rect key="frame" x="10" y="10" width="113" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="113" id="EOF-Ao-wk1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="2u5-JL-f5Z" firstAttribute="leading" secondItem="UQI-5b-7nb" secondAttribute="trailing" constant="33" id="1r5-Pb-yLn"/>
+                    <constraint firstItem="WSl-t1-PrX" firstAttribute="top" secondItem="2u5-JL-f5Z" secondAttribute="bottom" constant="30" id="30C-sh-SGz"/>
                     <constraint firstItem="2u5-JL-f5Z" firstAttribute="top" secondItem="wxP-Gi-eqJ" secondAttribute="top" constant="10" id="IqX-vG-4lV"/>
                     <constraint firstItem="1qL-vN-Wxd" firstAttribute="top" secondItem="znh-pd-GYp" secondAttribute="top" id="JtZ-h7-AdP"/>
+                    <constraint firstItem="UQI-5b-7nb" firstAttribute="leading" secondItem="wxP-Gi-eqJ" secondAttribute="leading" constant="10" id="QGs-hT-pB7"/>
                     <constraint firstAttribute="trailing" secondItem="c5w-c1-WTr" secondAttribute="trailing" constant="10" id="Vsh-5F-GSV"/>
+                    <constraint firstItem="1qL-vN-Wxd" firstAttribute="top" secondItem="c5w-c1-WTr" secondAttribute="bottom" constant="2" id="Ydf-Pk-kLN"/>
                     <constraint firstItem="g4J-Y5-8Bj" firstAttribute="top" secondItem="znh-pd-GYp" secondAttribute="top" id="ZXp-Bx-6op"/>
-                    <constraint firstItem="znh-pd-GYp" firstAttribute="top" secondItem="2u5-JL-f5Z" secondAttribute="bottom" constant="30" id="bVo-R3-KXZ"/>
-                    <constraint firstItem="2u5-JL-f5Z" firstAttribute="leading" secondItem="wxP-Gi-eqJ" secondAttribute="leading" constant="30" id="eiV-s7-2WT"/>
+                    <constraint firstItem="UQI-5b-7nb" firstAttribute="top" secondItem="wxP-Gi-eqJ" secondAttribute="top" constant="10" id="bDj-8P-SSn"/>
                     <constraint firstItem="WSl-t1-PrX" firstAttribute="top" secondItem="znh-pd-GYp" secondAttribute="top" id="fWj-vh-ISd"/>
                     <constraint firstAttribute="trailing" secondItem="1qL-vN-Wxd" secondAttribute="trailing" constant="20" id="hZF-20-jj7"/>
+                    <constraint firstItem="znh-pd-GYp" firstAttribute="top" secondItem="UQI-5b-7nb" secondAttribute="bottom" constant="30" id="ha5-Ye-Phd"/>
+                    <constraint firstItem="mgO-eA-9ek" firstAttribute="leading" secondItem="2u5-JL-f5Z" secondAttribute="trailing" constant="50" id="k9R-YO-gcw"/>
+                    <constraint firstItem="znh-pd-GYp" firstAttribute="baseline" secondItem="g4J-Y5-8Bj" secondAttribute="baseline" id="oYn-Nu-wb2"/>
                     <constraint firstAttribute="trailing" secondItem="mgO-eA-9ek" secondAttribute="trailing" constant="10" id="q66-ss-Bwe"/>
                     <constraint firstItem="znh-pd-GYp" firstAttribute="leading" secondItem="wxP-Gi-eqJ" secondAttribute="leading" constant="10" id="q9d-I0-Jwh"/>
                     <constraint firstItem="g4J-Y5-8Bj" firstAttribute="leading" secondItem="znh-pd-GYp" secondAttribute="trailing" constant="10" id="sCm-pb-ADr"/>
                     <constraint firstItem="c5w-c1-WTr" firstAttribute="top" secondItem="mgO-eA-9ek" secondAttribute="bottom" constant="10" id="ssT-Bw-I70"/>
-                    <constraint firstItem="mgO-eA-9ek" firstAttribute="leading" secondItem="2u5-JL-f5Z" secondAttribute="trailing" constant="100" id="tLl-dJ-nCV"/>
                     <constraint firstItem="1qL-vN-Wxd" firstAttribute="leading" secondItem="WSl-t1-PrX" secondAttribute="trailing" constant="20" id="yKS-HZ-bwH"/>
                     <constraint firstItem="mgO-eA-9ek" firstAttribute="top" secondItem="wxP-Gi-eqJ" secondAttribute="top" constant="10" id="ydf-D1-ns7"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="alarmEndSettingTimeLabel" destination="1qL-vN-Wxd" id="uT2-5m-lx2"/>
+                <outlet property="alarmNameLabel" destination="UQI-5b-7nb" id="Hhl-x1-qJY"/>
                 <outlet property="alarmStartSettingTimeLabel" destination="2u5-JL-f5Z" id="9pD-3V-ota"/>
                 <outlet property="byItemLabel" destination="g4J-Y5-8Bj" id="KYk-ro-JQE"/>
                 <outlet property="deleteButton" destination="mgO-eA-9ek" id="b6L-Qw-RPs"/>
             </connections>
-            <point key="canvasLocation" x="134" y="-133"/>
+            <point key="canvasLocation" x="132.82442748091603" y="-133.09859154929578"/>
         </tableViewCell>
     </objects>
     <resources>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
