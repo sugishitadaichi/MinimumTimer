@@ -143,27 +143,15 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         let alarmSetting = alarmSettingList[indexPath.row]
         //セルの全体設定とalarmSettigListの共通化
         cell.allAlarmSetting = alarmSetting
-        //セルの定義
-        //アラーム名のテキストデータの定義
-        cell.alarmNameLabel.text = String(alarmSetting.alarmName)
+        //セルの定義は不要
+        //MainAlarmViewCell.setUp(alarmSetting: AlarmSetting)メソッドで定義済
+        
         print("項目名は\(alarmSetting.alarmName)です")
         
-        // TODO: 全体開始時間と全体終了時間の登録は不要？（今後検討　1/4記載）
-        //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
-//        let allAlarmStartTime = "\(alarmSetting.alarmStartSettingTime.toStringWithCurrentLocale())"
-//        cell.alarmStartSettingTimeLabel.text = allAlarmStartTime
-        //print("開始時間は\(allAlarmStartTime)です")
-        //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
-//        let allAlarmEndTime = "\(alarmSetting.alarmEndSettingTime.toStringWithCurrentLocale())"
-//        cell.alarmEndSettingTimeLabel.text = allAlarmEndTime
-//        print("終了時間は\(allAlarmEndTime)です")
-        //作業個数のテキストデータを定義
-        //上記で表示した配列の個数を表示
-        cell.byItemLabel.text = "\(alarmSetting.itemIdCount)個"
         print("設定作業の個数は\(alarmSetting.itemIdCount)個です")
-        //print("設定作業の個数を表示しているセルは\(String(describing: cell.byItemLabel.text))個と表示されています")
         //デリゲートの登録
         cell.delegate = self
+        //セルの定義を行ったデータを参照
         cell.setUp(alarmSetting: alarmSetting)
         
         return cell
@@ -178,27 +166,17 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     //セルがタップされた際にアラーム設定画面に戻る処理(全体設定の編集機能)
     //セルがタップされた際の処理
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: ここの記載がまだ
         print("セルがタップされました")
-        // Realmのインスタンス化
-        let realm = try!Realm()
-        //　alarmSettingListのインデックス番号のidをeditTarget定数に取得
-        let editTarget = alarmSettingList[indexPath.row].id
-        print("選択したalarmSettingListのidは\(editTarget)")
-        //　targetと同じidを持つRealmデータベース内のデータを検索してeditMainAlarmに格納
-        //let editMainAlarm = realm.objects(AlarmSetting.self).filter("id == %@", editTarget).first
-        //　もしもeditPostがnilでなければ以下を実行
-        //if editMainAlarm != nil {
-            // 画面遷移処理（記載済みのテキストデータが必要？）
-            let storyboad = UIStoryboard(name: "AlarmSettingViewController", bundle: nil)
-            guard let alarmSettingViewController = storyboad.instantiateInitialViewController() as? AlarmSettingViewController else { return }
-            //記載済みのテキストデータを取得
-            alarmSettingViewController.alarmSetting = editTarget
-            //delegateの登録
-            alarmSettingViewController.delegate = self
-            //画面遷移処理
-            present(alarmSettingViewController, animated: true)
-        //}
+        // 画面遷移先の登録
+        let storyboad = UIStoryboard(name: "AlarmSettingViewController", bundle: nil)
+        guard let alarmSettingViewController = storyboad.instantiateInitialViewController() as? AlarmSettingViewController else { return }
+        //記載済みのデータを取得
+        alarmSettingViewController.alarmSetting = alarmSettingList[indexPath.row]
+        print("タップしたalarmSettingListの内容は\(alarmSettingList[indexPath.row])")
+        //delegateの登録
+        alarmSettingViewController.delegate = self
+        //画面遷移処理
+        present(alarmSettingViewController, animated: true)
     }
 
 }

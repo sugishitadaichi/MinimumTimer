@@ -10,9 +10,9 @@ import RealmSwift
 
 //アラーム表示に必要なモデルを定義
 class AlarmSetting: Object {
-    //追加したアラームのユニークID
+    //アラーム全体のユニークID（AlarmItemモデルのalarmSettigIdと同義）
     @objc dynamic var id: String = UUID().uuidString
-    //アラームに追加した作業項目のユニークID
+    //アラームに追加した作業項目のユニークID（AlarmItemモデルのidと同義）
     @objc dynamic var itemId: String = ""
     //アラームに追加した作業項目のユニークID・computed propertyで個数を取得
     @objc dynamic var itemIdCount: Int = 0

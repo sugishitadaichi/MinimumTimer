@@ -99,6 +99,14 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmStartSettingTimeHeader.alarmNameText.text = alarmSetting.alarmName
         //alarmSettingTableViewのtableHeaderViewにヘッダービューを設定
         alarmSettingTableView.tableHeaderView = alarmStartSettingTimeHeader
+        
+        //alarmStartDatePickerTextのテキストにalarmSetting.alarmStartSettingTimeを代入
+            alarmStartSettingTimeHeader.alarmStartDatePickerText.text = "\(alarmSetting.alarmStartSettingTime.formattedTime())"
+        
+        print("alarmStartSettingTimeHeader.alarmStartDatePickerText.textの時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
+        
+        
+
         //setAlarmItemメソッドを画面が表示される際に実行
         //setAlarmItem()
         
@@ -132,18 +140,18 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         print("alarmItemListの内容は\(alarmItemList)")
         //alarmSettingプロパティへデータ保存
         try! realm.write {
-            //AlarmSettingのitemIdとAlarmItemのItemIdの共通化（編集遷移時に特定に必要なため）
-            alarmSetting.itemId = alarmItem.id
+            //AlarmSettingのidとAlarmItemのalarmSettingIdの共通化（編集遷移時に特定に必要なため）
+            alarmItem.alarmSettingId = alarmSetting.id
             //メイン画面の作業個数(alarmSetting.itemIdCount)とアラームに設定した作業の個数（alarmItemList.count）を共通化
             alarmSetting.itemIdCount = alarmItemList.count
             //項目名の共通化
             alarmSetting.alarmName = alarmStartSettingTimeHeader.alarmNameText.text ?? ""
             print("保存したalarmSetting.alarmNameは\(alarmSetting.alarmName)です")
             //全体の開始時間の共通化(reflectItemDataメソッドで記載済)
-            //alarmSetting.alarmStartSettingTime = alarmItem.byItemStartTime
+            alarmStartSettingTimeHeader.alarmStartDatePickerText.text = "\(alarmSetting.alarmStartSettingTime.formattedTime())"
             print("保存したalarmSetting.alarmStartSettingTimeは\(alarmSetting.alarmStartSettingTime)です")
             //全体終了時間の共通化(reflectItemDataメソッドで記載済)
-            //alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
+            
             print("保存したalarmSetting.alarmEndSettingTimeは\(alarmSetting.alarmEndSettingTime)です")
             realm.add(alarmSetting)
         }
@@ -184,6 +192,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //（１項目＝アラーム時間+項目設定時間　２項目目以降＝アラーム時間＋1項目目の項目設置時間+2項目目の項目設置時間...）
         
         //項目別開始時間(itemStartTime）をDate型で定義
+        var allStartTime: Date
         var itemStartTime: Date
         //alarmItemListが0の場合（項目が追加されていない場合）、ヘッダーの時間を開始時間に反映
         //Date型に変換できなかった場合は、現在時刻を反映
@@ -191,11 +200,13 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
             let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
             print("alarmStartSettingTimeHeader.alarmStartDatePickerText.textの内容は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))")
-            
+            //全体の開始時間をString型→Date型で定義
+            allStartTime = dateFormatter.date(from: dateString) ?? Date()
+            //項目別の開始時間をString型→Date型で定義
             itemStartTime = dateFormatter.date(from: dateString) ?? Date()
-            print("itemStartTimeの時間は\(itemStartTime)")
+            print("itemStartTimeの時間は\(allStartTime)")
             //全体の開始時間の共通化
-            alarmSetting.alarmStartSettingTime = itemStartTime
+            alarmSetting.alarmStartSettingTime = allStartTime
             print("alarmSetting.alarmStartSettingTimeの時間は\(alarmSetting.alarmStartSettingTime)")
             //alarmItemListが0でない場合（項目が追加されている場合）
             //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
