@@ -140,12 +140,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         print("alarmItemListの内容は\(alarmItemList)")
         //alarmSettingプロパティへデータ保存
         try! realm.write {
-            //AlarmSettingのidとAlarmItemのalarmSettingIdの共通化（編集遷移時に特定に必要なため）
-            //alarmItemListの各データを保存？
-            for alarmItemListData in self.alarmItemList {
-                realm.add(alarmItemListData)
-            }
-            //alarmItemListData.alarmSettingId = alarmSetting.id
+            //AlarmSettingのidとAlarmItemのalarmSettingIdの共通化（reflectItemDataメソッドで記載済）
             //メイン画面の作業個数(alarmSetting.itemIdCount)とアラームに設定した作業の個数（alarmItemList.count）を共通化
             alarmSetting.itemIdCount = alarmItemList.count
             //項目名の共通化
@@ -179,7 +174,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     func reflectItemData(selectedMasterItem: MasterItem) {
         //項目設定オブジェクトの作成(ローカル変数)
         let alarmItem = AlarmItem()
-        
+        //　idの共通化ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        alarmItem.alarmSettingId = alarmSetting.id
+        print("保存されたalarmItem.alarmSettingIdは\(alarmItem.alarmSettingId)です")
         //　項目名の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         //alarmItemとselectedMasteItemのuserSetupNameの共通化（継承）
         alarmItem.userSetupName = selectedMasterItem.userSetupName
