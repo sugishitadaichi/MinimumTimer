@@ -52,8 +52,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
     //全体設定のプロパティの作成
     var alarmSetting = AlarmSetting()
-    //各作業内容のプロパティの作成
-    //var alarmItem = AlarmItem()
     //delegateの設定
     var delegate: AlarmSettingViewControllerDelegate?
     //フッタービューを定義
@@ -106,29 +104,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         print("alarmStartSettingTimeHeader.alarmStartDatePickerText.textの時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
         
         
-
-        //setAlarmItemメソッドを画面が表示される際に実行
-        //setAlarmItem()
-        
     }
     
     
     // MARK: - 追加関数
-    // TODO: 不要？今後検討（設定の新規作成の際に前回や前々回の設定項目が引き継がれる）
-    //項目別設定を格納するためのメソッド
-//    func setAlarmItem() -> Void {
-//        //dateFormatterを定義
-//        let dateFormatter = DateFormatter()
-//        //Date型への変換？
-//        dateFormatter.dateFormat = "HH:mm"
-//        //Realmをインスタンス化
-//        let realm = try! Realm()
-//        //項目別設定を表示する際の条件（idの降順）
-//        let resultItem = realm.objects(AlarmItem.self).sorted(byKeyPath: "id", ascending: true)
-//        //alarmItemListに格納
-//        alarmItemList = Array(resultItem)
-//    }
-    
     //AlarmSettingプロパティで諸々のデータを保存（試し）
     func saveMainAlarm() {
         //Realmをインスタンス化
