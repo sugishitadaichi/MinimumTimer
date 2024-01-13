@@ -50,6 +50,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     let dateFormatter = DateFormatter()
     //AlarmStartSettingTimeHeaderをインスタンス化
     var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
+    //AlarmSettingViewCellをインスタンス化
+    var alarmSettingViewCell = AlarmSettingViewCell()
     //全体設定のプロパティの作成
     var alarmSetting = AlarmSetting()
     //delegateの設定
@@ -103,6 +105,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         print("alarmStartSettingTimeHeader.alarmStartDatePickerText.textの時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
         
+        //データ編集時のalarmItemList引き継ぎ処理
+        editMainAlarm(indexPath: IndexPath)
         
     }
     
@@ -129,12 +133,24 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             alarmStartSettingTimeHeader.alarmStartDatePickerText.text = "\(alarmSetting.alarmStartSettingTime.formattedTime())"
             print("保存したalarmSetting.alarmStartSettingTimeは\(alarmSetting.alarmStartSettingTime)です")
             //全体終了時間の共通化(reflectItemDataメソッドで記載済)
-            
+            self.endSettingTimeLabel.text = "\(alarmSetting.alarmEndSettingTime.formattedTime())"
             print("保存したalarmSetting.alarmEndSettingTimeは\(alarmSetting.alarmEndSettingTime)です")
             realm.add(alarmSetting)
         }
         print("alarmSettingの内容は\(alarmSetting)です")
         
+    }
+    //データ編集時のalarmItemList引き継ぎ処理
+    func editMainAlarm(indexPath: IndexPath) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        
+        let editTarget = alarmItemList[indexPath.row].id
+        let editMainAlarm = realm.objects(AlarmItem.self).filter("id == %@", editTarget)
+        //上記データをAlarmItemListへ保存
+        try! realm.write {
+            realm.add(alarmItemList)
+        }
     }
     // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
@@ -154,7 +170,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //項目設定オブジェクトの作成(ローカル変数)
         let alarmItem = AlarmItem()
         //　idの共通化ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        //全体のidの共通化
         alarmItem.alarmSettingId = alarmSetting.id
+        //各作業内容のidの共通化
+        alarmItem.id = alarmSetting.itemId
         print("保存されたalarmItem.alarmSettingIdは\(alarmItem.alarmSettingId)です")
         //　項目名の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         //alarmItemとselectedMasteItemのuserSetupNameの共通化（継承）
