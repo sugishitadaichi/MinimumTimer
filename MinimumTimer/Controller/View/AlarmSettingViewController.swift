@@ -144,13 +144,10 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     func editMainAlarm(indexPath: IndexPath) {
         //Realmをインスタンス化
         let realm = try! Realm()
-        
-        let editTarget = alarmItemList[indexPath.row].id
-        let editMainAlarm = realm.objects(AlarmItem.self).filter("id == %@", editTarget)
-        //上記データをAlarmItemListへ保存
-        try! realm.write {
-            realm.add(alarmItemList)
-        }
+        //AlarmItemの配列を取得
+        let editMainAlarm = realm.objects(AlarmItem.self).filter("alarmSettingId == %@", alarmSetting.id)
+        //alarmItemListにeditMainAlarm（AlarmItemの配列）を格納
+        self.alarmItemList = Array(editMainAlarm)
     }
     // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
