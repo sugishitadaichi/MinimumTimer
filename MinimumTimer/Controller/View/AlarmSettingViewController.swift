@@ -102,8 +102,11 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         //alarmStartDatePickerTextのテキストにalarmSetting.alarmStartSettingTimeを代入
             alarmStartSettingTimeHeader.alarmStartDatePickerText.text = "\(alarmSetting.alarmStartSettingTime.formattedTime())"
+        //endSettingTimeLabelのテキストにalarmSetting.alarmEndSettingTimeを代入
+        self.endSettingTimeLabel.text = "\(alarmSetting.alarmEndSettingTime.formattedTime())"
         
         print("alarmStartSettingTimeHeader.alarmStartDatePickerText.textの時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
+        print("self.endSettingTimeLabel.textの時間は\(String(describing: self.endSettingTimeLabel.text))です")
         
         //データ編集時のalarmItemList引き継ぎ処理
         editMainAlarm()
@@ -230,8 +233,13 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmEndTime = dateFormatter.date(from: dateEndString) ?? Date()
         //alarmEndTimeをalarmItem.byItemEndTimeへ共通化
         alarmEndTime = alarmItem.byItemEndTime
-        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ継承
-        alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
+        
+        //Realmに保存したalarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ継承
+        let realm = try! Realm()
+        try! realm .write {        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ継承
+            alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
+        }
+        
         print("alarmEndTimeの時間は\(alarmEndTime)")
 
         //全体の終了時間のテキストへ反映
