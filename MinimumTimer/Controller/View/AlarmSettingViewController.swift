@@ -154,12 +154,25 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     }
     // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
-    func deleteItem(item: AlarmItem) {
-        //alarmItemListの配列からインデックス番号に該当する配列を削除
-        if let index = alarmItemList.firstIndex(of: item) {
-            alarmItemList.remove(at: index)
+    func deleteItem(indexPath: IndexPath) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        
+        let target = alarmItemList[indexPath.row].id
+        let deleteAlarmItem = realm.objects(AlarmItem.self).filter("id == %@", target).first
+        //もしもdeleteAlarmItemがnilでなければ以下を実行
+        if let deleteAlarmItem {
+            //Realmの処理
+            try! realm .write {
+                //deleteMainAlarmをRealmから削除
+                realm.delete(deleteAlarmItem)
+            }
         }
-        //更新
+        //alarmSettingListの配列からindexPathに該当する配列を削除
+        alarmItemList.remove(at: indexPath.row)
+        //alarmSettingTableViewからindexPathに該当するセルを削除
+        alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        //alarmSettingTableViewの再読み込み
         alarmSettingTableView.reloadData()
         
     }

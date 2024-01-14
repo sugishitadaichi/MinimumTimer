@@ -10,7 +10,7 @@ import RealmSwift
 // MARK: - delegateの定義
 //delegateを定義
 protocol AlarmSettingViewCellDelegate{
-    func deleteItem(item: AlarmItem)
+    func deleteItem(indexPath: IndexPath)
 }
 
 // MARK: - classの定義＋機能追加
@@ -19,7 +19,7 @@ class AlarmSettingViewCell: UITableViewCell {
     //削除ボタンを押した時の処理
     @IBAction func deleteButtonAction(_ sender: UIButton) {
         //削除処理を受ける処理
-        delegate?.deleteItem(item: alarmItem!)
+        delegate?.deleteItem(indexPath: indexPath!)
     }
     //削除ボタンを紐付け
     @IBOutlet weak var deleteButton: UIButton!

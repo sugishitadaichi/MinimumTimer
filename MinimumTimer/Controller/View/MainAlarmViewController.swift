@@ -175,6 +175,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         print("タップしたalarmSettingListの内容は\(alarmSettingList[indexPath.row])")
         //delegateの登録
         alarmSettingViewController.delegate = self
+        //モダール表示の設定
+        alarmSettingViewController.modalPresentationStyle = .fullScreen
         //画面遷移処理
         present(alarmSettingViewController, animated: true)
     }
