@@ -106,7 +106,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         print("alarmStartSettingTimeHeader.alarmStartDatePickerText.textの時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
         
         //データ編集時のalarmItemList引き継ぎ処理
-        editMainAlarm(indexPath: IndexPath)
+        editMainAlarm()
         
     }
     
@@ -141,7 +141,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     //データ編集時のalarmItemList引き継ぎ処理
-    func editMainAlarm(indexPath: IndexPath) {
+    func editMainAlarm() {
         //Realmをインスタンス化
         let realm = try! Realm()
         //AlarmItemの配列を取得
