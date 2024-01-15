@@ -129,7 +129,6 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     // MARK: - delegateメソッド（TableView関係）
     // TableViewに表示するセルの数を返却
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("alarmSettingList個数は\(alarmSettingList.count)個です2")
         //alarmSettingListにある個数分セルを返却
         return alarmSettingList.count
     }
@@ -146,9 +145,6 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //セルの定義は不要
         //MainAlarmViewCell.setUp(alarmSetting: AlarmSetting)メソッドで定義済
         
-        print("項目名は\(alarmSetting.alarmName)です")
-        
-        print("設定作業の個数は\(alarmSetting.itemIdCount)個です")
         //デリゲートの登録
         cell.delegate = self
         //セルの定義を行ったデータを参照
@@ -166,13 +162,11 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     //セルがタップされた際にアラーム設定画面に戻る処理(全体設定の編集機能)
     //セルがタップされた際の処理
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("セルがタップされました")
         // 画面遷移先の登録
         let storyboad = UIStoryboard(name: "AlarmSettingViewController", bundle: nil)
         guard let alarmSettingViewController = storyboad.instantiateInitialViewController() as? AlarmSettingViewController else { return }
         //記載済みのデータを取得
         alarmSettingViewController.alarmSetting = alarmSettingList[indexPath.row]
-        print("タップしたalarmSettingListの内容は\(alarmSettingList[indexPath.row])")
         //delegateの登録
         alarmSettingViewController.delegate = self
         //モダール表示の設定
