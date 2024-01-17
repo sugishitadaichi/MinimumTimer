@@ -152,19 +152,22 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let realm = try! Realm()
         
         let target = alarmItemList[indexPath.row].id
-        let deleteAlarmItem = realm.objects(AlarmItem.self).filter("id == %@", target).first
-        //もしもdeleteAlarmItemがnilでなければ以下を実行
-        if let deleteAlarmItem {
-            print("deleteAlarmItemが実行されました")
-            //Realmの処理
-            try! realm .write {
-                //deleteMainAlarmをRealmから削除
-                realm.delete(deleteAlarmItem)
-                //項目別開始時間(itemStartTime）をDate型で定義
-                var updateAllStartTime: Date
-                var updateItemStartTime: Date
-                //
-                if alarmItemList.count == 0 {
+        let deleteAlarmItem = realm.objects(AlarmItem.self).filter("id == %@", target).first!
+        
+        //Realmの処理
+        try! realm .write {
+            //deleteMainAlarmをRealmから削除
+            realm.delete(deleteAlarmItem)
+            //alarmItemListの配列からindexPathに該当する配列を削除+残りの配列を自動的に割り当て
+            alarmItemList.remove(at: indexPath.row)
+            //alarmSettingTableViewからindexPathに該当するセルを削除
+            alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+            
+            //項目別開始時間(itemStartTime）をDate型で定義
+            var updateAllStartTime: Date
+            var updateItemStartTime: Date
+            //
+            if alarmItemList.count == 0 {
                     //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
                     let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
                     //全体の開始時間をString型→Date型で定義
@@ -184,7 +187,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
                     print("alarmItemListData.byItemStartTimeは\(alarmItemListData.byItemStartTime)です")
                 }
                 
-            }
         }
         // TODO: alarmItemListが削除された時に時間を再編集する処理を模索中
 //        //RealmデータベースからAlarmItemというオブジェクトを取得し、"byItemStartTime"というキーパスを基準に昇順でソートされた結果を取得
@@ -192,10 +194,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
 //        //resultという結果を配列に変換して、alarmSettingListに代入
 //        alarmItemList = Array(result)
         
-        //alarmItemListの配列からindexPathに該当する配列を削除+残りの配列を自動的に割り当て
-        alarmItemList.remove(at: indexPath.row)
-        //alarmSettingTableViewからindexPathに該当するセルを削除
-        alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        
         //alarmSettingTableViewの再読み込み
         alarmSettingTableView.reloadData()
         
