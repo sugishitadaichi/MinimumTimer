@@ -147,6 +147,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
     func deleteItem(indexPath: IndexPath) {
+        
         //Realmをインスタンス化
         let realm = try! Realm()
         
@@ -154,14 +155,40 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let deleteAlarmItem = realm.objects(AlarmItem.self).filter("id == %@", target).first
         //もしもdeleteAlarmItemがnilでなければ以下を実行
         if let deleteAlarmItem {
+            print("deleteAlarmItemが実行されました")
             //Realmの処理
             try! realm .write {
                 //deleteMainAlarmをRealmから削除
                 realm.delete(deleteAlarmItem)
+                //項目別開始時間(itemStartTime）をDate型で定義
+                var updateAllStartTime: Date
+                var updateItemStartTime: Date
+                //
+                if alarmItemList.count == 0 {
+                    //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
+                    let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
+                    //全体の開始時間をString型→Date型で定義
+                    updateAllStartTime = dateFormatter.date(from: dateString) ?? Date()
+                    //項目別の開始時間をString型→Date型で定義
+                    updateItemStartTime = dateFormatter.date(from: dateString) ?? Date()
+                    //全体の開始時間の共通化
+                    alarmSetting.alarmStartSettingTime = updateAllStartTime
+                    //alarmItemListが0でない場合（項目が追加されている場合）
+                    //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
+                } else {
+                    updateItemStartTime = alarmItemList.last?.byItemEndTime ?? Date()
+                }
+                //alarmItemListに変更データを反映
+                for alarmItemListData in self.alarmItemList {
+                    alarmItemListData.byItemStartTime = updateItemStartTime
+                    print("alarmItemListData.byItemStartTimeは\(alarmItemListData.byItemStartTime)です")
+                }
+                
             }
         }
+        // TODO: alarmItemListが削除された時に時間を再編集する処理を模索中
 //        //RealmデータベースからAlarmItemというオブジェクトを取得し、"byItemStartTime"というキーパスを基準に昇順でソートされた結果を取得
-//        let result = realm.objects(AlarmItem.self).sorted(byKeyPath: "byItemStartTime", ascending: true)
+//        let result = realm.objects(AlarmItem.self).sorted(byKeyPath: "id", ascending: true)
 //        //resultという結果を配列に変換して、alarmSettingListに代入
 //        alarmItemList = Array(result)
         
@@ -185,7 +212,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //各作業内容のidの共通化
         alarmItem.id = alarmSetting.itemId
         //　項目名の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-        //alarmItemとselectedMasteItemのuserSetupNameの共通化（継承）
+        //alarmItemとselectedMasteItemのuserSetupNameの共通化（紐付け）
         alarmItem.userSetupName = selectedMasterItem.userSetupName
         //　項目名の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         
@@ -238,9 +265,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //alarmEndTimeをalarmItem.byItemEndTimeへ共通化
         alarmEndTime = alarmItem.byItemEndTime
         
-        //Realmに保存したalarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ継承
+        //Realmに保存したalarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
         let realm = try! Realm()
-        try! realm .write {        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ継承
+        try! realm .write {        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
             alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
         }
         
