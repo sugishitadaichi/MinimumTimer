@@ -150,42 +150,40 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         //Realmをインスタンス化
         let realm = try! Realm()
-        
-        let target = alarmItemList[indexPath.row].id
-        let deleteAlarmItem = realm.objects(AlarmItem.self).filter("id == %@", target).first!
-        
+        //削除対象の定数化
+        let deleteTarget = alarmItemList[indexPath.row]        
         //Realmの処理
         try! realm .write {
             //deleteMainAlarmをRealmから削除
-            realm.delete(deleteAlarmItem)
-            //alarmItemListの配列からindexPathに該当する配列を削除+残りの配列を自動的に割り当て
-            alarmItemList.remove(at: indexPath.row)
-            //alarmSettingTableViewからindexPathに該当するセルを削除
-            alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
-            
-            //項目別開始時間(itemStartTime）をDate型で定義
-            var updateAllStartTime: Date
-            var updateItemStartTime: Date
-            //
-            if alarmItemList.count == 0 {
-                    //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
-                    let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
-                    //全体の開始時間をString型→Date型で定義
-                    updateAllStartTime = dateFormatter.date(from: dateString) ?? Date()
-                    //項目別の開始時間をString型→Date型で定義
-                    updateItemStartTime = dateFormatter.date(from: dateString) ?? Date()
-                    //全体の開始時間の共通化
-                    alarmSetting.alarmStartSettingTime = updateAllStartTime
-                    //alarmItemListが0でない場合（項目が追加されている場合）
-                    //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
-                } else {
-                    updateItemStartTime = alarmItemList.last?.byItemEndTime ?? Date()
+            realm.delete(deleteTarget)
                 }
-                //alarmItemListに変更データを反映
-                for alarmItemListData in self.alarmItemList {
-                    alarmItemListData.byItemStartTime = updateItemStartTime
-                    print("alarmItemListData.byItemStartTimeは\(alarmItemListData.byItemStartTime)です")
-                }
+        //alarmItemListの配列からindexPathに該当する配列を削除+残りの配列を自動的に割り当て
+        alarmItemList.remove(at: indexPath.row)
+        //alarmSettingTableViewからindexPathに該当するセルを削除
+        alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        
+        //項目別開始時間(itemStartTime）をDate型で定義
+        var updateAllStartTime: Date
+        var updateItemStartTime: Date
+        //
+        if alarmItemList.count == 0 {
+                //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
+                let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
+                //全体の開始時間をString型→Date型で定義
+                updateAllStartTime = dateFormatter.date(from: dateString) ?? Date()
+                //項目別の開始時間をString型→Date型で定義
+                updateItemStartTime = dateFormatter.date(from: dateString) ?? Date()
+                //全体の開始時間の共通化
+                alarmSetting.alarmStartSettingTime = updateAllStartTime
+                //alarmItemListが0でない場合（項目が追加されている場合）
+                //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
+            } else {
+                updateItemStartTime = alarmItemList.last?.byItemEndTime ?? Date()
+            }
+            //alarmItemListに変更データを反映
+            for alarmItemListData in self.alarmItemList {
+                alarmItemListData.byItemStartTime = updateItemStartTime
+                print("alarmItemListData.byItemStartTimeは\(alarmItemListData.byItemStartTime)です")
                 
         }
         // TODO: alarmItemListが削除された時に時間を再編集する処理を模索中
