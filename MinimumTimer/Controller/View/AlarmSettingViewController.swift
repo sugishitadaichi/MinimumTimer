@@ -180,11 +180,14 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 updateItemStartTime = alarmItemList.last?.byItemEndTime ?? Date()
             }
+        //データ変更処理
+        try! realm .write {
             //alarmItemListに変更データを反映
             for alarmItemListData in self.alarmItemList {
                 alarmItemListData.byItemStartTime = updateItemStartTime
                 print("alarmItemListData.byItemStartTimeは\(alarmItemListData.byItemStartTime)です")
                 
+            }
         }
         // TODO: alarmItemListが削除された時に時間を再編集する処理を模索中
 //        //RealmデータベースからAlarmItemというオブジェクトを取得し、"byItemStartTime"というキーパスを基準に昇順でソートされた結果を取得
