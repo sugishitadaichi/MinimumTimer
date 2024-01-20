@@ -23,7 +23,7 @@ class AlarmItem: Object {
     //ユーザーが設定した項目名
     @objc dynamic var userSetupName: String = ""
     
-    //初期化(Relmを使用する引数Objectもクラスは初期化時にconvinienceをつける)
+    //初期化(Realmを使用する引数Objectもクラスは初期化時にconvinienceをつける)
     convenience init(alarmSettingId: String, id: String, masterId: String, byItemStartTime: Date, byItemEndTime: Date, userSetupName: String) {
         self.init()
         self.alarmSettingId = alarmSettingId
@@ -32,6 +32,11 @@ class AlarmItem: Object {
         self.byItemStartTime = byItemStartTime
         self.byItemEndTime = byItemEndTime
         self.userSetupName = userSetupName
+    }
+    
+    //プライマリキーの設定
+    override static func primaryKey() -> String? {
+        return "id"
     }
 
 }
