@@ -13,7 +13,7 @@ class AlarmSetting: Object {
     //アラーム全体のユニークID（AlarmItemモデルのalarmSettigIdと同義）
     @objc dynamic var id: String = UUID().uuidString
     //アラームに追加した作業項目のユニークID（AlarmItemモデルのidと同義）
-    @objc dynamic var itemId: String = ""
+    @objc dynamic var itemId: String = UUID().uuidString
     //アラームに追加した作業項目のユニークIDの個数を取得
     @objc dynamic var itemIdCount: Int = 0
     //アラーム全体の名前
