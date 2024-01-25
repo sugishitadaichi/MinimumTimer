@@ -212,8 +212,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //　idの共通化ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         //全体のidの共通化
         alarmItem.alarmSettingId = alarmSetting.id
-        //各作業内容のidの共通化
-        alarmItem.id = alarmSetting.itemId
+        //各作業内容のidの共通化（不要）
         print("alarmItem.idは\(alarmItem.id)")
         //　項目名の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         //alarmItemとselectedMasteItemのuserSetupNameの共通化（紐付け）
@@ -271,8 +270,12 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         //Realmに保存したalarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
         let realm = try! Realm()
+        
         try! realm .write {        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
             alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
+            //itemidの紐付け
+            alarmSetting.itemId = alarmItem.id
+            realm.add(alarmItem)
         }
         
 
