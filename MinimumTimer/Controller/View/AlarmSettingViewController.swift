@@ -150,9 +150,13 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         //Realmをインスタンス化
         let realm = try! Realm()
-        //削除対象の定数化
-        let deleteTarget = alarmItemList[indexPath.row].id
-        let deleteAlarmItem = realm.objects(AlarmItem.self).filter("id == %@", deleteTarget).first
+        //削除対象の定義(選択したalarmItemList)
+        let deleteTarget = alarmItemList[indexPath.row]
+        let deleteAlarmItem = realm.objects(AlarmItem.self).filter("id == %@", deleteTarget.id).first
+        //削除対象の作業時間の定義
+        let diff = deleteTarget.byItemDifferentTime
+        
+        //もしdeleteAlarmItemがnilでなければ以下を処理
         if let deleteAlarmItem {
             //Realmの処理
             try! realm .write {
@@ -164,41 +168,25 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             //alarmSettingTableViewからindexPathに該当するセルを削除
             alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
             
-            //項目別開始時間(itemStartTime）をDate型で定義
-            var updateAllStartTime: Date
-            var updateItemStartTime: Date
-            //
-            if alarmItemList.count == 0 {
-                //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
-                let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
-                //全体の開始時間をString型→Date型で定義
-                updateAllStartTime = dateFormatter.date(from: dateString) ?? Date()
-                //項目別の開始時間をString型→Date型で定義
-                updateItemStartTime = dateFormatter.date(from: dateString) ?? Date()
-                //全体の開始時間の共通化
-                alarmSetting.alarmStartSettingTime = updateAllStartTime
-                //alarmItemListが0でない場合（項目が追加されている場合）
-                //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
-            } else {
-                alarmItemList.enumerated().forEach { index, item in
-                    if index >= indexPath.row {
-                        // ここでitem（選択されたindexより下の行）の時間を修正する処理
-                        for alarmItemListData in self.alarmItemList {
-                            //削除前の開始時間 - 削除した
-                            updateItemStartTime = alarmItemListData.byItemStartTime - alarmItemListData.byItemDifferentTime
+            alarmItemList.enumerated().forEach { index, item in
+                if index >= indexPath.row {
+                    // ここでitem（選択されたindexより下の行）の時間を修正する処理
+                    try! realm .write {
+                        //データ変更処理
+                        //項目別開始時間 - 削除した作業時間
+                        item.byItemStartTime = item.byItemStartTime.addingTimeInterval(diff)
+                        //項目別終了時間 - 削除した作業時間
+                        item.byItemEndTime = item.byItemEndTime.addingTimeInterval(diff)
+                        //全体終了時間の更新（配列からデータ取得）
+                        for alarmItemListData in alarmItemList {
+                            //作業項目の最後のリストの終了時間（last?指定しなくても自動参照）をalarmSetting.alarmEndSettingTimeへ代入
+                            alarmSetting.alarmEndSettingTime = alarmItemListData.byItemEndTime
+                            //作業項目の最後のリストの終了時間（last?指定しなくても自動参照）を全体終了予定時間へ反映
+                            endSettingTimeLabel.text = alarmItemListData.byItemEndTime.formattedTime()
+                            }
                         }
                     }
                 }
-            }
-            //データ変更処理
-            try! realm .write {
-                //alarmItemListに変更データを反映
-                for alarmItemListData in self.alarmItemList {
-                    alarmItemListData.byItemStartTime = updateItemStartTime
-                    print("alarmItemListData.byItemStartTimeは\(alarmItemListData.byItemStartTime)です")
-                    
-                }
-            }
         }
         // TODO: alarmItemListが削除された時に時間を再編集する処理を模索中
 //        //RealmデータベースからAlarmItemというオブジェクトを取得し、"byItemStartTime"というキーパスを基準に昇順でソートされた結果を取得
