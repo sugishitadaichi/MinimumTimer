@@ -180,7 +180,15 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
                 //alarmItemListが0でない場合（項目が追加されている場合）
                 //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
             } else {
-                updateItemStartTime = alarmItemList.last?.byItemEndTime ?? Date()
+                alarmItemList.enumerated().forEach { index, item in
+                    if index >= indexPath.row {
+                        // ここでitem（選択されたindexより下の行）の時間を修正する処理
+                        for alarmItemListData in self.alarmItemList {
+                            //削除前の開始時間 - 削除した
+                            updateItemStartTime = alarmItemListData.byItemStartTime - alarmItemListData.byItemDifferentTime
+                        }
+                    }
+                }
             }
             //データ変更処理
             try! realm .write {
