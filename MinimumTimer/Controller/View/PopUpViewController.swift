@@ -56,8 +56,8 @@ class PopUpViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     var toolBar:UIToolbar!
     //delegateの定義
     var delegate: PopUpViewControllerDelegate?
-    //項目名の文字数を10文字以内に定義
-    let maxUserSetupNameLength = 10
+    //項目名の文字数を7文字以内に定義
+    let maxUserSetupNameLength = 7
     //設定時間(時間)を0時間以上24時間未満に定義
     let hourTimeRange = 0..<24
     //設定時間(時間)を0分以上60分未満に定義

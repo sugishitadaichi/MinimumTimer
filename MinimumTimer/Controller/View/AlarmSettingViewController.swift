@@ -49,8 +49,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     let dateFormatter = DateFormatter()
     //AlarmStartSettingTimeHeaderをインスタンス化
     var alarmStartSettingTimeHeader = AlarmStartSettingTimeHeader()
-    //AlarmSettingViewCellをインスタンス化
-    var alarmSettingViewCell = AlarmSettingViewCell()
     //全体設定のプロパティの作成
     var alarmSetting = AlarmSetting()
     //delegateの設定
@@ -133,7 +131,7 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             //Realmに保存
             realm.add(alarmSetting)
         }
-        
+        print("alarmSetting.idは\(alarmSetting.id)")
     }
     //データ編集時のalarmItemList引き継ぎ処理
     func editMainAlarm() {
@@ -147,7 +145,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
     func deleteItem(indexPath: IndexPath) {
-        
         //Realmをインスタンス化
         let realm = try! Realm()
         //削除対象の定義(選択したalarmItemList)
@@ -188,13 +185,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
                     }
                 }
         }
-        // TODO: alarmItemListが削除された時に時間を再編集する処理を模索中
-//        //RealmデータベースからAlarmItemというオブジェクトを取得し、"byItemStartTime"というキーパスを基準に昇順でソートされた結果を取得
-//        let result = realm.objects(AlarmItem.self).sorted(byKeyPath: "id", ascending: true)
-//        //resultという結果を配列に変換して、alarmSettingListに代入
-//        alarmItemList = Array(result)
-        
-        
         //alarmSettingTableViewの再読み込み
         alarmSettingTableView.reloadData()
         
@@ -204,16 +194,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //項目別の時間の実装（Footerからのdelegateメソッド）
     func reflectItemData(selectedMasterItem: MasterItem) {
         //項目設定オブジェクトの作成(ローカル変数)
-        let alarmItem = AlarmItem()
-        //　idの共通化ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-        //全体のidの共通化
-        alarmItem.alarmSettingId = alarmSetting.id
-        //各作業内容のidの共通化（不要）
-        print("alarmItem.idは\(alarmItem.id)")
-        //　項目名の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-        //alarmItemとselectedMasteItemのuserSetupNameの共通化（紐付け）
-        alarmItem.userSetupName = selectedMasterItem.userSetupName
-        //　項目名の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        //全体idの共通化と項目名の共通化も設定済
+        let alarmItem = AlarmItem(alarmSettingId: alarmSetting.id, userSetupName: selectedMasterItem.userSetupName)
         
         //　時間の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         //day（現在時刻）を設定

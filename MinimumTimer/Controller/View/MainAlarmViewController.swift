@@ -107,8 +107,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //Realmをインスタンス化
         let realm = try! Realm()
         
-        let target = alarmSettingList[indexPath.row].id
-        let deleteMainAlarm = realm.objects(AlarmSetting.self).filter("id == %@", target).first
+        let target = alarmSettingList[indexPath.row]
+        let deleteMainAlarm = realm.objects(AlarmSetting.self).filter("id == %@", target.id).first
         //もしもdeleteMainAlarmがnilでなければ以下を実行
         if let deleteMainAlarm {
             //Realmの処理

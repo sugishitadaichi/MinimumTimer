@@ -18,6 +18,7 @@ class MainAlarmViewCell: UITableViewCell {
     // MARK: - 紐付け＋ボタンアクション
     //削除ボタンを押した際の処理を紐付け
     @IBAction func deleteButtonAction(_ sender: UIButton) {
+        print("deleteMainAlarmを押しました")
         //delegateの設定
         delegate?.deleteMainAlarm(indexPath: indexPath!)
     }
