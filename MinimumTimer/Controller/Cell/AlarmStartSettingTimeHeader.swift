@@ -56,7 +56,6 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         } else {
 //            //閉じる処理(アラーム名)
             alarmNameText.resignFirstResponder()
-//            print("delegateが実装されました")
         }
     }
 
@@ -137,8 +136,6 @@ class AlarmStartSettingTimeHeader: UIView, UITextFieldDelegate {
         dateFormatter.locale = Locale(identifier: "ja_JP")
         dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
         alarmStartDatePickerText.text = dateFormatter.string(from: sender.date)
-        //出力確認
-        print("\(String(describing: alarmStartDatePickerText.text))が入力されました")
     }
     
 }

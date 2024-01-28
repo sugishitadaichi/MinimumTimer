@@ -18,6 +18,7 @@ class MainAlarmViewCell: UITableViewCell {
     // MARK: - 紐付け＋ボタンアクション
     //削除ボタンを押した際の処理を紐付け
     @IBAction func deleteButtonAction(_ sender: UIButton) {
+        print("deleteMainAlarmを押しました")
         //delegateの設定
         delegate?.deleteMainAlarm(indexPath: indexPath!)
     }
@@ -71,10 +72,8 @@ class MainAlarmViewCell: UITableViewCell {
         alarmNameLabel.text = String(alarmSetting.alarmName)
         //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）
         alarmStartSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmStartSettingTime)
-        print("alarmStartSettingTimeLabel.textは\(String(describing: alarmStartSettingTimeLabel.text))です")
         //終了予定時間のテキストデータを定義（データ変換(Date→テキスト)）
         alarmEndSettingTimeLabel.text = dateFormatter.string(from: alarmSetting.alarmEndSettingTime)
-        print("alarmEndSettingTimeLabel.textは\(String(describing: alarmEndSettingTimeLabel.text))です")
         //作業個数のテキストデータを定義
         byItemLabel.text = "\(alarmSetting.itemIdCount)個"
 

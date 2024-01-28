@@ -32,7 +32,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //保存ボタンを押した際の処理
     @IBAction func saveButtonAction(_ sender: UIButton) {
         saveMainAlarm()
-        print("設定したidは\(alarmSetting.id)")
         //delegateの設定（整列と更新）
         delegate?.arrayMainAlarm()
         //画面遷移元に戻る処理
@@ -100,9 +99,11 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         
         //alarmStartDatePickerTextのテキストにalarmSetting.alarmStartSettingTimeを代入
             alarmStartSettingTimeHeader.alarmStartDatePickerText.text = "\(alarmSetting.alarmStartSettingTime.formattedTime())"
+        //endSettingTimeLabelのテキストにalarmSetting.alarmEndSettingTimeを代入
+        self.endSettingTimeLabel.text = "\(alarmSetting.alarmEndSettingTime.formattedTime())"
         
-        print("alarmStartSettingTimeHeader.alarmStartDatePickerText.textの時間は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))です")
-        
+        //データ編集時のalarmItemList引き継ぎ処理
+        editMainAlarm()
         
     }
     
@@ -116,7 +117,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         try! realm.write {
             realm.add(alarmItemList)
         }
-        print("alarmItemListの内容は\(alarmItemList)")
         //alarmSettingプロパティへデータ保存
         try! realm.write {
             //AlarmSettingのidとAlarmItemのalarmSettingIdの共通化（reflectItemDataメソッドで記載済）
@@ -124,26 +124,68 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             alarmSetting.itemIdCount = alarmItemList.count
             //項目名の共通化
             alarmSetting.alarmName = alarmStartSettingTimeHeader.alarmNameText.text ?? ""
-            print("保存したalarmSetting.alarmNameは\(alarmSetting.alarmName)です")
             //全体の開始時間の共通化(reflectItemDataメソッドで記載済)
             alarmStartSettingTimeHeader.alarmStartDatePickerText.text = "\(alarmSetting.alarmStartSettingTime.formattedTime())"
-            print("保存したalarmSetting.alarmStartSettingTimeは\(alarmSetting.alarmStartSettingTime)です")
             //全体終了時間の共通化(reflectItemDataメソッドで記載済)
-            
-            print("保存したalarmSetting.alarmEndSettingTimeは\(alarmSetting.alarmEndSettingTime)です")
+            self.endSettingTimeLabel.text = "\(alarmSetting.alarmEndSettingTime.formattedTime())"
+            //Realmに保存
             realm.add(alarmSetting)
         }
-        print("alarmSettingの内容は\(alarmSetting)です")
-        
+        print("alarmSetting.idは\(alarmSetting.id)")
+    }
+    //データ編集時のalarmItemList引き継ぎ処理
+    func editMainAlarm() {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //AlarmItemの配列を取得
+        let editMainAlarm = realm.objects(AlarmItem.self).filter("alarmSettingId == %@", alarmSetting.id)
+        //alarmItemListにeditMainAlarm（AlarmItemの配列）を格納
+        self.alarmItemList = Array(editMainAlarm)
     }
     // MARK: - delegateメソッド（AlarmSettingViewCell）
     //削除処理の実装
-    func deleteItem(item: AlarmItem) {
-        //alarmItemListの配列からインデックス番号に該当する配列を削除
-        if let index = alarmItemList.firstIndex(of: item) {
-            alarmItemList.remove(at: index)
+    func deleteItem(indexPath: IndexPath) {
+        //Realmをインスタンス化
+        let realm = try! Realm()
+        //削除対象の定義(選択したalarmItemList)
+        let deleteTarget = alarmItemList[indexPath.row]
+        let deleteAlarmItem = realm.objects(AlarmItem.self).filter("id == %@", deleteTarget.id).first
+        //削除対象の作業時間の定義
+        let diff = deleteTarget.byItemDifferentTime
+        
+        //もしdeleteAlarmItemがnilでなければ以下を処理
+        if let deleteAlarmItem {
+            //Realmの処理
+            try! realm .write {
+                //deleteMainAlarmをRealmから削除
+                realm.delete(deleteAlarmItem)
+            }
+            //alarmItemListの配列からindexPathに該当する配列を削除+残りの配列を自動的に割り当て
+            alarmItemList.remove(at: indexPath.row)
+            //alarmSettingTableViewからindexPathに該当するセルを削除
+            alarmSettingTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+            
+            alarmItemList.enumerated().forEach { index, item in
+                if index >= indexPath.row {
+                    // ここでitem（選択されたindexより下の行）の時間を修正する処理
+                    try! realm .write {
+                        //データ変更処理
+                        //項目別開始時間 - 削除した作業時間
+                        item.byItemStartTime = item.byItemStartTime.addingTimeInterval(diff)
+                        //項目別終了時間 - 削除した作業時間
+                        item.byItemEndTime = item.byItemEndTime.addingTimeInterval(diff)
+                        //全体終了時間の更新（配列からデータ取得）
+                        for alarmItemListData in alarmItemList {
+                            //作業項目の最後のリストの終了時間（last?指定しなくても自動参照）をalarmSetting.alarmEndSettingTimeへ代入
+                            alarmSetting.alarmEndSettingTime = alarmItemListData.byItemEndTime
+                            //作業項目の最後のリストの終了時間（last?指定しなくても自動参照）を全体終了予定時間へ反映
+                            endSettingTimeLabel.text = alarmItemListData.byItemEndTime.formattedTime()
+                            }
+                        }
+                    }
+                }
         }
-        //更新
+        //alarmSettingTableViewの再読み込み
         alarmSettingTableView.reloadData()
         
     }
@@ -152,14 +194,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     //項目別の時間の実装（Footerからのdelegateメソッド）
     func reflectItemData(selectedMasterItem: MasterItem) {
         //項目設定オブジェクトの作成(ローカル変数)
-        let alarmItem = AlarmItem()
-        //　idの共通化ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-        alarmItem.alarmSettingId = alarmSetting.id
-        print("保存されたalarmItem.alarmSettingIdは\(alarmItem.alarmSettingId)です")
-        //　項目名の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-        //alarmItemとselectedMasteItemのuserSetupNameの共通化（継承）
-        alarmItem.userSetupName = selectedMasterItem.userSetupName
-        //　項目名の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        //全体idの共通化と項目名の共通化も設定済
+        let alarmItem = AlarmItem(alarmSettingId: alarmSetting.id, userSetupName: selectedMasterItem.userSetupName)
         
         //　時間の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         //day（現在時刻）を設定
@@ -179,15 +215,12 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         if alarmItemList.count == 0 {
             //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
             let dateString = "2023/11/2 " +   alarmStartSettingTimeHeader.alarmStartDatePickerText.text!
-            print("alarmStartSettingTimeHeader.alarmStartDatePickerText.textの内容は\(String(describing: alarmStartSettingTimeHeader.alarmStartDatePickerText.text))")
             //全体の開始時間をString型→Date型で定義
             allStartTime = dateFormatter.date(from: dateString) ?? Date()
             //項目別の開始時間をString型→Date型で定義
             itemStartTime = dateFormatter.date(from: dateString) ?? Date()
-            print("itemStartTimeの時間は\(allStartTime)")
             //全体の開始時間の共通化
             alarmSetting.alarmStartSettingTime = allStartTime
-            print("alarmSetting.alarmStartSettingTimeの時間は\(alarmSetting.alarmStartSettingTime)")
             //alarmItemListが0でない場合（項目が追加されている場合）
             //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
         } else {
@@ -202,25 +235,30 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let modifiedItemEndTime = Calendar.current.date(byAdding: .minute, value: selectedMasterItem.userSetupMinutesTime, to: modifiedItemEndHourTime)!
         //テキスト・alarmSettingモデル・合計時間の共通化
         alarmItem.byItemEndTime = modifiedItemEndTime
-        print("modifiedItemEndTimeの時間は\(modifiedItemEndTime)")
         
         //全体の終了時間
         //全体の終了時間プロパティの定義
         var alarmEndTime: Date
         //文字列→Date型にするために日付を追加（yyyy/MM/dd HH:mm式でないと認識しないため）
         let dateEndString = "\(modifiedItemEndTime.toStringWithCurrentLocale())"
-        print("dateEndStringの時間は\(dateEndString)")
         //dateEndStringの文字列をDate型に変換
         alarmEndTime = dateFormatter.date(from: dateEndString) ?? Date()
         //alarmEndTimeをalarmItem.byItemEndTimeへ共通化
         alarmEndTime = alarmItem.byItemEndTime
-        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ継承
-        alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
-        print("alarmEndTimeの時間は\(alarmEndTime)")
+        
+        //Realmに保存したalarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
+        let realm = try! Realm()
+        
+        try! realm .write {        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
+            alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
+            //itemidの紐付け
+            alarmSetting.itemId = alarmItem.id
+            realm.add(alarmItem)
+        }
+        
 
         //全体の終了時間のテキストへ反映
-        endSettingTimeLabel.text = alarmEndTime.formattedTime() 
-        print("alarmEndTime.formattedTime() の時間は\(alarmEndTime.formattedTime() )")
+        endSettingTimeLabel.text = alarmEndTime.formattedTime()
         //　時間の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
         
         //　追加・反映の実装ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -229,7 +267,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //データ反映
         alarmSettingTableView.reloadData()
         //　追加・反映の実装終了ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-        print("alarmItemListの個数は\(alarmItemList.count)個です")
     }
     
     
