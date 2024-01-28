@@ -131,7 +131,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             //Realmに保存
             realm.add(alarmSetting)
         }
-        print("alarmSetting.idは\(alarmSetting.id)")
     }
     //データ編集時のalarmItemList引き継ぎ処理
     func editMainAlarm() {

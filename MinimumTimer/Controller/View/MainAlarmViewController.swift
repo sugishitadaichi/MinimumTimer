@@ -142,8 +142,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         let alarmSetting = alarmSettingList[indexPath.row]
         //セルの全体設定とalarmSettigListの共通化
         cell.allAlarmSetting = alarmSetting
-        //セルの定義は不要
-        //MainAlarmViewCell.setUp(alarmSetting: AlarmSetting)メソッドで定義済
+        //indexpath
+        cell.indexPath = indexPath
         
         //デリゲートの登録
         cell.delegate = self
