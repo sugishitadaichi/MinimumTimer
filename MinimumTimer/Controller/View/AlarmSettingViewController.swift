@@ -34,6 +34,18 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         saveMainAlarm()
         //delegateの設定（整列と更新）
         delegate?.arrayMainAlarm()
+        //通知表示の設定
+        //ローカル通知内容のクラスのインスタンス化
+        let content: UNMutableNotificationContent = UNMutableNotificationContent()
+        //通知タイトル
+        content.title = "作業項目名"
+        //通知音
+        content.sound = UNNotificationSound.default
+        // MARK: 通知をいつ発動するかを設定(検討中)
+        // カレンダークラスを作成
+        //let calendar: Calendar = Calendar.current
+        //let trigger: UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.hour, .minute], from: ), repeats: false)
+
         //画面遷移元に戻る処理
         self.dismiss(animated: true, completion: nil)
     }
