@@ -38,13 +38,37 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //ローカル通知内容のクラスのインスタンス化
         let content: UNMutableNotificationContent = UNMutableNotificationContent()
         //通知タイトル
-        content.title = "作業項目名"
+        for alarmItemListData in alarmItemList {
+            content.title = "アラーム名：\(alarmSetting.alarmName)         作業名：\(alarmItemListData.userSetupName)"
+        }
+        
         //通知音
         content.sound = UNNotificationSound.default
-        // MARK: 通知をいつ発動するかを設定(検討中)
+        // MARK: 通知をいつ発動するかを設定
         // カレンダークラスを作成
-        //let calendar: Calendar = Calendar.current
-        //let trigger: UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.hour, .minute], from: ), repeats: false)
+        let calendar: Calendar = Calendar.current
+        //alarmItemListのデータを使用のためfor in関数を使用
+        for alarmItemListData in alarmItemList {
+            //alarmItemListに格納されてある作業別開始時間ごとにアラームが鳴る
+            let trigger: UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.hour, .minute], from:alarmItemListData.byItemStartTime ), repeats: false)
+            // MARK: 通知のリクエストを作成
+            let request: UNNotificationRequest = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            // MARK: 通知のリクエストを実際に登録する
+            UNUserNotificationCenter.current().add(request) { (error: Error?) in
+                // エラーが存在しているかをif文で確認している
+                if error != nil {
+                    // MARK: エラーが存在しているので、エラー内容をprintする
+                    print("通知がうまくいきませんでした。")
+                } else {
+                    // MARK: エラーがないので、うまく通知を追加できた
+                    print("通知に成功しました。")
+                }
+        }
+            
+        
+        }
+
+
 
         //画面遷移元に戻る処理
         self.dismiss(animated: true, completion: nil)

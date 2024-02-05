@@ -16,6 +16,16 @@ protocol MainAlarmViewCellDelegate{
 // MARK: - classの定義＋機能追加
 class MainAlarmViewCell: UITableViewCell {
     // MARK: - 紐付け＋ボタンアクション
+    //ON・OFFボタンの分岐処理
+    @IBAction func AlarmUISwitchAction(_ sender: UISwitch) {
+        //スイッチがONであれば
+        if ( sender.isOn ) {
+            
+        } else {
+            //スイッチがOFFであれば
+            
+        }
+    }
     //削除ボタンを押した際の処理を紐付け
     @IBAction func deleteButtonAction(_ sender: UIButton) {
         //delegateの設定
@@ -31,6 +41,8 @@ class MainAlarmViewCell: UITableViewCell {
     @IBOutlet weak var alarmStartSettingTimeLabel: UILabel!
     //削除ボタンを紐付け
     @IBOutlet weak var deleteButton: UIButton!
+    //ON・OFFボタンの紐付け
+    @IBOutlet weak var AlarmUISwitch: UISwitch!
     
     // MARK: - プロパティ
     //DateFormatterクラスのインスタンス化

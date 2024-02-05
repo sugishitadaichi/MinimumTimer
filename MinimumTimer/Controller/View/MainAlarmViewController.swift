@@ -56,7 +56,7 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
         dateFormatter.dateFormat = "HH:mm"
         
-        //ローカル通知の許可
+        // MARK: ローカル通知の許可の設定
         center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
             if granted {
                 //許可を得られた場合の処理
