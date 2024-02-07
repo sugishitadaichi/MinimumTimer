@@ -37,10 +37,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         //通知表示の設定
         //ローカル通知内容のクラスのインスタンス化
         let content: UNMutableNotificationContent = UNMutableNotificationContent()
-        //通知タイトル
-        for alarmItemListData in alarmItemList {
-            content.title = "アラーム名：\(alarmSetting.alarmName)         作業名：\(alarmItemListData.userSetupName)"
-        }
         
         //通知音
         content.sound = UNNotificationSound.default
@@ -49,10 +45,12 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         let calendar: Calendar = Calendar.current
         //alarmItemListのデータを使用のためfor in関数を使用
         for alarmItemListData in alarmItemList {
+            //通知タイトル
+            content.title = "アラーム名：\(alarmSetting.alarmName)         作業名：\(alarmItemListData.userSetupName)"
             //alarmItemListに格納されてある作業別開始時間ごとにアラームが鳴る
             let trigger: UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.hour, .minute], from:alarmItemListData.byItemStartTime ), repeats: false)
             // MARK: 通知のリクエストを作成
-            let request: UNNotificationRequest = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            let request: UNNotificationRequest = UNNotificationRequest(identifier: alarmItemListData.id, content: content, trigger: trigger)
             // MARK: 通知のリクエストを実際に登録する
             UNUserNotificationCenter.current().add(request) { (error: Error?) in
                 // エラーが存在しているかをif文で確認している
