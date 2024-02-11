@@ -226,6 +226,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - delegateメソッド（ItemSelectedFooter）
     //項目別の時間の実装（Footerからのdelegateメソッド）
     func reflectItemData(selectedMasterItem: MasterItem) {
+        //Realmのインスタンス化
+        let realm = try! Realm()
         //項目設定オブジェクトの作成(ローカル変数)
         //全体idの共通化と項目名の共通化も設定済
         let alarmItem = AlarmItem(alarmSettingId: alarmSetting.id, userSetupName: selectedMasterItem.userSetupName)
@@ -253,7 +255,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             //項目別の開始時間をString型→Date型で定義
             itemStartTime = dateFormatter.date(from: dateString) ?? Date()
             //全体の開始時間の共通化
-            alarmSetting.alarmStartSettingTime = allStartTime
+            try! realm.write {
+                alarmSetting.alarmStartSettingTime = allStartTime
+            }
             //alarmItemListが0でない場合（項目が追加されている場合）
             //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
         } else {
@@ -280,7 +284,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmEndTime = alarmItem.byItemEndTime
         
         //Realmに保存したalarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
-        let realm = try! Realm()
         
         try! realm .write {        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
             alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
