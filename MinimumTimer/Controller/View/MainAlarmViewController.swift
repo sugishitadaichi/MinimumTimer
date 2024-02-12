@@ -136,6 +136,13 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         alarmSettingList.remove(at: indexPath.row)
         //mainAlarmTableViewからindexPathに該当するセルを削除
         mainAlarmTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        // MARK: 通知の削除処理
+        //AlarmItemの配列のプロパティ
+        var alarmItemList = [AlarmItem]()
+        //登録された通知のうち任意のもの(alarmItemListData.id)を1つだけ削除
+        for alarmItemListData in alarmItemList {
+        center.removePendingNotificationRequests(withIdentifiers: [alarmItemListData.id])
+        }
         //mainAlarmTableViewの再読み込み
         mainAlarmTableView.reloadData()
         
