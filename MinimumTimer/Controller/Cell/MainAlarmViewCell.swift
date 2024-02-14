@@ -14,11 +14,23 @@ protocol MainAlarmViewCellDelegate{
     func deleteMainAlarm(indexPath: IndexPath)
 }
 // MARK: - classの定義＋機能追加
-class MainAlarmViewCell: UITableViewCell {
+class MainAlarmViewCell: UITableViewCell, MainAlarmViewControllerDelegate {
+    // MARK: delegateメソッド（MainAlarmViewController）
+    //最下部ではalarmItemListがエラーになるためここに記載
+    func deleteNotification() {
+        //通知送信機能のclassをインスタンス化
+        let center = UNUserNotificationCenter.current()
+        //登録された通知のうち任意のもの(alarmItemListData.id)を1つだけ削除
+        for alarmItemListData in alarmItemList {
+        center.removePendingNotificationRequests(withIdentifiers: [alarmItemListData.id])
+        }
+    }
+    
+    
     // MARK: - 紐付け＋ボタンアクション
     //ON・OFFボタンの分岐処理
     @IBAction func AlarmUISwitchAction(_ sender: UISwitch) {
-        //
+        //通知送信機能のclassをインスタンス化
         let center = UNUserNotificationCenter.current()
         //ローカル通知内容のクラスのインスタンス化
         let content: UNMutableNotificationContent = UNMutableNotificationContent()
@@ -104,6 +116,9 @@ class MainAlarmViewCell: UITableViewCell {
         dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
         //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
         dateFormatter.dateFormat = "HH:mm"
+        //mainAlarmViewControllerをインスタンス化・delegateの登録
+        let mainAlarmViewController = MainAlarmViewController()
+        mainAlarmViewController.delegate = self
         //画面表示時に角丸を実装
         setupDeleteButton()
     }
