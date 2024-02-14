@@ -9,11 +9,6 @@ import UIKit
 import RealmSwift
 import UserNotifications
 
-// MARK: - delegateの定義
-//delegateを定義
-protocol MainAlarmViewControllerDelegate {
-    func deleteNotification()
-}
 // MARK: - classの定義＋機能追加
 class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate, MainAlarmViewCellDelegate, UITableViewDataSource {
     
@@ -35,8 +30,6 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     let dateFormatter = DateFormatter()
     //ローカル通知許可のクラスのインスタンス化
     let center = UNUserNotificationCenter.current()
-    //MainAlarmViewControllerDelegateを定義（他ファイルで使用するため）
-    var delegate: MainAlarmViewControllerDelegate?
     
     // MARK: - 初期設定関数
     override func viewDidLoad() {
@@ -143,9 +136,6 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         alarmSettingList.remove(at: indexPath.row)
         //mainAlarmTableViewからindexPathに該当するセルを削除
         mainAlarmTableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
-        // MARK: 通知の削除処理
-        //delegateの設定
-        delegate?.deleteNotification()
         //mainAlarmTableViewの再読み込み
         mainAlarmTableView.reloadData()
         
