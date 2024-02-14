@@ -26,6 +26,7 @@ class MainAlarmViewCell: UITableViewCell {
         let content: UNMutableNotificationContent = UNMutableNotificationContent()
         //スイッチがONであれば
         if ( sender.isOn ) {
+            print("スイッチがONになりました")
             //通知音
             content.sound = UNNotificationSound.default
             // MARK: 通知をいつ発動するかを設定
@@ -53,10 +54,17 @@ class MainAlarmViewCell: UITableViewCell {
                         print("通知に成功しました。")
                     }
                 }
+                //通知予定の一覧確認
+                center.getPendingNotificationRequests {requests in
+                    requests.forEach {
+                        debugPrint($0.description)
+                    }
+                }
             }
             
         } else {
             //スイッチがOFFであれば
+            print("スイッチがOFFになりました")
             //登録された通知のうち任意のもの(alarmItemListData.id)を1つだけ削除
             for alarmItemListData in alarmItemList {
             center.removePendingNotificationRequests(withIdentifiers: [alarmItemListData.id])
