@@ -35,10 +35,7 @@ class MainAlarmViewCell: UITableViewCell {
             //alarmItemListのデータを使用のためfor in関数を使用
             for alarmItemListData in alarmItemList {
                 //通知タイトル
-                //RealmからAlarmSettingを取得
-                if let alarmSetting = alarmSettingList.first(where: { $0.id == alarmItemListData.alarmSettingId }) {
-                    content.title = "アラーム名：\(alarmSetting.alarmName)         作業名：\(alarmItemListData.userSetupName)"
-                }
+                content.title = "アラーム名：\(allAlarmSetting?.alarmName ?? "")        作業名：\(alarmItemListData.userSetupName)"
                 //alarmItemListに格納されてある作業別開始時間ごとにアラームが鳴る
                 let trigger: UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.hour, .minute], from:alarmItemListData.byItemStartTime ), repeats: false)
                 // MARK: 通知のリクエストを作成
@@ -104,8 +101,6 @@ class MainAlarmViewCell: UITableViewCell {
     var allAlarmSetting: AlarmSetting?
     //MainAlarmViewCellDelegateを定義（他ファイルで使用するため）
     var delegate: MainAlarmViewCellDelegate?
-    //AlarmSettingの配列のプロパティ
-    var alarmSettingList: [AlarmSetting] = []
     //AlarmItemの配列のプロパティ
     var alarmItemList = [AlarmItem]()
     //IndexPath
@@ -134,6 +129,8 @@ class MainAlarmViewCell: UITableViewCell {
     
     
     func setUp(alarmSetting: AlarmSetting) {
+        //引数alarmSettingをallAlarmSettingに設定
+        allAlarmSetting = alarmSetting
         // Realm から alarmSetting に基づいて mavcAlarmItemListData を取得
         if let realm = try? Realm() {
             let mavcAlarmItemListData = realm.objects(AlarmItem.self).filter("alarmSettingId == %@" , alarmSetting.id)
