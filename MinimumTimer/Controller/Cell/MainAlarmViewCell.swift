@@ -15,12 +15,71 @@ protocol MainAlarmViewCellDelegate{
 }
 // MARK: - classの定義＋機能追加
 class MainAlarmViewCell: UITableViewCell {
+    
+    
     // MARK: - 紐付け＋ボタンアクション
+    //ON・OFFボタンの分岐処理
+    @IBAction func AlarmUISwitchAction(_ sender: UISwitch) {
+        //通知送信機能のclassをインスタンス化
+        let center = UNUserNotificationCenter.current()
+        //ローカル通知内容のクラスのインスタンス化
+        let content: UNMutableNotificationContent = UNMutableNotificationContent()
+        //スイッチがONであれば
+        if ( sender.isOn ) {
+            print("スイッチがONになりました")
+            //通知音
+            content.sound = UNNotificationSound.default
+            // MARK: 通知をいつ発動するかを設定
+            // カレンダークラスを作成
+            let calendar: Calendar = Calendar.current
+            //alarmItemListのデータを使用のためfor in関数を使用
+            for alarmItemListData in alarmItemList {
+                //通知タイトル
+                content.title = "アラーム名：\(allAlarmSetting?.alarmName ?? "")        作業名：\(alarmItemListData.userSetupName)"
+                //alarmItemListに格納されてある作業別開始時間ごとにアラームが鳴る
+                let trigger: UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.hour, .minute], from:alarmItemListData.byItemStartTime ), repeats: false)
+                // MARK: 通知のリクエストを作成
+                let request: UNNotificationRequest = UNNotificationRequest(identifier: alarmItemListData.id, content: content, trigger: trigger)
+                // MARK: 通知のリクエストを実際に登録する
+                UNUserNotificationCenter.current().add(request) { (error: Error?) in
+                    // エラーが存在しているかをif文で確認している
+                    if error != nil {
+                        // MARK: エラーが存在しているので、エラー内容をprintする
+                        print("通知がうまくいきませんでした。")
+                    } else {
+                        // MARK: エラーがないので、うまく通知を追加できた
+                        print("通知に成功しました。")
+                    }
+                }
+                //通知予定の一覧確認
+                center.getPendingNotificationRequests {requests in
+                    requests.forEach {
+                        debugPrint($0.description)
+                    }
+                }
+            }
+            
+        } else {
+            //スイッチがOFFであれば
+            print("スイッチがOFFになりました")
+            //登録された通知のうち任意のもの(alarmItemListData.id)を1つだけ削除
+            for alarmItemListData in alarmItemList {
+            center.removePendingNotificationRequests(withIdentifiers: [alarmItemListData.id])
+            }
+        }
+    }
     //削除ボタンを押した際の処理を紐付け
     @IBAction func deleteButtonAction(_ sender: UIButton) {
-        print("deleteMainAlarmを押しました")
         //delegateの設定
         delegate?.deleteMainAlarm(indexPath: indexPath!)
+        
+        //通知の削除処理
+        //通知送信機能のclassをインスタンス化
+        let center = UNUserNotificationCenter.current()
+        //登録された通知のうち任意のもの(alarmItemListData.id)を1つだけ削除
+        for alarmItemListData in alarmItemList {
+            center.removePendingNotificationRequests(withIdentifiers: [alarmItemListData.id])
+        }
     }
     //設定したアラームの名前を紐付け
     @IBOutlet weak var alarmNameLabel: UILabel!
@@ -32,6 +91,8 @@ class MainAlarmViewCell: UITableViewCell {
     @IBOutlet weak var alarmStartSettingTimeLabel: UILabel!
     //削除ボタンを紐付け
     @IBOutlet weak var deleteButton: UIButton!
+    //ON・OFFボタンの紐付け
+    @IBOutlet weak var AlarmUISwitch: UISwitch!
     
     // MARK: - プロパティ
     //DateFormatterクラスのインスタンス化
@@ -40,8 +101,8 @@ class MainAlarmViewCell: UITableViewCell {
     var allAlarmSetting: AlarmSetting?
     //MainAlarmViewCellDelegateを定義（他ファイルで使用するため）
     var delegate: MainAlarmViewCellDelegate?
-    //AlarmSettingの配列のプロパティ
-    var alarmSettingList: [AlarmSetting] = []
+    //AlarmItemの配列のプロパティ
+    var alarmItemList = [AlarmItem]()
     //IndexPath
     var indexPath: IndexPath?
     
@@ -68,6 +129,17 @@ class MainAlarmViewCell: UITableViewCell {
     
     
     func setUp(alarmSetting: AlarmSetting) {
+        //引数alarmSettingをallAlarmSettingに設定
+        allAlarmSetting = alarmSetting
+        // Realm から alarmSetting に基づいて mavcAlarmItemListData を取得
+        if let realm = try? Realm() {
+            let mavcAlarmItemListData = realm.objects(AlarmItem.self).filter("alarmSettingId == %@" , alarmSetting.id)
+            // 結果が空でないか確認してから alarmItemList に設定
+                if !mavcAlarmItemListData.isEmpty {
+                    alarmItemList = Array(mavcAlarmItemListData)
+                }
+            
+        }
         //アラーム名のテキストデータの定義
         alarmNameLabel.text = String(alarmSetting.alarmName)
         //アラーム開始時間のテキストデータ定義（データ変換(Date→テキスト)）

@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import UserNotifications
 
 // MARK: - classの定義＋機能追加
 class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSettingViewControllerDelegate, MainAlarmViewCellDelegate, UITableViewDataSource {
@@ -27,6 +28,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
     var alarmSettingList: [AlarmSetting] = []
     //DateFormatterクラスのインスタンス化
     let dateFormatter = DateFormatter()
+    //ローカル通知許可のクラスのインスタンス化
+    let center = UNUserNotificationCenter.current()
     
     // MARK: - 初期設定関数
     override func viewDidLoad() {
@@ -52,6 +55,18 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         dateFormatter.timeZone = TimeZone(identifier:  "Asia/Tokyo")
         //変換フォーマット定義（未設定の場合は自動フォーマットが採用される）
         dateFormatter.dateFormat = "HH:mm"
+        
+        // MARK: ローカル通知の許可の設定
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+            if granted {
+                //許可を得られた場合の処理
+                print("通知の許可を得られました。")
+            } else {
+                //許可が得られなかった場合の処理
+                print("通知の許可が得られませんでした。")
+            }
+        }
+        
 
     }
     
@@ -142,8 +157,8 @@ class MainAlarmViewController: UIViewController, UITableViewDelegate, AlarmSetti
         let alarmSetting = alarmSettingList[indexPath.row]
         //セルの全体設定とalarmSettigListの共通化
         cell.allAlarmSetting = alarmSetting
-        //セルの定義は不要
-        //MainAlarmViewCell.setUp(alarmSetting: AlarmSetting)メソッドで定義済
+        //indexpath
+        cell.indexPath = indexPath
         
         //デリゲートの登録
         cell.delegate = self

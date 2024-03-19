@@ -34,6 +34,40 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         saveMainAlarm()
         //delegateの設定（整列と更新）
         delegate?.arrayMainAlarm()
+        //通知表示の設定
+        //ローカル通知内容のクラスのインスタンス化
+        let content: UNMutableNotificationContent = UNMutableNotificationContent()
+        
+        //通知音
+        content.sound = UNNotificationSound.default
+        // MARK: 通知をいつ発動するかを設定
+        // カレンダークラスを作成
+        let calendar: Calendar = Calendar.current
+        //alarmItemListのデータを使用のためfor in関数を使用
+        for alarmItemListData in alarmItemList {
+            //通知タイトル
+            content.title = "アラーム名：\(alarmSetting.alarmName)         作業名：\(alarmItemListData.userSetupName)"
+            //alarmItemListに格納されてある作業別開始時間ごとにアラームが鳴る
+            let trigger: UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.hour, .minute], from:alarmItemListData.byItemStartTime ), repeats: false)
+            // MARK: 通知のリクエストを作成
+            let request: UNNotificationRequest = UNNotificationRequest(identifier: alarmItemListData.id, content: content, trigger: trigger)
+            // MARK: 通知のリクエストを実際に登録する
+            UNUserNotificationCenter.current().add(request) { (error: Error?) in
+                // エラーが存在しているかをif文で確認している
+                if error != nil {
+                    // MARK: エラーが存在しているので、エラー内容をprintする
+                    print("通知がうまくいきませんでした。")
+                } else {
+                    // MARK: エラーがないので、うまく通知を追加できた
+                    print("通知に成功しました。")
+                }
+        }
+            
+        
+        }
+
+
+
         //画面遷移元に戻る処理
         self.dismiss(animated: true, completion: nil)
     }
@@ -131,7 +165,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             //Realmに保存
             realm.add(alarmSetting)
         }
-        print("alarmSetting.idは\(alarmSetting.id)")
     }
     //データ編集時のalarmItemList引き継ぎ処理
     func editMainAlarm() {
@@ -193,6 +226,8 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - delegateメソッド（ItemSelectedFooter）
     //項目別の時間の実装（Footerからのdelegateメソッド）
     func reflectItemData(selectedMasterItem: MasterItem) {
+        //Realmのインスタンス化
+        let realm = try! Realm()
         //項目設定オブジェクトの作成(ローカル変数)
         //全体idの共通化と項目名の共通化も設定済
         let alarmItem = AlarmItem(alarmSettingId: alarmSetting.id, userSetupName: selectedMasterItem.userSetupName)
@@ -220,7 +255,9 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
             //項目別の開始時間をString型→Date型で定義
             itemStartTime = dateFormatter.date(from: dateString) ?? Date()
             //全体の開始時間の共通化
-            alarmSetting.alarmStartSettingTime = allStartTime
+            try! realm.write {
+                alarmSetting.alarmStartSettingTime = allStartTime
+            }
             //alarmItemListが0でない場合（項目が追加されている場合）
             //alarmItemListの最後の時間の終了予定時間（byItemEndTime）を反映
         } else {
@@ -247,7 +284,6 @@ class AlarmSettingViewController: UIViewController, UITableViewDelegate, UITable
         alarmEndTime = alarmItem.byItemEndTime
         
         //Realmに保存したalarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
-        let realm = try! Realm()
         
         try! realm .write {        //alarmItem.byItemEndTimeをalarmSetting.alarmEndSettingTimeへ紐付け
             alarmSetting.alarmEndSettingTime = alarmItem.byItemEndTime
